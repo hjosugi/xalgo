@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import math
 import re
+import time
 from dataclasses import dataclass, field
 from typing import Optional
 
@@ -44,6 +45,18 @@ class PostData:
     video_duration_ms: Optional[int] = None
     source_backend: str = ""
     warnings: list = field(default_factory=list)
+
+
+@dataclass
+class BackendAttempt:
+    backend: str
+    elapsed_ms: float
+    post: Optional[PostData] = None
+    error: Optional[str] = None
+
+    @property
+    def ok(self) -> bool:
+        return self.post is not None
 
 
 def extract_status_id(url_or_id: str) -> str:
@@ -100,7 +113,7 @@ def _from_fxtwitter(status_id: str) -> PostData:
 
 def _from_vxtwitter(status_id: str) -> PostData:
     r = requests.get(
-        f"https://api.vxtwitter.com/Twitter/status/{status_id}",
+        f"https://api.vxtwitter.com/status/{status_id}",
         headers=UA,
         timeout=TIMEOUT,
     )
@@ -147,6 +160,32 @@ def _from_syndication(status_id: str) -> PostData:
 
 
 BACKENDS = [_from_fxtwitter, _from_vxtwitter, _from_syndication]
+
+
+def fetch_all_backends(url_or_id: str) -> list[BackendAttempt]:
+    """Query every backend for reliability and cross-backend comparisons."""
+    status_id = extract_status_id(url_or_id)
+    attempts = []
+    for backend in BACKENDS:
+        started = time.monotonic()
+        try:
+            post = backend(status_id)
+            attempts.append(
+                BackendAttempt(
+                    backend=backend.__name__.removeprefix("_from_"),
+                    elapsed_ms=(time.monotonic() - started) * 1000,
+                    post=post,
+                )
+            )
+        except Exception as exc:  # noqa: BLE001 - audit must retain all failures
+            attempts.append(
+                BackendAttempt(
+                    backend=backend.__name__.removeprefix("_from_"),
+                    elapsed_ms=(time.monotonic() - started) * 1000,
+                    error=f"{type(exc).__name__}: {exc}",
+                )
+            )
+    return attempts
 
 
 def fetch_post(url_or_id: str) -> PostData:

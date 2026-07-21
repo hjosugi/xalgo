@@ -87,10 +87,21 @@ python scripts/validate_popular.py --json > result.json
 python -m unittest discover -s tests -v
 ```
 
+### 取得バックエンドの監査
+
+```bash
+python scripts/audit_backends.py 123456789 987654321
+cat urls.txt | python scripts/audit_backends.py --stdin --json > backend-audit.json
+```
+
+3バックエンドを個別に呼び、成功率、成功時レイテンシ、各カウントの取得率、
+共通フィールドの相対差、標本内での推奨フォールバック順を出力します。
+
 ## ドキュメント
 
 - [`docs/algorithm-deep-dive.md`](docs/algorithm-deep-dive.md) — アルゴリズム徹底解説
 - [`docs/validation-findings.md`](docs/validation-findings.md) — 実測検証レポート
+- [`docs/backend-audit.md`](docs/backend-audit.md) — 取得先の成功率・欠損・数値差
 
 ## 免責
 
