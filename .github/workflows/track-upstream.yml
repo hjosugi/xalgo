@@ -1,0 +1,59 @@
+name: Track upstream x-algorithm
+
+on:
+  schedule:
+    - cron: "0 21 * * *" # 06:00 JST daily
+  workflow_dispatch: {}
+
+concurrency:
+  group: track-x-algorithm
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install requests
+
+      - name: Detect scoring changes
+        id: detect
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set +e
+          python scripts/track_upstream.py
+          code=$?
+          set -e
+          echo "changed=$([ $code -eq 2 ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+          if [ $code -ne 0 ] && [ $code -ne 2 ]; then exit $code; fi
+
+      - name: File issue on scoring change
+        if: steps.detect.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh label create upstream-change \
+            --color D93F0B \
+            --description "Detected change in xai-org/x-algorithm" 2>/dev/null || true
+          gh issue create \
+            --title "上流スコアリング変更検知: $(date -u +%Y-%m-%d)" \
+            --label upstream-change \
+            --body-file report.md
+
+      - name: Persist last-seen commit
+        run: |
+          git config user.name "xalgo-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add state/last_commit.txt state/last_checked_at.txt || true
+          git diff --cached --quiet || git commit -m "chore: update upstream watch state"
+          git push

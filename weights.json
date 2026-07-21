@@ -1,0 +1,50 @@
+{
+  "_comment": "重みプリセット。本番の重みは xai_feature_switches で動的注入され非公開。'repo_demo' はリポジトリ内 phoenix/run_pipeline.py に実際に書かれている唯一の公開数値。'legacy_2023' は 2023年 twitter/the-algorithm 公開時の Heavy Ranker 重み(比較用)。'full_template' は home-mixer/scorers/ranking_scorer.rs の全アクションを網羅した編集用テンプレ。",
+  "default_preset": "repo_demo",
+  "presets": {
+    "repo_demo": {
+      "favorite": 1.0,
+      "reply": 0.5,
+      "retweet": 0.3,
+      "dwell": 0.2
+    },
+    "legacy_2023": {
+      "favorite": 0.5,
+      "retweet": 1.0,
+      "reply": 13.5,
+      "profile_click_and_engage": 12.0,
+      "good_click_2min": 10.0,
+      "video_playback_50": 0.005,
+      "reply_engaged_by_author": 75.0,
+      "negative_feedback": -74.0,
+      "report": -369.0
+    },
+    "full_template": {
+      "favorite": 1.0,
+      "reply": 0.5,
+      "retweet": 0.3,
+      "photo_expand": 0.0,
+      "click": 0.0,
+      "profile_click": 0.0,
+      "vqv": 0.0,
+      "share": 0.0,
+      "share_via_dm": 0.0,
+      "share_via_copy_link": 0.0,
+      "dwell": 0.2,
+      "quote": 0.0,
+      "quoted_click": 0.0,
+      "quoted_vqv": 0.0,
+      "cont_dwell_time": 0.0,
+      "cont_click_dwell_time": 0.0,
+      "follow_author": 0.0,
+      "not_interested": 0.0,
+      "block_author": 0.0,
+      "mute_author": 0.0,
+      "report": 0.0,
+      "not_dwelled": 0.0
+    }
+  },
+  "negative_scores_offset": 0.0,
+  "author_diversity": { "decay": 0.9, "floor": 0.2, "_comment": "実値は非公開。式: (1-floor)*decay^position+floor" },
+  "oon_weight_factor": 1.0
+}
