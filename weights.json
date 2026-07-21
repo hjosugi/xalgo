@@ -1,5 +1,5 @@
 {
-  "_comment": "重みプリセット。本番の重みは xai_feature_switches で動的注入され非公開。'repo_demo' はリポジトリ内 phoenix/run_pipeline.py に実際に書かれている唯一の公開数値。'legacy_2023' は 2023年 twitter/the-algorithm 公開時の Heavy Ranker 重み(比較用)。'full_template' は home-mixer/scorers/ranking_scorer.rs の全アクションを網羅した編集用テンプレ。",
+  "_comment": "重みプリセット。本番の重みは xai_feature_switches で動的注入され非公開。'repo_demo' は phoenix/run_pipeline.py のラベル上のデモ値だが、同ファイルのserver action indexとrunners.pyのmodel output順には既知の不整合があるため正解値ではない。'legacy_2023' は twitter/the-algorithm-mlが2023-04-05時点として公開した旧Heavy Ranker重みで、2026 Phoenixには適用できない。'full_template' はhome-mixer/scorers/ranking_scorer.rsの22信号を網羅した感度分析用テンプレ。",
   "default_preset": "repo_demo",
   "presets": {
     "repo_demo": {

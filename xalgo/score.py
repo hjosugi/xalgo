@@ -115,6 +115,17 @@ def score_post(
             breakdown[wkey] = w * math.log1p(cnt)
         score = sum(breakdown.values())
 
+    if preset_name == "repo_demo":
+        warnings.append(
+            "repo_demo is a sensitivity preset, not a verified Phoenix score: "
+            "upstream run_pipeline.py indices conflict with runners.py output order"
+        )
+    elif preset_name == "legacy_2023":
+        warnings.append(
+            "legacy_2023 is the old Heavy Ranker configuration dated 2023-04-05; "
+            "it is not a 2026 Phoenix configuration"
+        )
+
     return ScoreResult(
         preset=preset_name,
         mode=mode,

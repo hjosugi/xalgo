@@ -34,6 +34,7 @@ REPORT_FILE = ROOT / "report.md"
 # A path match is enough to flag a change.  The regular expression below is
 # only used to extract a compact set of especially interesting patch lines.
 ALGORITHM_PATHS = (
+    "README.md",
     "candidate-pipeline/",
     "home-mixer/candidate_pipeline/",
     "home-mixer/filters/",
@@ -41,6 +42,8 @@ ALGORITHM_PATHS = (
     "home-mixer/selectors/",
     "home-mixer/sources/",
     "phoenix/grok.py",
+    "phoenix/README.md",
+    "phoenix/artifacts/oss-phoenix-artifacts.zip",
     "phoenix/recsys_model.py",
     "phoenix/recsys_retrieval_model.py",
     "phoenix/run_pipeline.py",

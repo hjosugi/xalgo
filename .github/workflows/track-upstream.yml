@@ -42,6 +42,17 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          python scripts/audit_model_contract.py --ref main --json > model-contract.json || true
+          if [ -s model-contract.json ]; then
+            {
+              echo
+              echo "## Public model contract at upstream main"
+              echo
+              echo '```json'
+              cat model-contract.json
+              echo '```'
+            } >> report.md
+          fi
           gh label create upstream-change \
             --color D93F0B \
             --description "Detected change in xai-org/x-algorithm" 2>/dev/null || true
