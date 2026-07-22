@@ -13,7 +13,9 @@
   2026-07-20 UTCスナップショット9件と、比較用2件
 - ライブ取得: 2026-07-21 12:27 UTC
 - 取得方法: `scripts/validate_popular.py` からFxTwitter等の公開バックエンドを使用
-- スコア: `repo_demo`（favorite 1.0 / reply 0.5 / retweet 0.3 / dwell 0.2）
+- スコア: `repo_demo`（ラベル上はfavorite 1.0 / reply 0.5 / retweet 0.3 /
+  dwell 0.2）。後の契約監査で`run_pipeline.py`のindexと`runners.py`の出力head順に
+  不整合が見つかったため、これは正解重みではなく感度分析用の仮定として扱う
 - 注意: XBeastのVirality Scoreは第三者の独自指標で、Phoenixスコアではない
 
 公開カウントは時間とともに変化するため、以下は一時点の結果である。手元では

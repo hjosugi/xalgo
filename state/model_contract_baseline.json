@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "upstream_repository": "xai-org/x-algorithm",
+  "source_ref": "0bfc2795d308f90032544322747caacd535f75ae",
+  "recorded_at": "2026-07-22",
+  "contract": {
+    "readme_claims": {
+      "root_readme": {
+        "emb_size": 256,
+        "num_layers": 2
+      },
+      "phoenix_readme": {
+        "emb_size": 128,
+        "num_layers": 4
+      }
+    },
+    "artifact_architecture": {
+      "emb_size": 128,
+      "num_layers": 4,
+      "num_heads": 4,
+      "key_size": 32,
+      "history_seq_len": 127,
+      "candidate_seq_len": 64,
+      "num_actions": 19
+    },
+    "retrieval_ranker_configs_match": true,
+    "readme_matches_artifact": {
+      "root_readme": false,
+      "phoenix_readme": true
+    },
+    "action_contract": {
+      "actions": [
+        "favorite_score",
+        "reply_score",
+        "repost_score",
+        "photo_expand_score",
+        "click_score",
+        "profile_click_score",
+        "vqv_score",
+        "share_score",
+        "share_via_dm_score",
+        "share_via_copy_link_score",
+        "dwell_score",
+        "quote_score",
+        "quoted_click_score",
+        "follow_author_score",
+        "not_interested_score",
+        "block_author_score",
+        "mute_author_score",
+        "report_score",
+        "dwell_time"
+      ],
+      "pipeline_index_mappings": [
+        {
+          "constant": "IDX_FAV",
+          "index": 1,
+          "expected_head": "favorite_score",
+          "actual_head_at_index": "reply_score",
+          "matches": false
+        },
+        {
+          "constant": "IDX_REPLY",
+          "index": 4,
+          "expected_head": "reply_score",
+          "actual_head_at_index": "click_score",
+          "matches": false
+        },
+        {
+          "constant": "IDX_QUOTE",
+          "index": 5,
+          "expected_head": "quote_score",
+          "actual_head_at_index": "profile_click_score",
+          "matches": false
+        },
+        {
+          "constant": "IDX_RT",
+          "index": 6,
+          "expected_head": "repost_score",
+          "actual_head_at_index": "vqv_score",
+          "matches": false
+        },
+        {
+          "constant": "IDX_DWELL",
+          "index": 11,
+          "expected_head": "dwell_score",
+          "actual_head_at_index": "quote_score",
+          "matches": false
+        },
+        {
+          "constant": "IDX_VQV",
+          "index": 13,
+          "expected_head": "vqv_score",
+          "actual_head_at_index": "follow_author_score",
+          "matches": false
+        }
+      ]
+    },
+    "artifact_identity": {
+      "lfs_oid": "fbc6017d00588754e22e0c7eb2f786a008a74d309c03c8085fa2fad418a83dac",
+      "archive_size_bytes": 2903518802,
+      "zip_entry_count": 11
+    },
+    "example_history_items": 3
+  }
+}

@@ -41,14 +41,30 @@ X公式embed CDN（syndication）。X APIは使いませんが、各公開サー
 
 | preset | 内容 |
 |---|---|
-| `repo_demo` | リポジトリ内に実在する唯一の公開数値 (run_pipeline.py) |
-| `legacy_2023` | 2023年 twitter/the-algorithm の Heavy Ranker 重み (比較用) |
+| `repo_demo` | 2026 `run_pipeline.py`に書かれたラベル上のデモ値。出力indexに既知の不整合あり |
+| `legacy_2023` | 2023-04-05 `twitter/the-algorithm-ml` Heavy Ranker重み（歴史比較専用） |
 | `full_template` | 全22アクション網羅の編集用テンプレ |
 
 本番重みはfeature switch注入で非公開です。逆推定の計画は
 [`issues/001-weight-estimation.md`](issues/001-weight-estimation.md) を参照してください。
 
-### 3. 上流変更の自動検知
+### 3. 公開モデル契約を約68KBで監査
+
+```bash
+python scripts/audit_model_contract.py
+python scripts/audit_model_contract.py --ref main --json
+python scripts/audit_model_contract.py --ref main --fail-on-drift
+```
+
+約2.9GBのPhoenix artifactを丸ごと落とさず、Git LFSのRange requestで内部configだけを
+読みます。READMEとmodel実体、デモのaction indexと出力head順を比較できます。現在の
+pinned releaseでは、root READMEの`256-dim/2-layer`に対しartifactは
+`128-dim/4-layer`、デモのaction indexも`runners.py`の出力順と一致しません。
+既知状態は[`state/model_contract_baseline.json`](state/model_contract_baseline.json)に固定し、
+`--fail-on-drift`は既知不整合では失敗せず、LFS OID・model寸法・README・action順の
+新しい変更だけをexit 1で通知します。
+
+### 4. 上流変更の自動検知
 
 ```bash
 python -m xalgo.cli diff --since 2026-05-01
@@ -60,16 +76,17 @@ python -m xalgo.cli diff --since 2026-05-01
 していますが、その場合もcommit監視は継続し、PR APIが公開された時点から
 ファイル単位のPR検査が自動で有効になります。
 
-### 4. 分析 issue の一括登録
+### 5. 分析 issue の一括登録
 
 ```bash
-./issues/create_issues.sh <owner/repo>   # gh CLIで7本を冪等に登録
+./issues/create_issues.sh <owner/repo>   # gh CLIで10本を冪等に登録
 ```
 
 001 重み逆推定 / 002 Phoenix mini ローカル推論 / 003 Author Diversity /
-004 負シグナル / 005 取得信頼性 / 006 動画VQV / 007 追跡精度。
+004 負シグナル / 005 取得信頼性 / 006 動画VQV / 007 追跡精度 /
+008 action index契約 / 009 artifact-doc drift / 010 viewer別feed評価。
 
-### 5. 実投稿での検証
+### 6. 実投稿での検証
 
 ```bash
 python scripts/validate_popular.py            # 2026-07-20のスナップショット
@@ -81,6 +98,18 @@ python scripts/validate_popular.py --json > result.json
 してください。組み込み標本は第三者サイトXBeastの一時点のランキングであり、
 母集団を代表する検証セットではありません。
 
+### 7. 匿名化した実For You順位との比較
+
+```bash
+python scripts/evaluate_feed_snapshot.py examples/feed_snapshot.example.csv
+python scripts/evaluate_feed_snapshot.py my-anonymized-feed.csv --k 5,10,20 --json
+```
+
+同一viewer・同一refresh内で、代理スコア順と実表示順のSpearman、Kendall tau-b、
+NDCG@K、Top-K overlapを計算します。credential列を拒否し、入力SHA-256と層別結果も
+出力します。CSV仕様と限界は
+[`docs/feed-snapshot-evaluation.md`](docs/feed-snapshot-evaluation.md)を参照してください。
+
 ## テスト
 
 ```bash
@@ -90,6 +119,10 @@ python -m unittest discover -s tests -v
 ## ドキュメント
 
 - [`docs/algorithm-deep-dive.md`](docs/algorithm-deep-dive.md) — アルゴリズム徹底解説
+- [`docs/model-ai-ml-deep-dive.md`](docs/model-ai-ml-deep-dive.md) — AI/ML・Transformer・推薦モデル解説
+- [`docs/external-analysis-review.md`](docs/external-analysis-review.md) — 外部記事・GitHub repo・論文の比較検証
+- [`docs/model-validation-plan.md`](docs/model-validation-plan.md) — モデルと実投稿を検証する実験計画
+- [`docs/feed-snapshot-evaluation.md`](docs/feed-snapshot-evaluation.md) — 匿名化For You順位の評価方法
 - [`docs/validation-findings.md`](docs/validation-findings.md) — 実測検証レポート
 
 ## 免責

@@ -36,6 +36,13 @@ class ScoreTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             author_diversity_multiplier(-1, 0.9, 0.2)
 
+    def test_historical_and_demo_presets_are_labeled(self):
+        post = PostData(status_id="1", likes=1, views=10)
+        demo = score_post(post, {"favorite": 1.0}, "repo_demo")
+        legacy = score_post(post, {"favorite": 0.5}, "legacy_2023")
+        self.assertTrue(any("not a verified Phoenix score" in item for item in demo.warnings))
+        self.assertTrue(any("2023-04-05" in item for item in legacy.warnings))
+
 
 if __name__ == "__main__":
     unittest.main()
