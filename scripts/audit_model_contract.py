@@ -21,6 +21,7 @@ import struct
 import sys
 import zlib
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Callable
 
 import requests
@@ -31,6 +32,8 @@ DEFAULT_REF = "0bfc2795d308f90032544322747caacd535f75ae"
 ARTIFACT_PATH = "phoenix/artifacts/oss-phoenix-artifacts.zip"
 RAW_ROOT = "https://raw.githubusercontent.com"
 LFS_BATCH_URL = f"https://github.com/{REPO}.git/info/lfs/objects/batch"
+ROOT = Path(__file__).resolve().parent.parent
+DEFAULT_BASELINE = ROOT / "state" / "model_contract_baseline.json"
 JSON_MEMBERS = (
     "oss-phoenix-artifacts/retrieval/config.json",
     "oss-phoenix-artifacts/ranker/config.json",
@@ -295,6 +298,80 @@ def build_report(session: requests.Session, ref: str) -> dict[str, object]:
     }
 
 
+def contract_snapshot(report: dict[str, object]) -> dict[str, object]:
+    """Return the stable, serving-relevant part of a live audit report."""
+    artifact = report["artifact"]
+    return {
+        "readme_claims": report["readme_claims"],
+        "artifact_architecture": report["artifact_architecture"],
+        "retrieval_ranker_configs_match": report["retrieval_ranker_configs_match"],
+        "readme_matches_artifact": report["readme_matches_artifact"],
+        "action_contract": report["action_contract"],
+        "artifact_identity": {
+            "lfs_oid": artifact["lfs_oid"],
+            "archive_size_bytes": artifact["archive_size_bytes"],
+            "zip_entry_count": artifact["zip_entry_count"],
+        },
+        "example_history_items": report["example_history_items"],
+    }
+
+
+def diff_values(expected: object, actual: object, path: str = "$") -> list[dict[str, object]]:
+    """Build a compact, deterministic structural diff for JSON-compatible values."""
+    if type(expected) is not type(actual):
+        return [{"path": path, "expected": expected, "actual": actual}]
+    if isinstance(expected, dict):
+        differences: list[dict[str, object]] = []
+        for key in sorted(set(expected) | set(actual)):
+            key_path = f"{path}.{key}"
+            if key not in expected:
+                differences.append({"path": key_path, "expected": None, "actual": actual[key]})
+            elif key not in actual:
+                differences.append({"path": key_path, "expected": expected[key], "actual": None})
+            else:
+                differences.extend(diff_values(expected[key], actual[key], key_path))
+        return differences
+    if isinstance(expected, list):
+        differences = []
+        for index in range(max(len(expected), len(actual))):
+            item_path = f"{path}[{index}]"
+            if index >= len(expected):
+                differences.append(
+                    {"path": item_path, "expected": None, "actual": actual[index]}
+                )
+            elif index >= len(actual):
+                differences.append(
+                    {"path": item_path, "expected": expected[index], "actual": None}
+                )
+            else:
+                differences.extend(diff_values(expected[index], actual[index], item_path))
+        return differences
+    return [] if expected == actual else [{"path": path, "expected": expected, "actual": actual}]
+
+
+def compare_with_baseline(
+    report: dict[str, object], baseline_path: Path
+) -> dict[str, object]:
+    try:
+        baseline = json.loads(baseline_path.read_text(encoding="utf-8"))
+    except FileNotFoundError as exc:
+        raise AuditError(f"baseline file not found: {baseline_path}") from exc
+    if baseline.get("schema_version") != 1 or not isinstance(baseline.get("contract"), dict):
+        raise AuditError(f"unsupported model-contract baseline: {baseline_path}")
+    differences = diff_values(baseline["contract"], contract_snapshot(report))
+    try:
+        shown_path = str(baseline_path.relative_to(ROOT))
+    except ValueError:
+        shown_path = str(baseline_path)
+    return {
+        "status": "changed" if differences else "unchanged",
+        "baseline_path": shown_path,
+        "baseline_source_ref": baseline.get("source_ref"),
+        "difference_count": len(differences),
+        "differences": differences,
+    }
+
+
 def render_text(report: dict[str, object]) -> str:
     artifact = report["artifact_architecture"]
     lines = [
@@ -321,6 +398,18 @@ def render_text(report: dict[str, object]) -> str:
         f"artifact bytes: archive={meta['archive_size_bytes']:,}, "
         f"range-read≈{meta['range_bytes_requested_approximately']:,}"
     )
+    comparison = report.get("baseline_comparison")
+    if comparison:
+        lines.append(
+            f"baseline: {comparison['status'].upper()} "
+            f"({comparison['difference_count']} differences vs "
+            f"{comparison['baseline_source_ref']})"
+        )
+        for difference in comparison["differences"][:20]:
+            lines.append(
+                f"  {difference['path']}: {difference['expected']!r} -> "
+                f"{difference['actual']!r}"
+            )
     return "\n".join(lines)
 
 
@@ -330,22 +419,42 @@ def has_mismatch(report: dict[str, object]) -> bool:
     )
 
 
+def has_drift(report: dict[str, object]) -> bool:
+    comparison = report.get("baseline_comparison")
+    return bool(comparison and comparison["status"] == "changed")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--ref", default=DEFAULT_REF, help="upstream commit, tag, or branch")
     parser.add_argument("--json", action="store_true", help="emit machine-readable JSON")
     parser.add_argument(
+        "--baseline",
+        type=Path,
+        default=DEFAULT_BASELINE,
+        help=f"known-contract baseline (default: {DEFAULT_BASELINE.relative_to(ROOT)})",
+    )
+    parser.add_argument(
+        "--no-baseline", action="store_true", help="skip known-vs-new contract comparison"
+    )
+    parser.add_argument(
         "--strict", action="store_true", help="exit 1 when an upstream mismatch is found"
+    )
+    parser.add_argument(
+        "--fail-on-drift", action="store_true", help="exit 1 only for changes from baseline"
     )
     args = parser.parse_args()
     try:
         with requests.Session() as session:
             report = build_report(session, args.ref)
+        if not args.no_baseline:
+            report["baseline_comparison"] = compare_with_baseline(report, args.baseline)
     except (AuditError, KeyError, ValueError, requests.RequestException) as exc:
         print(f"audit failed: {exc}", file=sys.stderr)
         return 2
     print(json.dumps(report, ensure_ascii=False, indent=2) if args.json else render_text(report))
-    return 1 if args.strict and has_mismatch(report) else 0
+    failed = (args.strict and has_mismatch(report)) or (args.fail_on_drift and has_drift(report))
+    return 1 if failed else 0
 
 
 if __name__ == "__main__":

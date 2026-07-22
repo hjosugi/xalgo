@@ -7,9 +7,9 @@
 
 ## 完了条件
 
-- [ ] cookie/tokenを保存しない匿名化snapshot schemaを定義する
-- [ ] request時刻、position、network内外、media、候補集合を記録する
-- [ ] NDCG@K、Kendall/Spearman、top-K overlapを算出する
-- [ ] position/exposure/selection biasの限界をreportへ明記する
+- [x] cookie/tokenを保存しない匿名化snapshot schemaを定義する
+- [x] request時刻、position、network内外、media、候補集合を記録する
+- [x] NDCG@K、Kendall/Spearman、top-K overlapを算出する
+- [x] position/exposure/selection biasの限界をreportへ明記する
 - [ ] 低・中・高view帯とauthor-disjointで層別評価する
-- [ ] input snapshot、commit、設定から結果を再生成できる
+- [x] input snapshot、commit、設定から結果を再生成できる

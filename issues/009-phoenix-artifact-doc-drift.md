@@ -7,8 +7,8 @@
 
 ## 完了条件
 
-- [ ] Git LFS OIDとconfig抽出結果を検証artifactとして保存する
-- [ ] root/Phoenix README変更時に自動監査する
-- [ ] artifact pointer変更時にもIssueを起票する
-- [ ] 既知driftと新規driftを区別して通知する
+- [x] Git LFS OIDとconfig抽出結果を検証artifactとして保存する
+- [x] root/Phoenix README変更時に自動監査する
+- [x] artifact pointer変更時にもIssueを起票する
+- [x] 既知driftと新規driftを区別して通知する
 - [ ] 上流で修正されたcommit/PRをIssueへ記録する

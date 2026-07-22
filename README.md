@@ -53,12 +53,16 @@ X公式embed CDN（syndication）。X APIは使いませんが、各公開サー
 ```bash
 python scripts/audit_model_contract.py
 python scripts/audit_model_contract.py --ref main --json
+python scripts/audit_model_contract.py --ref main --fail-on-drift
 ```
 
 約2.9GBのPhoenix artifactを丸ごと落とさず、Git LFSのRange requestで内部configだけを
 読みます。READMEとmodel実体、デモのaction indexと出力head順を比較できます。現在の
 pinned releaseでは、root READMEの`256-dim/2-layer`に対しartifactは
 `128-dim/4-layer`、デモのaction indexも`runners.py`の出力順と一致しません。
+既知状態は[`state/model_contract_baseline.json`](state/model_contract_baseline.json)に固定し、
+`--fail-on-drift`は既知不整合では失敗せず、LFS OID・model寸法・README・action順の
+新しい変更だけをexit 1で通知します。
 
 ### 4. 上流変更の自動検知
 
@@ -94,6 +98,18 @@ python scripts/validate_popular.py --json > result.json
 してください。組み込み標本は第三者サイトXBeastの一時点のランキングであり、
 母集団を代表する検証セットではありません。
 
+### 7. 匿名化した実For You順位との比較
+
+```bash
+python scripts/evaluate_feed_snapshot.py examples/feed_snapshot.example.csv
+python scripts/evaluate_feed_snapshot.py my-anonymized-feed.csv --k 5,10,20 --json
+```
+
+同一viewer・同一refresh内で、代理スコア順と実表示順のSpearman、Kendall tau-b、
+NDCG@K、Top-K overlapを計算します。credential列を拒否し、入力SHA-256と層別結果も
+出力します。CSV仕様と限界は
+[`docs/feed-snapshot-evaluation.md`](docs/feed-snapshot-evaluation.md)を参照してください。
+
 ## テスト
 
 ```bash
@@ -106,6 +122,7 @@ python -m unittest discover -s tests -v
 - [`docs/model-ai-ml-deep-dive.md`](docs/model-ai-ml-deep-dive.md) — AI/ML・Transformer・推薦モデル解説
 - [`docs/external-analysis-review.md`](docs/external-analysis-review.md) — 外部記事・GitHub repo・論文の比較検証
 - [`docs/model-validation-plan.md`](docs/model-validation-plan.md) — モデルと実投稿を検証する実験計画
+- [`docs/feed-snapshot-evaluation.md`](docs/feed-snapshot-evaluation.md) — 匿名化For You順位の評価方法
 - [`docs/validation-findings.md`](docs/validation-findings.md) — 実測検証レポート
 
 ## 免責

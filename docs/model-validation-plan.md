@@ -16,7 +16,7 @@
 
 ```bash
 python scripts/audit_model_contract.py --ref 0bfc2795d3
-python scripts/audit_model_contract.py --ref main --strict
+python scripts/audit_model_contract.py --ref main --fail-on-drift
 ```
 
 検査項目:
@@ -26,9 +26,9 @@ python scripts/audit_model_contract.py --ref main --strict
 - `run_pipeline.py`のindexと`runners.py::ACTIONS`の出力順
 - history/candidate長、action数、hash数の変更
 
-現時点ではmodel sizeとaction indexに不整合がある。CIで`--strict`を直ちに必須化すると上流の
-既知不整合で常時失敗するため、まずbaseline JSONを保存し「新しい差分」だけを警告する設計が
-よい。
+現時点ではmodel sizeとaction indexに不整合がある。その状態を
+`state/model_contract_baseline.json`へ保存し、`--fail-on-drift`では既知不整合を許容しながら
+「新しい差分」だけを終了コード1にする。`--strict`は調査用として既知不整合も失敗させる。
 
 ## L1: 公開checkpointの再現性
 
@@ -89,6 +89,10 @@ Phoenixはpersonalizedなので、直接検証に最も近い単位は
 候補集合に入らなかった投稿の順位は観測できない。表示された投稿だけの評価にはposition biasと
 exposure biasがあるため、「高順位だからengagementされた」の逆因果を除けない。
 
+匿名化CSV schemaと実装済み指標は
+[`feed-snapshot-evaluation.md`](feed-snapshot-evaluation.md)を参照。実データを保存せず、
+同梱のsynthetic sampleでpipelineだけを検証できる。
+
 ## L4: 因果検証
 
 本当に「この変更が配信を増やした」と言うには、randomized exposure、interleaving、A/B test、
@@ -115,4 +119,4 @@ exposure biasがあるため、「高順位だからengagementされた」の逆
 2. temporal splitを備えた評価notebook/CLI。
 3. L0監査結果のbaseline差分をupstream追跡Issueへ統合。
 4. 公開Phoenix artifactのdeterministic receipt生成。
-5. viewer自身が提供したfeed snapshotとのNDCG比較。
+5. viewer自身が提供した匿名化feed snapshotとのNDCG比較（CLI実装済み、実標本待ち）。

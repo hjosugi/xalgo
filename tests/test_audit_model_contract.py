@@ -35,6 +35,19 @@ class AuditModelContractTests(unittest.TestCase):
         self.assertEqual(mappings["IDX_FAV"]["actual_head_at_index"], "reply_score")
         self.assertFalse(mappings["IDX_FAV"]["matches"])
 
+    def test_structural_diff_identifies_exact_contract_path(self):
+        expected = {"architecture": {"layers": 4}, "actions": ["fav", "reply"]}
+        actual = {"architecture": {"layers": 6}, "actions": ["fav", "repost"]}
+        differences = audit.diff_values(expected, actual)
+        self.assertEqual(
+            [item["path"] for item in differences],
+            ["$.actions[1]", "$.architecture.layers"],
+        )
+
+    def test_structural_diff_accepts_unchanged_contract(self):
+        contract = {"oid": "abc", "shape": [128, 19], "matches": False}
+        self.assertEqual(audit.diff_values(contract, contract), [])
+
 
 if __name__ == "__main__":
     unittest.main()

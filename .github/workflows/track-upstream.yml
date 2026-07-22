@@ -42,7 +42,16 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          python scripts/audit_model_contract.py --ref main --json > model-contract.json || true
+          set +e
+          python scripts/audit_model_contract.py \
+            --ref main --json --fail-on-drift > model-contract.json
+          audit_code=$?
+          set -e
+          if [ "$audit_code" -eq 1 ]; then
+            echo "::warning::Phoenix public model contract changed from the recorded baseline"
+          elif [ "$audit_code" -ne 0 ]; then
+            echo "::warning::Phoenix model-contract audit could not complete"
+          fi
           if [ -s model-contract.json ]; then
             {
               echo
