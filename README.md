@@ -19,7 +19,21 @@ pip install -r requirements.txt   # requests のみ
 
 ## 使い方
 
-### 1. URL からスコア計算 (X API 不使用)
+### 1. ブラウザで学ぶ（学習ラボ）
+
+**公開ページ:** https://hjosugi.github.io/xalgo/
+
+```bash
+python -m xalgo.web
+# http://127.0.0.1:8000 を開く
+```
+
+投稿の公開カウントを手入力するか、Xの投稿URLから取得して、行動率・重み・
+スコアへの寄与を画面で確認できます。候補取得からPhoenix予測、著者多様性までの
+処理フローも図解しています。ログインやデータ保存はなく、手入力モードの計算は
+ブラウザ内だけで完結します。
+
+### 2. URL からスコア計算 (X API 不使用)
 
 ```bash
 python -m xalgo.cli score "https://x.com/user/status/123456789"
@@ -37,7 +51,7 @@ X公式embed CDN（syndication）。X APIは使いませんが、各公開サー
   「1インプレッションあたり行動確率」に対応する形。
 - **raw モード** (views なし・2022年12月以前の投稿): log1p(count) の加重和。
 
-### 2. 重みプリセット (weights.json)
+### 3. 重みプリセット (weights.json)
 
 | preset | 内容 |
 |---|---|
@@ -48,7 +62,7 @@ X公式embed CDN（syndication）。X APIは使いませんが、各公開サー
 本番重みはfeature switch注入で非公開です。逆推定の計画は
 [`issues/001-weight-estimation.md`](issues/001-weight-estimation.md) を参照してください。
 
-### 3. 上流変更の自動検知
+### 4. 上流変更の自動検知
 
 ```bash
 python -m xalgo.cli diff --since 2026-05-01
@@ -60,7 +74,7 @@ python -m xalgo.cli diff --since 2026-05-01
 していますが、その場合もcommit監視は継続し、PR APIが公開された時点から
 ファイル単位のPR検査が自動で有効になります。
 
-### 4. 分析 issue の一括登録
+### 5. 分析 issue の一括登録
 
 ```bash
 ./issues/create_issues.sh <owner/repo>   # gh CLIで7本を冪等に登録
@@ -69,7 +83,7 @@ python -m xalgo.cli diff --since 2026-05-01
 001 重み逆推定 / 002 Phoenix mini ローカル推論 / 003 Author Diversity /
 004 負シグナル / 005 取得信頼性 / 006 動画VQV / 007 追跡精度。
 
-### 5. 実投稿での検証
+### 6. 実投稿での検証
 
 ```bash
 python scripts/validate_popular.py            # 2026-07-20のスナップショット
