@@ -19,3 +19,13 @@
 ```bash
 python scripts/audit_model_contract.py
 ```
+
+## 2026-07-22追加調査
+
+- 上流`main`は引き続きcommit `0bfc2795d3`で、6件のindex差も同じ。
+- artifactのranker `model_params.npz`もRange取得して検査した。
+- 出力は`unembeddings.npy (128, 19)`、履歴action入力は
+  `action_projection.npy (19, 128)`だが、列ごとのaction名metadataはない。
+- 両行列のcosine similarityにもsemantic順を確定できる安定した1対1対応はなかった。
+
+このため公開物だけで正しいhead順を断定せず、上流確認を残す。
