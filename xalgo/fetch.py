@@ -2,7 +2,7 @@
 
 Backend chain (first success wins):
   1. fxtwitter   - https://api.fxtwitter.com/status/{id}
-  2. vxtwitter   - https://api.vxtwitter.com/Twitter/status/{id}
+  2. vxtwitter   - https://api.vxtwitter.com/status/{id}
   3. syndication - https://cdn.syndication.twimg.com/tweet-result (official embed CDN)
 
 All backends are unauthenticated and read only public data.
