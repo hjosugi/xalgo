@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Xのおすすめアルゴリズムを入力しながら理解する学習用シミュレーター" />
+    <title>xalgo lab — おすすめの仕組みを、触って理解する</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="xalgo lab ホーム">
+        <span class="brand-mark" aria-hidden="true">x∑</span>
+        <span><strong>xalgo</strong><small>LEARNING LAB</small></span>
+      </a>
+      <nav aria-label="メインナビゲーション">
+        <a href="#playground">実験する</a>
+        <a href="#pipeline">仕組みを知る</a>
+        <a href="#limits">わかること</a>
+      </nav>
+      <a class="header-cta" href="#playground">スコアを試す <span>↘</span></a>
+    </header>
+
+    <main id="top">
+      <section class="hero section-shell">
+        <div class="hero-copy">
+          <p class="eyebrow"><span></span> INTERACTIVE ALGORITHM STUDY</p>
+          <h1>おすすめの仕組みを、<br /><em>触って</em>理解する。</h1>
+          <p class="hero-lead">
+            Xの公開アルゴリズムを、数式だけで終わらせない。投稿の数字を入力すると、
+            行動率・重み・スコアへの変化がその場で見える学習ラボです。
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#playground">シミュレーターを開く <span>→</span></a>
+            <a class="text-link" href="#pipeline"><span class="play">▶</span> 3分で仕組みを見る</a>
+          </div>
+          <ul class="hero-notes" aria-label="特徴">
+            <li><span>01</span> X APIキー不要</li>
+            <li><span>02</span> 手入力でも学べる</li>
+            <li><span>03</span> 公開コード準拠</li>
+          </ul>
+        </div>
+
+        <div class="hero-visual" aria-label="スコアリングの概念図">
+          <div class="orb orb-one"></div><div class="orb orb-two"></div>
+          <div class="formula-card glass">
+            <div class="formula-head"><span>SCORING MODEL</span><span class="live-dot">LIVE</span></div>
+            <div class="formula-main"><i>score</i> = <span>Σ</span> w<sub>i</sub> × P(a<sub>i</sub>)</div>
+            <div class="formula-line"></div>
+            <div class="signal-row"><span class="signal-icon coral">♥</span><b>いいね</b><div><i style="--w:82%"></i></div><strong>× 1.0</strong></div>
+            <div class="signal-row"><span class="signal-icon violet">↩</span><b>返信</b><div><i style="--w:58%"></i></div><strong>× 0.5</strong></div>
+            <div class="signal-row"><span class="signal-icon cyan">↻</span><b>リポスト</b><div><i style="--w:34%"></i></div><strong>× 0.3</strong></div>
+            <div class="formula-total"><span>CROWD-AVERAGE SCORE</span><strong>0.0418</strong></div>
+          </div>
+          <div class="float-chip chip-a"><span>👁</span><b>views</b><small>分母になる</small></div>
+          <div class="float-chip chip-b"><span>⚡</span><b>P(action)</b><small>行動の予測確率</small></div>
+        </div>
+      </section>
+
+      <section class="truth-strip">
+        <div class="section-shell truth-inner">
+          <p class="eyebrow light"><span></span> FIRST PRINCIPLE</p>
+          <blockquote>「いいね数が多い = おすすめされる」ではない。</blockquote>
+          <p>モデルが予測する複数の行動確率に、それぞれの重要度を掛けて足し合わせる。まずは、この核になる考え方を体験します。</p>
+        </div>
+      </section>
+
+      <section id="playground" class="playground section-shell">
+        <div class="section-heading centered">
+          <p class="eyebrow"><span></span> SCORE PLAYGROUND</p>
+          <h2>数字を変える。<br />理由まで見える。</h2>
+          <p>サンプルから始めるか、実際の投稿URLを入力してください。計算の各段階を分解して表示します。</p>
+        </div>
+
+        <div class="lab-frame">
+          <div class="lab-toolbar">
+            <div class="window-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+            <span>XALGO / INTERACTIVE-SCORER</span>
+            <span class="model-badge">PUBLIC MODEL · 2026</span>
+          </div>
+
+          <div class="lab-grid">
+            <form id="score-form" class="control-panel">
+              <div class="panel-top">
+                <span class="step-label">INPUT / 01</span>
+                <button class="reset-button" type="button" id="reset-button">↺ リセット</button>
+              </div>
+
+              <div class="source-tabs" role="tablist" aria-label="入力方法">
+                <button type="button" class="active" data-source="manual" role="tab" aria-selected="true">数値を手入力</button>
+                <button type="button" data-source="url" role="tab" aria-selected="false">XのURLから取得</button>
+              </div>
+
+              <div id="manual-inputs">
+                <div class="sample-row">
+                  <label for="sample-select">学習サンプル</label>
+                  <select id="sample-select">
+                    <option value="balanced">バランス型の投稿</option>
+                    <option value="conversation">会話が盛んな投稿</option>
+                    <option value="viral">拡散型の投稿</option>
+                    <option value="small">小さな投稿</option>
+                  </select>
+                </div>
+                <div class="field-grid">
+                  <label><span>表示回数 <small>VIEWS</small></span><input name="views" type="number" min="1" value="100000" /></label>
+                  <label><span>いいね <small>LIKES</small></span><input name="likes" type="number" min="0" value="3200" /></label>
+                  <label><span>返信 <small>REPLIES</small></span><input name="replies" type="number" min="0" value="180" /></label>
+                  <label><span>リポスト <small>REPOSTS</small></span><input name="retweets" type="number" min="0" value="940" /></label>
+                  <label><span>引用 <small>QUOTES</small></span><input name="quotes" type="number" min="0" value="120" /></label>
+                </div>
+              </div>
+
+              <div id="url-inputs" hidden>
+                <label class="url-field" for="post-url"><span>公開投稿のURL</span><input id="post-url" type="url" placeholder="https://x.com/user/status/…" /></label>
+                <p class="input-help">公開カウントを FxTwitter → VxTwitter の順に取得します。入力内容は保存されません。</p>
+              </div>
+
+              <div class="divider"></div>
+
+              <div class="preset-row">
+                <label for="preset-select">重みプリセット</label>
+                <select id="preset-select"><option value="repo_demo">repo_demo — 2026公開デモ</option></select>
+              </div>
+              <p class="preset-note" id="preset-note">公開リポジトリに実在する唯一の2026年版デモ重みです。</p>
+
+              <div class="advanced-toggle">
+                <button type="button" id="advanced-button" aria-expanded="false"><span>＋</span> 仮定する確率・重みを調整</button>
+              </div>
+              <div id="advanced-panel" hidden>
+                <div class="range-field">
+                  <div><label for="dwell-p">滞在する確率（仮定）</label><output id="dwell-output">0%</output></div>
+                  <input id="dwell-p" type="range" min="0" max="1" value="0" step="0.01" />
+                </div>
+                <div id="weight-fields" class="weight-fields"></div>
+              </div>
+
+              <button class="calculate-button" type="submit"><span id="calculate-label">この数字で計算する</span><i>→</i></button>
+              <p class="form-error" id="form-error" role="alert" hidden></p>
+            </form>
+
+            <section class="result-panel" aria-live="polite" aria-busy="false">
+              <div class="panel-top">
+                <span class="step-label dark">OUTPUT / 02</span>
+                <span class="mode-pill" id="mode-pill">RATE MODE</span>
+              </div>
+
+              <div class="score-display">
+                <span>APPROXIMATE SCORE</span>
+                <strong id="score-value">0.03572</strong>
+                <p>公開カウントから求めた群集平均の近似値</p>
+              </div>
+
+              <div class="breakdown-head"><b>スコアの内訳</b><span>寄与度</span></div>
+              <div id="breakdown-list" class="breakdown-list"></div>
+
+              <div class="calculation-trace">
+                <p><span>CALCULATION TRACE</span><button type="button" id="copy-formula">式をコピー</button></p>
+                <code id="formula-output">(3,200 ÷ 100,000) × 1.0 + … = 0.03572</code>
+              </div>
+
+              <div class="result-note" id="result-note">
+                <span>!</span><p><b>これは実際の「おすすめ順位」ではありません。</b> 閲覧者ごとの予測を、公開カウントの割合で代用した学習用スコアです。</p>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section class="math-walkthrough">
+        <div class="section-shell">
+          <div class="section-heading split">
+            <div><p class="eyebrow light"><span></span> READ THE RESULT</p><h2>計算を、<br />3ステップで読む。</h2></div>
+            <p>シミュレーターの裏側で行っているのは、割る・掛ける・足すの3つだけです。複雑なのは、実物では確率をPhoenixが予測する点です。</p>
+          </div>
+          <div class="lesson-grid">
+            <article><span class="lesson-no">01</span><div class="lesson-icon">÷</div><h3>行動率にする</h3><p>投稿規模を揃えるため、行動数を表示回数で割ります。</p><code><b>3,200</b> likes ÷ <b>100,000</b> views<br /><em>= 0.032</em></code></article>
+            <article><span class="lesson-no">02</span><div class="lesson-icon">×</div><h3>重みを掛ける</h3><p>行動ごとの重要度を掛けて、スコアへの寄与を求めます。</p><code><b>0.032</b> probability × <b>1.0</b> weight<br /><em>= +0.032</em></code></article>
+            <article><span class="lesson-no">03</span><div class="lesson-icon">Σ</div><h3>すべて足す</h3><p>正・負の寄与を合計し、候補投稿の基礎スコアにします。</p><code><b>0.032</b> + 0.0009 + 0.00282<br /><em>= 0.03572</em></code></article>
+          </div>
+        </div>
+      </section>
+
+      <section id="pipeline" class="pipeline section-shell">
+        <div class="section-heading centered">
+          <p class="eyebrow"><span></span> FROM POSTS TO YOUR FEED</p>
+          <h2>1つのスコアだけでは、<br />フィードにならない。</h2>
+          <p>実際には、候補を集め、除外し、予測し、並べ替える長いパイプラインがあります。</p>
+        </div>
+
+        <div class="pipeline-map">
+          <div class="pipe-line" aria-hidden="true"></div>
+          <article class="pipe-card active"><span>01</span><div class="pipe-icon">⌁</div><h3>候補を集める</h3><p>フォロー中の投稿と、興味が近そうな投稿を数百万件から絞る。</p><small>THUNDER + RETRIEVAL</small></article>
+          <article class="pipe-card"><span>02</span><div class="pipe-icon">⌕</div><h3>除外する</h3><p>重複、ブロック、ミュート、既読、古い投稿などを取り除く。</p><small>PRE-SCORING FILTERS</small></article>
+          <article class="pipe-card"><span>03</span><div class="pipe-icon">✦</div><h3>行動を予測</h3><p>Phoenixが閲覧者ごとに「いいね」「返信」などの確率を予測。</p><small>PHOENIX RANKING</small></article>
+          <article class="pipe-card"><span>04</span><div class="pipe-icon">∑</div><h3>重み付き合計</h3><p>予測確率に重みを掛け、正・負のシグナルをひとつにまとめる。</p><small>WEIGHTED SCORE</small></article>
+          <article class="pipe-card"><span>05</span><div class="pipe-icon">≋</div><h3>並べて調整</h3><p>同じ著者の連投を弱め、安全性を再確認して上位を表示。</p><small>DIVERSITY + TOP-K</small></article>
+        </div>
+
+        <div class="phoenix-callout">
+          <div class="phoenix-visual" aria-hidden="true"><div class="ring r1"></div><div class="ring r2"></div><div class="core">P</div><span class="node n1"></span><span class="node n2"></span><span class="node n3"></span></div>
+          <div><p class="eyebrow light"><span></span> THE PREDICTION ENGINE</p><h3>Phoenixは、あなたの文脈を読む。</h3><p>実物の <code>P(action)</code> は投稿全体の平均ではありません。閲覧者の過去の行動シーケンスと候補投稿をTransformerに入力し、「この人が次に何をするか」を行動別に予測します。</p>
+            <ul><li><span>19+</span> 予測する行動タイプ</li><li><span>2 stages</span> 検索とランキング</li><li><span>per user</span> 閲覧者ごとの予測</li></ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="diversity-section">
+        <div class="section-shell diversity-grid">
+          <div class="diversity-copy">
+            <p class="eyebrow light"><span></span> AUTHOR DIVERSITY</p>
+            <h2>同じ人ばかりに、<br />ならない仕組み。</h2>
+            <p>基礎スコアが高くても、同じ著者の2件目、3件目には減衰係数が掛かります。スライダーで連投時の変化を確認できます。</p>
+            <label for="position-slider"><span>同じ著者の何件目？</span><output id="position-output">2件目</output></label>
+            <input id="position-slider" type="range" min="1" max="6" value="2" step="1" />
+            <div class="diversity-formula"><span>multiplier</span><code id="diversity-formula">(1 − 0.2) × 0.9¹ + 0.2 = <b>0.920</b></code></div>
+          </div>
+          <div class="feed-stack" id="feed-stack">
+            <div class="feed-card featured"><span class="avatar">A</span><div><b>@same_author</b><i>最初の投稿 · score × 1.000</i><p></p><p class="short"></p></div><strong>1</strong></div>
+            <div class="feed-card"><span class="avatar">A</span><div><b>@same_author</b><i id="feed-multiplier">2件目 · score × 0.920</i><p></p><p class="short"></p></div><strong id="feed-rank">2</strong></div>
+            <div class="feed-card muted"><span class="avatar alt">B</span><div><b>@another_author</b><i>別の著者 · 減衰なし</i><p></p><p class="short"></p></div><strong>↑</strong></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="limits" class="limits section-shell">
+        <div class="section-heading split dark-text">
+          <div><p class="eyebrow"><span></span> USE IT CORRECTLY</p><h2>わかることと、<br />わからないこと。</h2></div>
+          <p>公開コードは仕組みを理解する地図です。本番フィードを完全再現する答えではありません。</p>
+        </div>
+        <div class="limits-grid">
+          <article class="can"><div class="limit-head"><span>✓</span><h3>このラボでわかる</h3><small>CAN EXPLAIN</small></div><ul><li>公開スコア式の構造</li><li>各エンゲージメント率の寄与</li><li>重みを変えたときの感度</li><li>著者多様性の減衰イメージ</li><li>2026年版の処理フロー</li></ul></article>
+          <article class="cannot"><div class="limit-head"><span>×</span><h3>このラボではわからない</h3><small>CANNOT REPRODUCE</small></div><ul><li>実際の「おすすめ」順位</li><li>本番で使われる非公開の重み</li><li>あなた個人のPhoenix予測</li><li>非公開の閲覧・負シグナル</li><li>候補集合と正規化処理の全容</li></ul></article>
+        </div>
+        <div class="source-note"><span>OPEN SOURCE, CLEAR BOUNDARIES</span><p>このページは <a href="https://github.com/xai-org/x-algorithm" target="_blank" rel="noreferrer">xai-org/x-algorithm</a> の公開コードを学習目的で読み解き、公開カウントで一部を近似します。X Corp. / xAIの公式ツールではありません。</p></div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="section-shell footer-inner"><a class="brand inverted" href="#top"><span class="brand-mark">x∑</span><span><strong>xalgo</strong><small>LEARNING LAB</small></span></a><p>アルゴリズムを、ブラックボックスのままにしない。</p><a href="#top">ページ上部へ ↑</a></div>
+    </footer>
+    <script src="./scoring.js" defer></script>
+    <script src="./app.js" defer></script>
+  </body>
+</html>

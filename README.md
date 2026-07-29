@@ -19,7 +19,21 @@ pip install -r requirements.txt   # requests のみ
 
 ## 使い方
 
-### 1. URL からスコア計算 (X API 不使用)
+### 1. ブラウザで学ぶ（学習ラボ）
+
+**公開ページ:** https://hjosugi.github.io/xalgo/
+
+```bash
+python -m xalgo.web
+# http://127.0.0.1:8000 を開く
+```
+
+投稿の公開カウントを手入力するか、Xの投稿URLから取得して、行動率・重み・
+スコアへの寄与を画面で確認できます。候補取得からPhoenix予測、著者多様性までの
+処理フローも図解しています。ログインやデータ保存はなく、手入力モードの計算は
+ブラウザ内だけで完結します。
+
+### 2. URL からスコア計算 (X API 不使用)
 
 ```bash
 python -m xalgo.cli score "https://x.com/user/status/123456789"
@@ -37,18 +51,18 @@ X公式embed CDN（syndication）。X APIは使いませんが、各公開サー
   「1インプレッションあたり行動確率」に対応する形。
 - **raw モード** (views なし・2022年12月以前の投稿): log1p(count) の加重和。
 
-### 2. 重みプリセット (weights.json)
+### 3. 重みプリセット (weights.json)
 
 | preset | 内容 |
 |---|---|
-| `repo_demo` | 2026 `run_pipeline.py`に書かれたラベル上のデモ値。出力indexに既知の不整合あり |
-| `legacy_2023` | 2023-04-05 `twitter/the-algorithm-ml` Heavy Ranker重み（歴史比較専用） |
+| `repo_demo` | リポジトリ内に実在する唯一の公開数値 (run_pipeline.py) |
+| `legacy_2023` | 2023年 twitter/the-algorithm の Heavy Ranker 重み (比較用) |
 | `full_template` | 全22アクション網羅の編集用テンプレ |
 
 本番重みはfeature switch注入で非公開です。逆推定の計画は
 [`issues/001-weight-estimation.md`](issues/001-weight-estimation.md) を参照してください。
 
-### 3. 公開モデル契約を約68KBで監査
+### 4. 公開モデル契約を約68KBで監査
 
 ```bash
 python scripts/audit_model_contract.py
@@ -64,7 +78,7 @@ pinned releaseでは、root READMEの`256-dim/2-layer`に対しartifactは
 `--fail-on-drift`は既知不整合では失敗せず、LFS OID・model寸法・README・action順の
 新しい変更だけをexit 1で通知します。
 
-### 4. 上流変更の自動検知
+### 5. 上流変更の自動検知
 
 ```bash
 python -m xalgo.cli diff --since 2026-05-01
@@ -76,17 +90,16 @@ python -m xalgo.cli diff --since 2026-05-01
 していますが、その場合もcommit監視は継続し、PR APIが公開された時点から
 ファイル単位のPR検査が自動で有効になります。
 
-### 5. 分析 issue の一括登録
+### 6. 分析 issue の一括登録
 
 ```bash
-./issues/create_issues.sh <owner/repo>   # gh CLIで10本を冪等に登録
+./issues/create_issues.sh <owner/repo>   # gh CLIで7本を冪等に登録
 ```
 
 001 重み逆推定 / 002 Phoenix mini ローカル推論 / 003 Author Diversity /
-004 負シグナル / 005 取得信頼性 / 006 動画VQV / 007 追跡精度 /
-008 action index契約 / 009 artifact-doc drift / 010 viewer別feed評価。
+004 負シグナル / 005 取得信頼性 / 006 動画VQV / 007 追跡精度。
 
-### 6. 実投稿での検証
+### 7. 実投稿での検証
 
 ```bash
 python scripts/validate_popular.py            # 2026-07-20のスナップショット
@@ -98,7 +111,7 @@ python scripts/validate_popular.py --json > result.json
 してください。組み込み標本は第三者サイトXBeastの一時点のランキングであり、
 母集団を代表する検証セットではありません。
 
-### 7. 匿名化した実For You順位との比較
+### 8. 匿名化した実For You順位との比較
 
 ```bash
 python scripts/evaluate_feed_snapshot.py examples/feed_snapshot.example.csv
@@ -116,14 +129,21 @@ NDCG@K、Top-K overlapを計算します。credential列を拒否し、入力SHA
 python -m unittest discover -s tests -v
 ```
 
+### 取得バックエンドの監査
+
+```bash
+python scripts/audit_backends.py 123456789 987654321
+cat urls.txt | python scripts/audit_backends.py --stdin --json > backend-audit.json
+```
+
+3バックエンドを個別に呼び、成功率、成功時レイテンシ、各カウントの取得率、
+共通フィールドの相対差、標本内での推奨フォールバック順を出力します。
+
 ## ドキュメント
 
 - [`docs/algorithm-deep-dive.md`](docs/algorithm-deep-dive.md) — アルゴリズム徹底解説
-- [`docs/model-ai-ml-deep-dive.md`](docs/model-ai-ml-deep-dive.md) — AI/ML・Transformer・推薦モデル解説
-- [`docs/external-analysis-review.md`](docs/external-analysis-review.md) — 外部記事・GitHub repo・論文の比較検証
-- [`docs/model-validation-plan.md`](docs/model-validation-plan.md) — モデルと実投稿を検証する実験計画
-- [`docs/feed-snapshot-evaluation.md`](docs/feed-snapshot-evaluation.md) — 匿名化For You順位の評価方法
 - [`docs/validation-findings.md`](docs/validation-findings.md) — 実測検証レポート
+- [`docs/backend-audit.md`](docs/backend-audit.md) — 取得先の成功率・欠損・数値差
 
 ## 免責
 
