@@ -87,6 +87,7 @@ class TrackUpstreamTests(unittest.TestCase):
         before = """
 FAVORITE_WEIGHT = 1.0
 ACTIONS = ["favorite"]
+score_cache: dict[str, float]
 def score_candidate(value):
     return value * FAVORITE_WEIGHT
 """
@@ -94,6 +95,7 @@ def score_candidate(value):
 FAVORITE_WEIGHT = 2.0
 REPLY_WEIGHT = 0.5
 ACTIONS = ["favorite", "reply"]
+score_cache: dict[str, float]
 def score_candidate(value):
     return value * FAVORITE_WEIGHT + REPLY_WEIGHT
 """

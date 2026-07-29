@@ -211,6 +211,8 @@ def _python_structure(source: str) -> dict[str, set[str]]:
         elif isinstance(node, (ast.Assign, ast.AnnAssign)):
             targets = node.targets if isinstance(node, ast.Assign) else [node.target]
             value = node.value
+            if value is None:
+                continue
             for target in targets:
                 if isinstance(target, ast.Name) and STRUCTURAL_NAME_RE.search(
                     target.id

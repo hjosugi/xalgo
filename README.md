@@ -1,5 +1,7 @@
 # xalgo — X「おすすめ」スコア推定・上流追跡ツール
 
+Version 0.1.0
+
 [xai-org/x-algorithm](https://github.com/xai-org/x-algorithm) の
 2026-05-15版（commit `0bfc2795d3`）を読み解き、投稿URLから公開カウントだけで
 近似スコアを計算します。X APIのキー、Xログイン、Cookieは不要です。
