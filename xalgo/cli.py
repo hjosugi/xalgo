@@ -45,7 +45,13 @@ def cmd_score(args: argparse.Namespace) -> int:
     if args.vqv_p is not None and post.has_video:
         extra_p["vqv"] = args.vqv_p
 
-    result = score_post(post, weights, preset_name, extra_p)
+    result = score_post(
+        post,
+        weights,
+        preset_name,
+        extra_p,
+        negative_scores_offset=cfg.get("negative_scores_offset", 0.0),
+    )
 
     if args.json:
         print(

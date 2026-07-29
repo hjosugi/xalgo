@@ -35,6 +35,34 @@ COUNT_FOR_WEIGHT = {
     "quote": "quotes",
 }
 
+# These lists intentionally mirror ``ScoringWeights::from_params`` in the
+# pinned upstream ranking_scorer.rs.  Continuous dwell-time weights contribute
+# to the combined score but are not included in its normalization sums.
+POSITIVE_NORMALIZATION_ACTIONS = (
+    "favorite",
+    "reply",
+    "retweet",
+    "photo_expand",
+    "click",
+    "profile_click",
+    "vqv",
+    "share",
+    "share_via_dm",
+    "share_via_copy_link",
+    "dwell",
+    "quote",
+    "quoted_click",
+    "quoted_vqv",
+    "follow_author",
+)
+NEGATIVE_NORMALIZATION_ACTIONS = (
+    "not_interested",
+    "block_author",
+    "mute_author",
+    "report",
+    "not_dwelled",
+)
+
 
 @dataclass
 class ScoreResult:
@@ -60,14 +88,56 @@ def _rate(count: Optional[int], views: int) -> Optional[float]:
     return min(count / views, 1.0)
 
 
+def normalization_sums(weights: Dict[str, float]) -> tuple[float, float, float]:
+    """Return upstream ``positive_sum``, ``negative_sum`` and ``total_sum``.
+
+    Negative action weights are expected to be negative.  Upstream negates
+    their sum, so ``negative_sum`` is normally a positive magnitude.
+    """
+    for action, weight in weights.items():
+        if not math.isfinite(weight):
+            raise ValueError(f"Weight for '{action}' must be finite")
+    positive_sum = sum(
+        weights.get(action, 0.0) for action in POSITIVE_NORMALIZATION_ACTIONS
+    )
+    negative_sum = -sum(
+        weights.get(action, 0.0) for action in NEGATIVE_NORMALIZATION_ACTIONS
+    )
+    return positive_sum, negative_sum, positive_sum + negative_sum
+
+
+def offset_score(
+    combined_score: float,
+    weights: Dict[str, float],
+    negative_scores_offset: float,
+) -> float:
+    """Apply the pinned upstream negative-score offset contract."""
+    if not math.isfinite(combined_score):
+        raise ValueError("combined_score must be finite")
+    if not math.isfinite(negative_scores_offset):
+        raise ValueError("negative_scores_offset must be finite")
+
+    _, negative_sum, total_sum = normalization_sums(weights)
+    if total_sum == 0.0:
+        return max(combined_score, 0.0)
+    if combined_score < 0.0:
+        return (combined_score + negative_sum) / total_sum * negative_scores_offset
+    return combined_score + negative_scores_offset
+
+
 def score_post(
     post: PostData,
     weights: Dict[str, float],
     preset_name: str,
     extra_p: Optional[Dict[str, float]] = None,
+    negative_scores_offset: Optional[float] = None,
 ) -> ScoreResult:
     """extra_p lets the caller inject probabilities that public data lacks,
-    e.g. --dwell-p 0.3 for P(dwell)."""
+    e.g. --dwell-p 0.3 for P(dwell).
+
+    Pass ``negative_scores_offset`` to apply the upstream offset in rate mode.
+    ``None`` preserves the historical library behavior for direct callers.
+    """
     warnings = list(post.warnings)
     extra_p = extra_p or {}
     for action, probability in extra_p.items():
@@ -92,7 +162,12 @@ def score_post(
                 if r is not None:
                     p_hat[wkey] = r
         breakdown = {k: weights[k] * p for k, p in p_hat.items()}
-        score = sum(breakdown.values())
+        combined_score = sum(breakdown.values())
+        score = (
+            offset_score(combined_score, weights, negative_scores_offset)
+            if negative_scores_offset is not None
+            else combined_score
+        )
         missing = [k for k in weights if k not in p_hat and weights[k] != 0.0]
         if missing:
             warnings.append(

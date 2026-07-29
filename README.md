@@ -123,6 +123,35 @@ NDCG@K、Top-K overlapを計算します。credential列を拒否し、入力SHA
 出力します。CSV仕様と限界は
 [`docs/feed-snapshot-evaluation.md`](docs/feed-snapshot-evaluation.md)を参照してください。
 
+### 8. Author Diversityの感度分析
+
+```bash
+python scripts/simulate_author_diversity.py
+python scripts/simulate_author_diversity.py \
+  --author-scores 1.0,0.94,0.88 --competitor-scores 0.98,0.92,0.86 \
+  --decays 0.5,0.7,0.9 --floors 0,0.2,0.4 --json
+```
+
+同一著者の複数候補を一つのfeed responseへ入れる`burst`と、responseを分けて
+著者カウンタが毎回0へ戻る`distributed`を比較します。順位差に加え、n件目が
+無補正時と同じスコアを保つために必要なbase score上昇率を出力します。
+入力値は仮定であり、投稿間隔そのものの因果効果は示しません。
+
+### 9. ネガティブシグナルの感度分析
+
+```bash
+python scripts/analyze_negative_signals.py \
+  --unit-negative-weights --negative-scores-offset 0.1
+python scripts/analyze_negative_signals.py --preset full_template \
+  --weight not_interested=-1 --weight report=-10 \
+  --negative-scores-offset 0.1 --json
+```
+
+上流`ranking_scorer.rs`のpositive/negative/total sumと`offset_score()`を再現し、
+5種類の負シグナル確率をsweepします。本番の重みとoffsetは非公開なので、
+`--unit-negative-weights`は無次元の仮定にすぎません。指定しない場合は
+`weights.json`を使い、負重みがすべて0なら明示的なoverrideを要求します。
+
 ## テスト
 
 ```bash
@@ -144,6 +173,7 @@ cat urls.txt | python scripts/audit_backends.py --stdin --json > backend-audit.j
 - [`docs/algorithm-deep-dive.md`](docs/algorithm-deep-dive.md) — アルゴリズム徹底解説
 - [`docs/validation-findings.md`](docs/validation-findings.md) — 実測検証レポート
 - [`docs/backend-audit.md`](docs/backend-audit.md) — 取得先の成功率・欠損・数値差
+- [`docs/sensitivity-analysis.md`](docs/sensitivity-analysis.md) — Author Diversity・負シグナル感度分析
 
 ## 免責
 

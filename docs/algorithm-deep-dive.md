@@ -161,10 +161,15 @@ VQV/quoted VQVには動画長条件があり、その閾値も非公開である
 
 合成後は次が適用される。
 
-1. `normalize_score`: 呼び出しはあるが実装は公開スナップショットにない。
-2. author diversity: 同一著者のn件目へ`(1-floor) × decay^n + floor`を乗算。
-3. OON補正: out-of-network候補へ状況別係数を乗算。係数値は非公開。
-4. visibility、既視聴、重複、会話dedup、ブロック・ミュート等のfilter。
+1. negative offset: weighted sumが負なら正負の重み合計とoffsetで圧縮し、
+   非負ならoffsetを加算する。重みとoffset値は非公開。
+2. `normalize_score`: 呼び出しはあるが実装は公開スナップショットにない。
+3. author diversity: 同一著者のn件目へ`(1-floor) × decay^n + floor`を乗算。
+4. OON補正: out-of-network候補へ状況別係数を乗算。係数値は非公開。
+5. visibility、既視聴、重複、会話dedup、ブロック・ミュート等のfilter。
+
+式の挙動を仮定値で再現するツールと限界は
+[`sensitivity-analysis.md`](sensitivity-analysis.md)を参照。
 
 ## 公開物にある二つの不整合
 
