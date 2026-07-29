@@ -14,6 +14,7 @@ Exit codes:
 from __future__ import annotations
 
 import argparse
+import ast
 import json
 import os
 import re
@@ -30,17 +31,26 @@ ROOT = Path(__file__).resolve().parent.parent
 STATE_FILE = ROOT / "state" / "last_commit.txt"
 LAST_CHECK_FILE = ROOT / "state" / "last_checked_at.txt"
 REPORT_FILE = ROOT / "report.md"
+CORPUS_FILE = ROOT / "state" / "upstream_tracking_corpus.json"
 
 # A path match is enough to flag a change.  The regular expression below is
 # only used to extract a compact set of especially interesting patch lines.
 ALGORITHM_PATHS = (
     "README.md",
     "candidate-pipeline/",
+    "home-mixer/candidate_hydrators/",
     "home-mixer/candidate_pipeline/",
     "home-mixer/filters/",
+    "home-mixer/query_hydrators/",
     "home-mixer/scorers/",
     "home-mixer/selectors/",
     "home-mixer/sources/",
+    "grox/classifiers/content/banger_initial_screen.py",
+    "grox/classifiers/content/reply_ranking.py",
+    "grox/embedder/",
+    "grox/plans/plan_initial_banger.py",
+    "grox/plans/plan_reply_ranking.py",
+    "grox/tasks/task_rank_replies.py",
     "phoenix/grok.py",
     "phoenix/README.md",
     "phoenix/artifacts/oss-phoenix-artifacts.zip",
@@ -51,10 +61,56 @@ ALGORITHM_PATHS = (
     "phoenix/run_retrieval.py",
     "phoenix/runners.py",
 )
+GROX_POLICY_TERMS = (
+    "post_safety",
+    "safety_ptos",
+    "spam",
+)
 SIGNAL_RE = re.compile(
     r"(weight|decay|floor|offset|action|score|rank|filter|candidate|attention|top[_-]?k)",
     re.IGNORECASE,
 )
+STRUCTURAL_NAME_RE = re.compile(
+    r"(weight|decay|floor|offset|action|score|rank|filter|candidate|attention|top[_-]?k)",
+    re.IGNORECASE,
+)
+PY_ASSIGN_RE = re.compile(r"^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.+)$")
+PY_FUNCTION_RE = re.compile(r"^\s*(?:async\s+)?def\s+([A-Za-z_][A-Za-z0-9_]*)\s*\(")
+RUST_CONST_RE = re.compile(
+    r"^\s*(?:pub\s+)?(?:const|static)\s+([A-Za-z_][A-Za-z0-9_]*)"
+    r"(?:\s*:[^=]+)?\s*=\s*(.+?);?\s*$"
+)
+RUST_FUNCTION_RE = re.compile(
+    r"^\s*(?:pub(?:\([^)]*\))?\s+)?(?:async\s+)?fn\s+"
+    r"([A-Za-z_][A-Za-z0-9_]*)\s*\("
+)
+RUST_FIELD_RE = re.compile(
+    r"^\s*(?:pub(?:\([^)]*\))?\s+)?([A-Za-z_][A-Za-z0-9_]*)\s*:\s*[^:]+,?\s*$"
+)
+ACTION_NAMES = {
+    "favorite",
+    "reply",
+    "retweet",
+    "photo_expand",
+    "click",
+    "profile_click",
+    "vqv",
+    "share",
+    "share_via_dm",
+    "share_via_copy_link",
+    "dwell",
+    "quote",
+    "quoted_click",
+    "quoted_vqv",
+    "cont_dwell_time",
+    "cont_click_dwell_time",
+    "follow_author",
+    "not_interested",
+    "block_author",
+    "mute_author",
+    "report",
+    "not_dwelled",
+}
 
 
 def _headers() -> dict[str, str]:
@@ -82,6 +138,26 @@ def _read_text(path: Path) -> str | None:
     return value or None
 
 
+def _classify_path(path: str) -> str:
+    if path.startswith("grox/") and any(term in path for term in GROX_POLICY_TERMS):
+        return "policy"
+    if _is_algorithm_path(path):
+        return "ranking"
+    return "unrelated"
+
+
+def _subsystem(path: str) -> str:
+    if path.startswith("grox/"):
+        return "grox"
+    if path.startswith("phoenix/"):
+        return "phoenix"
+    if path.startswith("home-mixer/"):
+        return "home-mixer"
+    if path.startswith("candidate-pipeline/"):
+        return "candidate-pipeline"
+    return "repository"
+
+
 def _is_algorithm_path(path: str) -> bool:
     return any(path == prefix or path.startswith(prefix) for prefix in ALGORITHM_PATHS)
 
@@ -98,20 +174,223 @@ def _interesting_lines(patch: str, limit: int = 40) -> list[str]:
     return lines
 
 
+def _normalize_expression(value: str) -> str:
+    return re.sub(r"\s+", " ", value.strip().rstrip(";"))
+
+
+def _python_structure(source: str) -> dict[str, set[str]]:
+    result = {
+        "assignments": set(),
+        "functions": set(),
+        "fields": set(),
+        "actions": set(),
+        "formulas": set(),
+    }
+    try:
+        tree = ast.parse(source)
+    except SyntaxError:
+        for line in source.splitlines():
+            assignment = PY_ASSIGN_RE.match(line)
+            if assignment and STRUCTURAL_NAME_RE.search(assignment.group(1)):
+                result["assignments"].add(
+                    f"{assignment.group(1)}={_normalize_expression(assignment.group(2))}"
+                )
+            function = PY_FUNCTION_RE.match(line)
+            if function and STRUCTURAL_NAME_RE.search(function.group(1)):
+                result["functions"].add(function.group(1))
+            if STRUCTURAL_NAME_RE.search(line) and any(
+                operator in line for operator in ("+", "-", "*", "/", "**")
+            ):
+                result["formulas"].add(_normalize_expression(line))
+        return result
+
+    for node in ast.walk(tree):
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            if STRUCTURAL_NAME_RE.search(node.name):
+                result["functions"].add(node.name)
+        elif isinstance(node, (ast.Assign, ast.AnnAssign)):
+            targets = node.targets if isinstance(node, ast.Assign) else [node.target]
+            value = node.value
+            for target in targets:
+                if isinstance(target, ast.Name) and STRUCTURAL_NAME_RE.search(
+                    target.id
+                ):
+                    result["assignments"].add(
+                        f"{target.id}={ast.dump(value, include_attributes=False)}"
+                    )
+        elif isinstance(node, ast.Constant) and isinstance(node.value, str):
+            if node.value.lower() in ACTION_NAMES:
+                result["actions"].add(node.value.lower())
+        elif isinstance(node, (ast.BinOp, ast.Compare)):
+            dumped = ast.dump(node, include_attributes=False)
+            if STRUCTURAL_NAME_RE.search(dumped):
+                result["formulas"].add(dumped)
+    return result
+
+
+def _rust_structure(source: str) -> dict[str, set[str]]:
+    result = {
+        "assignments": set(),
+        "functions": set(),
+        "fields": set(),
+        "actions": set(),
+        "formulas": set(),
+    }
+    for line in source.splitlines():
+        constant = RUST_CONST_RE.match(line)
+        if constant and STRUCTURAL_NAME_RE.search(constant.group(1)):
+            result["assignments"].add(
+                f"{constant.group(1)}={_normalize_expression(constant.group(2))}"
+            )
+        function = RUST_FUNCTION_RE.match(line)
+        if function and STRUCTURAL_NAME_RE.search(function.group(1)):
+            result["functions"].add(function.group(1))
+        field = RUST_FIELD_RE.match(line)
+        if field and STRUCTURAL_NAME_RE.search(field.group(1)):
+            result["fields"].add(field.group(1))
+        for token in re.findall(r"[A-Za-z_][A-Za-z0-9_]*", line):
+            if token.lower() in ACTION_NAMES:
+                result["actions"].add(token.lower())
+        if STRUCTURAL_NAME_RE.search(line) and any(
+            operator in line for operator in ("+", "-", "*", "/")
+        ):
+            result["formulas"].add(_normalize_expression(line))
+    return result
+
+
+def extract_source_structure(path: str, source: str) -> dict[str, set[str]]:
+    if path.endswith(".py"):
+        return _python_structure(source)
+    if path.endswith(".rs"):
+        return _rust_structure(source)
+    return {
+        "assignments": set(),
+        "functions": set(),
+        "fields": set(),
+        "actions": set(),
+        "formulas": set(),
+    }
+
+
+def diff_source_structure(path: str, before: str, after: str) -> dict[str, dict]:
+    previous = extract_source_structure(path, before)
+    current = extract_source_structure(path, after)
+    return {
+        kind: {
+            "added": sorted(current[kind] - previous[kind]),
+            "removed": sorted(previous[kind] - current[kind]),
+        }
+        for kind in previous
+        if current[kind] != previous[kind]
+    }
+
+
+def _structured_patch_changes(path: str, patch: str) -> dict[str, dict]:
+    removed = "\n".join(
+        line[1:]
+        for line in patch.splitlines()
+        if line.startswith("-") and not line.startswith("---")
+    )
+    added = "\n".join(
+        line[1:]
+        for line in patch.splitlines()
+        if line.startswith("+") and not line.startswith("+++")
+    )
+    return diff_source_structure(path, removed, added)
+
+
 def _analyze_files(files: Iterable[dict]) -> list[dict]:
     hits = []
     for changed in files:
         path = changed["filename"]
-        if not _is_algorithm_path(path):
+        category = _classify_path(path)
+        if category == "unrelated":
             continue
         hits.append(
             {
                 "path": path,
                 "status": changed.get("status", "modified"),
+                "category": category,
+                "subsystem": _subsystem(path),
                 "signal_lines": _interesting_lines(changed.get("patch", "")),
+                "structural_changes": _structured_patch_changes(
+                    path, changed.get("patch", "")
+                ),
             }
         )
     return hits
+
+
+def evaluate_corpus(path: Path = CORPUS_FILE) -> dict:
+    corpus = json.loads(path.read_text(encoding="utf-8"))
+    cases = corpus["cases"]
+    relevant = {"ranking", "policy"}
+    true_positive = false_positive = false_negative = true_negative = 0
+    correct_category = 0
+    errors = []
+    confusion: dict[str, dict[str, int]] = {}
+
+    for case in cases:
+        expected = case["expected_category"]
+        predicted = _classify_path(case["path"])
+        confusion.setdefault(expected, {})
+        confusion[expected][predicted] = confusion[expected].get(predicted, 0) + 1
+        if expected == predicted:
+            correct_category += 1
+
+        expected_relevant = expected in relevant
+        predicted_relevant = predicted in relevant
+        if expected_relevant and predicted_relevant:
+            true_positive += 1
+        elif not expected_relevant and predicted_relevant:
+            false_positive += 1
+        elif expected_relevant and not predicted_relevant:
+            false_negative += 1
+        else:
+            true_negative += 1
+        if expected != predicted:
+            errors.append(
+                {
+                    "id": case["id"],
+                    "path": case["path"],
+                    "expected": expected,
+                    "predicted": predicted,
+                }
+            )
+
+    precision = (
+        true_positive / (true_positive + false_positive)
+        if true_positive + false_positive
+        else None
+    )
+    recall = (
+        true_positive / (true_positive + false_negative)
+        if true_positive + false_negative
+        else None
+    )
+    f1 = (
+        2 * precision * recall / (precision + recall)
+        if precision is not None and recall is not None and precision + recall
+        else None
+    )
+    return {
+        "corpus": str(path),
+        "source_repository": corpus["source_repository"],
+        "reviewed_at": corpus["reviewed_at"],
+        "cases": len(cases),
+        "category_accuracy": correct_category / len(cases) if cases else None,
+        "precision": precision,
+        "recall": recall,
+        "f1": f1,
+        "confusion": confusion,
+        "counts": {
+            "true_positive": true_positive,
+            "false_positive": false_positive,
+            "false_negative": false_negative,
+            "true_negative": true_negative,
+        },
+        "errors": errors,
+    }
 
 
 def analyze_commit(sha: str) -> dict:
@@ -185,10 +464,31 @@ def merged_prs(since_iso: str) -> tuple[list[dict], str]:
                 "title": pr["title"],
                 "merged_at": merged_at,
                 "url": pr["html_url"],
+                "merge_commit_sha": pr.get("merge_commit_sha"),
                 "algorithm_files": _analyze_files(_list_pr_files(pr["number"])),
             }
         )
     return results, "available"
+
+
+def _deduplicate_pull_requests(
+    commits: Iterable[dict], pull_requests: Iterable[dict]
+) -> tuple[list[dict], list[dict]]:
+    """Drop PR records whose merge commit is already represented as a commit."""
+    commit_shas = {
+        commit.get("full_sha") for commit in commits if commit.get("full_sha")
+    }
+    kept = []
+    duplicates = []
+    for pull_request in pull_requests:
+        if (
+            pull_request.get("merge_commit_sha")
+            and pull_request["merge_commit_sha"] in commit_shas
+        ):
+            duplicates.append(pull_request)
+        else:
+            kept.append(pull_request)
+    return kept, duplicates
 
 
 def _resolve_since(explicit_since: str | None, now: datetime) -> str:
@@ -217,17 +517,32 @@ def build_report(since: str | None = None, now: datetime | None = None) -> dict:
     last_sha = _read_text(STATE_FILE) if since is None else None
     new_shas = _list_new_commits(since_iso, last_sha)
     commits = [analyze_commit(sha) for sha in new_shas]
-    prs, pr_api_status = merged_prs(since_iso)
+    inspected_prs, pr_api_status = merged_prs(since_iso)
+    prs, duplicate_prs = _deduplicate_pull_requests(commits, inspected_prs)
     return {
         "checked_at": now.isoformat(),
         "since": since_iso,
         "upstream_head": new_shas[0] if new_shas else last_sha,
         "new_commit_count": len(commits),
         "algorithm_commits": [c for c in commits if c["algorithm_files"]],
-        "merged_pr_count": len(prs),
+        "merged_pr_count": len(inspected_prs),
         "algorithm_pull_requests": [pr for pr in prs if pr["algorithm_files"]],
+        "deduplicated_pull_request_count": len(duplicate_prs),
+        "category_file_counts": _category_file_counts(commits, prs),
         "pull_request_api": pr_api_status,
     }
+
+
+def _category_file_counts(
+    commits: Iterable[dict], pull_requests: Iterable[dict]
+) -> dict[str, int]:
+    counts = {"ranking": 0, "policy": 0}
+    for change in [*commits, *pull_requests]:
+        for changed_file in change.get("algorithm_files", []):
+            category = changed_file.get("category", "ranking")
+            if category in counts:
+                counts[category] += 1
+    return counts
 
 
 def _persist_state(report: dict) -> None:
@@ -253,9 +568,19 @@ def run(since: str | None = None, as_json: bool = False) -> int:
 def _append_change(lines: list[str], change: dict, heading: str) -> None:
     lines.extend([f"### {heading}", "", change["url"], ""])
     for changed_file in change["algorithm_files"]:
-        lines.append(f"- **{changed_file['path']}** ({changed_file['status']})")
+        label = f"{changed_file.get('category', 'ranking')}/{changed_file.get('subsystem', 'unknown')}"
+        lines.append(
+            f"- **{changed_file['path']}** ({changed_file['status']}; {label})"
+        )
         for signal_line in changed_file["signal_lines"]:
             lines.append(f"  - `{signal_line[:240]}`")
+        for kind, values in changed_file.get("structural_changes", {}).items():
+            if values["added"]:
+                lines.append(f"  - {kind} added: `{', '.join(values['added'])[:240]}`")
+            if values["removed"]:
+                lines.append(
+                    f"  - {kind} removed: `{', '.join(values['removed'])[:240]}`"
+                )
     lines.append("")
 
 
@@ -266,20 +591,23 @@ def _write_markdown(report: dict) -> None:
         f"Window start: `{report['since']}`",
         f"New commits on main: {report['new_commit_count']}",
         f"Merged PRs inspected: {report['merged_pr_count']}",
+        f"Merged PRs deduplicated against commits: {report.get('deduplicated_pull_request_count', 0)}",
         f"Pull-request API: {report['pull_request_api']}",
+        f"Ranking files: {report.get('category_file_counts', {}).get('ranking', 0)}",
+        f"Grox policy files: {report.get('category_file_counts', {}).get('policy', 0)}",
         "",
     ]
     if not report["algorithm_commits"] and not report["algorithm_pull_requests"]:
         lines.extend(["No ranking-relevant changes.", ""])
 
     if report["algorithm_commits"]:
-        lines.extend(["## Ranking-relevant commits", ""])
+        lines.extend(["## Tracked commits", ""])
         for commit in report["algorithm_commits"]:
             heading = f"`{commit['sha']}` {commit['message']} ({commit['date']})"
             _append_change(lines, commit, heading)
 
     if report["algorithm_pull_requests"]:
-        lines.extend(["## Ranking-relevant merged pull requests", ""])
+        lines.extend(["## Tracked merged pull requests", ""])
         for pr in report["algorithm_pull_requests"]:
             heading = f"PR #{pr['number']} {pr['title']} ({pr['merged_at']})"
             _append_change(lines, pr, heading)
@@ -293,7 +621,36 @@ def main(argv: list[str] | None = None) -> int:
         "--since", help="ISO date/timestamp; defaults to saved check time"
     )
     parser.add_argument("--json", action="store_true")
+    parser.add_argument(
+        "--evaluate-corpus",
+        action="store_true",
+        help="evaluate path classification against the reviewed regression corpus",
+    )
+    parser.add_argument(
+        "--corpus",
+        type=Path,
+        default=CORPUS_FILE,
+        help="classification corpus used with --evaluate-corpus",
+    )
     args = parser.parse_args(argv)
+    if args.evaluate_corpus:
+        report = evaluate_corpus(args.corpus)
+        if args.json:
+            print(json.dumps(report, ensure_ascii=False, indent=2))
+        else:
+            print(
+                f"cases={report['cases']} "
+                f"precision={report['precision']:.3f} "
+                f"recall={report['recall']:.3f} "
+                f"f1={report['f1']:.3f} "
+                f"category_accuracy={report['category_accuracy']:.3f}"
+            )
+            for error in report["errors"]:
+                print(
+                    f"- {error['path']}: expected={error['expected']} "
+                    f"predicted={error['predicted']}"
+                )
+        return 0
     return run(since=args.since, as_json=args.json)
 
 

@@ -1,9 +1,12 @@
 import unittest
+from pathlib import Path
 from unittest.mock import patch
 
 import requests
 
 from scripts import track_upstream
+
+ROOT = Path(__file__).resolve().parent.parent
 
 
 class TrackUpstreamTests(unittest.TestCase):
@@ -26,6 +29,14 @@ class TrackUpstreamTests(unittest.TestCase):
             track_upstream._is_algorithm_path(
                 "phoenix/artifacts/oss-phoenix-artifacts.zip"
             )
+        )
+        self.assertEqual(
+            track_upstream._classify_path("grox/classifiers/content/spam.py"),
+            "policy",
+        )
+        self.assertEqual(
+            track_upstream._classify_path("grox/data_loaders/kafka_loader.py"),
+            "unrelated",
         )
 
     @patch.object(track_upstream, "_get")
@@ -61,6 +72,74 @@ class TrackUpstreamTests(unittest.TestCase):
         pulls, status = track_upstream.merged_prs("2026-07-19T00:00:00Z")
         self.assertEqual(pulls, [])
         self.assertIn("404", status)
+
+    def test_reviewed_corpus_has_no_classification_regression(self):
+        result = track_upstream.evaluate_corpus(
+            ROOT / "state" / "upstream_tracking_corpus.json"
+        )
+        self.assertEqual(result["cases"], 25)
+        self.assertEqual(result["precision"], 1.0)
+        self.assertEqual(result["recall"], 1.0)
+        self.assertEqual(result["category_accuracy"], 1.0)
+        self.assertEqual(result["errors"], [])
+
+    def test_python_ast_diff_tracks_weights_actions_and_formula(self):
+        before = """
+FAVORITE_WEIGHT = 1.0
+ACTIONS = ["favorite"]
+def score_candidate(value):
+    return value * FAVORITE_WEIGHT
+"""
+        after = """
+FAVORITE_WEIGHT = 2.0
+REPLY_WEIGHT = 0.5
+ACTIONS = ["favorite", "reply"]
+def score_candidate(value):
+    return value * FAVORITE_WEIGHT + REPLY_WEIGHT
+"""
+        changes = track_upstream.diff_source_structure(
+            "phoenix/ranker.py", before, after
+        )
+        self.assertIn("assignments", changes)
+        self.assertIn("reply", changes["actions"]["added"])
+        self.assertTrue(changes["formulas"]["added"])
+
+    def test_rust_structure_diff_tracks_constants_and_action_fields(self):
+        before = """
+const FAVORITE_WEIGHT: f64 = 1.0;
+struct ScoringWeights {
+    favorite: f64,
+}
+fn compute_score() -> f64 { FAVORITE_WEIGHT }
+"""
+        after = """
+const FAVORITE_WEIGHT: f64 = 2.0;
+const REPLY_WEIGHT: f64 = 0.5;
+struct ScoringWeights {
+    favorite: f64,
+    reply: f64,
+}
+fn compute_score() -> f64 { FAVORITE_WEIGHT + REPLY_WEIGHT }
+"""
+        changes = track_upstream.diff_source_structure(
+            "home-mixer/scorers/ranking_scorer.rs", before, after
+        )
+        self.assertIn("assignments", changes)
+        self.assertIn("reply", changes["actions"]["added"])
+        self.assertTrue(changes["formulas"]["added"])
+
+    def test_merge_commit_is_not_reported_twice_as_pr(self):
+        sha = "a" * 40
+        commits = [{"full_sha": sha}]
+        pull_requests = [
+            {"number": 1, "merge_commit_sha": sha},
+            {"number": 2, "merge_commit_sha": "b" * 40},
+        ]
+        kept, duplicates = track_upstream._deduplicate_pull_requests(
+            commits, pull_requests
+        )
+        self.assertEqual([item["number"] for item in kept], [2])
+        self.assertEqual([item["number"] for item in duplicates], [1])
 
 
 if __name__ == "__main__":

@@ -1,0 +1,183 @@
+{
+  "schema_version": 1,
+  "source_repository": "xai-org/x-algorithm",
+  "reviewed_at": "2026-07-29",
+  "method": "Representative files from the three public main commits were manually classified by their direct effect on recommendation ranking, Grox safety/spam policy, or neither.",
+  "cases": [
+    {
+      "id": "ranking-weighted-scorer",
+      "source_commit": "e414c171ed68",
+      "path": "home-mixer/scorers/ranking_scorer.rs",
+      "expected_category": "ranking",
+      "rationale": "Combines Phoenix action probabilities into the weighted score."
+    },
+    {
+      "id": "ranking-selector",
+      "source_commit": "e414c171ed68",
+      "path": "home-mixer/selectors/top_k_score_selector.rs",
+      "expected_category": "ranking",
+      "rationale": "Selects the final top-K candidates by score."
+    },
+    {
+      "id": "ranking-phoenix-model",
+      "source_commit": "e414c171ed68",
+      "path": "phoenix/recsys_model.py",
+      "expected_category": "ranking",
+      "rationale": "Defines the Phoenix ranking model."
+    },
+    {
+      "id": "ranking-phoenix-demo",
+      "source_commit": "e414c171ed68",
+      "path": "phoenix/run_pipeline.py",
+      "expected_category": "ranking",
+      "rationale": "Maps model action heads into the public scoring demo."
+    },
+    {
+      "id": "ranking-candidate-interface",
+      "source_commit": "e414c171ed68",
+      "path": "candidate-pipeline/scorer.rs",
+      "expected_category": "ranking",
+      "rationale": "Defines the scorer interface used by candidate pipelines."
+    },
+    {
+      "id": "ranking-action-history",
+      "source_commit": "e414c171ed68",
+      "path": "home-mixer/query_hydrators/user_action_seq_query_hydrator.rs",
+      "expected_category": "ranking",
+      "rationale": "Builds personalized action-history model inputs."
+    },
+    {
+      "id": "ranking-video-duration",
+      "source_commit": "e414c171ed68",
+      "path": "home-mixer/candidate_hydrators/video_duration_candidate_hydrator.rs",
+      "expected_category": "ranking",
+      "rationale": "Supplies the video-duration feature used by VQV weighting."
+    },
+    {
+      "id": "ranking-grox-replies",
+      "source_commit": "e414c171ed68",
+      "path": "grox/classifiers/content/reply_ranking.py",
+      "expected_category": "ranking",
+      "rationale": "Produces a Grox reply-ranking result."
+    },
+    {
+      "id": "ranking-grox-reply-task",
+      "source_commit": "e414c171ed68",
+      "path": "grox/tasks/task_rank_replies.py",
+      "expected_category": "ranking",
+      "rationale": "Runs the Grox reply-ranking task."
+    },
+    {
+      "id": "ranking-artifact",
+      "source_commit": "0bfc2795d308",
+      "path": "phoenix/artifacts/oss-phoenix-artifacts.zip",
+      "expected_category": "ranking",
+      "rationale": "Contains the released retrieval and ranker parameters."
+    },
+    {
+      "id": "ranking-contract-readme",
+      "source_commit": "e414c171ed68",
+      "path": "README.md",
+      "expected_category": "ranking",
+      "rationale": "The release README records the public model contract."
+    },
+    {
+      "id": "policy-spam-classifier",
+      "source_commit": "e414c171ed68",
+      "path": "grox/classifiers/content/spam.py",
+      "expected_category": "policy",
+      "rationale": "Classifies spam rather than producing the Home Mixer rank score."
+    },
+    {
+      "id": "policy-safety-ptos",
+      "source_commit": "e414c171ed68",
+      "path": "grox/classifiers/content/safety_ptos.py",
+      "expected_category": "policy",
+      "rationale": "Classifies PTOS safety policy."
+    },
+    {
+      "id": "policy-post-safety",
+      "source_commit": "e414c171ed68",
+      "path": "grox/classifiers/content/post_safety_screen_deluxe.py",
+      "expected_category": "policy",
+      "rationale": "Screens posts for safety policy."
+    },
+    {
+      "id": "policy-spam-task",
+      "source_commit": "e414c171ed68",
+      "path": "grox/tasks/task_spam_detection.py",
+      "expected_category": "policy",
+      "rationale": "Runs spam detection."
+    },
+    {
+      "id": "policy-ptos-task",
+      "source_commit": "e414c171ed68",
+      "path": "grox/tasks/task_safety_ptos_policy.py",
+      "expected_category": "policy",
+      "rationale": "Applies the PTOS policy result."
+    },
+    {
+      "id": "policy-spam-plan",
+      "source_commit": "e414c171ed68",
+      "path": "grox/plans/plan_spam_comment.py",
+      "expected_category": "policy",
+      "rationale": "Orchestrates spam-comment policy."
+    },
+    {
+      "id": "unrelated-gitattributes",
+      "source_commit": "e414c171ed68",
+      "path": ".gitattributes",
+      "expected_category": "unrelated",
+      "rationale": "Git LFS routing has no direct ranking or policy semantics."
+    },
+    {
+      "id": "unrelated-grox-kafka-loader",
+      "source_commit": "e414c171ed68",
+      "path": "grox/data_loaders/kafka_loader.py",
+      "expected_category": "unrelated",
+      "rationale": "Generic transport code."
+    },
+    {
+      "id": "unrelated-grox-utils",
+      "source_commit": "e414c171ed68",
+      "path": "grox/lib/utils.py",
+      "expected_category": "unrelated",
+      "rationale": "Generic Grox utilities."
+    },
+    {
+      "id": "unrelated-media-task",
+      "source_commit": "e414c171ed68",
+      "path": "grox/tasks/task_media.py",
+      "expected_category": "unrelated",
+      "rationale": "Media-loading task without direct scoring or policy logic."
+    },
+    {
+      "id": "unrelated-client-events",
+      "source_commit": "e414c171ed68",
+      "path": "home-mixer/side_effects/client_events_kafka_side_effect.rs",
+      "expected_category": "unrelated",
+      "rationale": "Post-response telemetry side effect."
+    },
+    {
+      "id": "unrelated-thunder-kafka",
+      "source_commit": "aaa167b3de8a",
+      "path": "thunder/kafka/utils.rs",
+      "expected_category": "unrelated",
+      "rationale": "Generic candidate-store transport helper."
+    },
+    {
+      "id": "unrelated-license",
+      "source_commit": "aaa167b3de8a",
+      "path": "LICENSE",
+      "expected_category": "unrelated",
+      "rationale": "Repository licensing text."
+    },
+    {
+      "id": "unrelated-code-of-conduct",
+      "source_commit": "aaa167b3de8a",
+      "path": "CODE_OF_CONDUCT.md",
+      "expected_category": "unrelated",
+      "rationale": "Community policy, not recommendation policy."
+    }
+  ]
+}

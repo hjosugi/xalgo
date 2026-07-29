@@ -82,22 +82,25 @@ pinned releaseでは、root READMEの`256-dim/2-layer`に対しartifactは
 
 ```bash
 python -m xalgo.cli diff --since 2026-05-01
+python scripts/track_upstream.py --evaluate-corpus --json
 ```
 
 `.github/workflows/track-upstream.yml` は毎日06:00 JSTに実行されます。
 `main` のcommitと、利用可能な場合はmerged PRの変更ファイルを調べ、ランキングに
-関係する変更があればIssueを自動起票します。上流は現在PR一覧REST APIを404に
-していますが、その場合もcommit監視は継続し、PR APIが公開された時点から
-ファイル単位のPR検査が自動で有効になります。
+関係する変更とGroxのspam/PTOS policy変更を区別してIssueを自動起票します。
+上流は現在PR一覧REST APIを404にしていますが、その場合もcommit監視は継続します。
+PR APIが公開された時点からファイル単位のPR検査とmerge commitの重複抑止が有効になります。
+25件の人手分類コーパスでpath判定のprecision/recallを回帰検証できます。
 
 ### 6. 分析 issue の一括登録
 
 ```bash
-./issues/create_issues.sh <owner/repo>   # gh CLIで7本を冪等に登録
+./issues/create_issues.sh <owner/repo>   # gh CLIで10本を冪等に登録
 ```
 
 001 重み逆推定 / 002 Phoenix mini ローカル推論 / 003 Author Diversity /
-004 負シグナル / 005 取得信頼性 / 006 動画VQV / 007 追跡精度。
+004 負シグナル / 005 取得信頼性 / 006 動画VQV / 007 追跡精度 /
+008 action index契約 / 009 artifact-doc drift / 010 viewer別feed評価。
 
 ### 7. 実投稿での検証
 
@@ -123,7 +126,7 @@ NDCG@K、Top-K overlapを計算します。credential列を拒否し、入力SHA
 出力します。CSV仕様と限界は
 [`docs/feed-snapshot-evaluation.md`](docs/feed-snapshot-evaluation.md)を参照してください。
 
-### 8. Author Diversityの感度分析
+### 9. Author Diversityの感度分析
 
 ```bash
 python scripts/simulate_author_diversity.py
@@ -137,7 +140,7 @@ python scripts/simulate_author_diversity.py \
 無補正時と同じスコアを保つために必要なbase score上昇率を出力します。
 入力値は仮定であり、投稿間隔そのものの因果効果は示しません。
 
-### 9. ネガティブシグナルの感度分析
+### 10. ネガティブシグナルの感度分析
 
 ```bash
 python scripts/analyze_negative_signals.py \
@@ -152,13 +155,7 @@ python scripts/analyze_negative_signals.py --preset full_template \
 `--unit-negative-weights`は無次元の仮定にすぎません。指定しない場合は
 `weights.json`を使い、負重みがすべて0なら明示的なoverrideを要求します。
 
-## テスト
-
-```bash
-python -m unittest discover -s tests -v
-```
-
-### 取得バックエンドの監査
+### 11. 取得バックエンドの監査
 
 ```bash
 python scripts/audit_backends.py 123456789 987654321
@@ -168,12 +165,23 @@ cat urls.txt | python scripts/audit_backends.py --stdin --json > backend-audit.j
 3バックエンドを個別に呼び、成功率、成功時レイテンシ、各カウントの取得率、
 共通フィールドの相対差、標本内での推奨フォールバック順を出力します。
 
+## テスト
+
+```bash
+python -m unittest discover -s tests -v
+```
+
 ## ドキュメント
 
 - [`docs/algorithm-deep-dive.md`](docs/algorithm-deep-dive.md) — アルゴリズム徹底解説
+- [`docs/model-ai-ml-deep-dive.md`](docs/model-ai-ml-deep-dive.md) — AI/ML・Transformer・推薦モデル解説
+- [`docs/external-analysis-review.md`](docs/external-analysis-review.md) — 外部記事・GitHub repo・論文の比較検証
+- [`docs/model-validation-plan.md`](docs/model-validation-plan.md) — モデルと実投稿を検証する実験計画
+- [`docs/feed-snapshot-evaluation.md`](docs/feed-snapshot-evaluation.md) — 匿名化For You順位の評価方法
 - [`docs/validation-findings.md`](docs/validation-findings.md) — 実測検証レポート
 - [`docs/backend-audit.md`](docs/backend-audit.md) — 取得先の成功率・欠損・数値差
 - [`docs/sensitivity-analysis.md`](docs/sensitivity-analysis.md) — Author Diversity・負シグナル感度分析
+- [`docs/upstream-tracking-evaluation.md`](docs/upstream-tracking-evaluation.md) — 追跡精度・構造差分・重複抑止
 
 ## 免責
 
