@@ -42,6 +42,26 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          set +e
+          python scripts/audit_model_contract.py \
+            --ref main --json --fail-on-drift > model-contract.json
+          audit_code=$?
+          set -e
+          if [ "$audit_code" -eq 1 ]; then
+            echo "::warning::Phoenix public model contract changed from the recorded baseline"
+          elif [ "$audit_code" -ne 0 ]; then
+            echo "::warning::Phoenix model-contract audit could not complete"
+          fi
+          if [ -s model-contract.json ]; then
+            {
+              echo
+              echo "## Public model contract at upstream main"
+              echo
+              echo '```json'
+              cat model-contract.json
+              echo '```'
+            } >> report.md
+          fi
           gh label create upstream-change \
             --color D93F0B \
             --description "Detected change in xai-org/x-algorithm" 2>/dev/null || true

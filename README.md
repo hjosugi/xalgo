@@ -62,7 +62,23 @@ X公式embed CDN（syndication）。X APIは使いませんが、各公開サー
 本番重みはfeature switch注入で非公開です。逆推定の計画は
 [`issues/001-weight-estimation.md`](issues/001-weight-estimation.md) を参照してください。
 
-### 4. 上流変更の自動検知
+### 4. 公開モデル契約を約68KBで監査
+
+```bash
+python scripts/audit_model_contract.py
+python scripts/audit_model_contract.py --ref main --json
+python scripts/audit_model_contract.py --ref main --fail-on-drift
+```
+
+約2.9GBのPhoenix artifactを丸ごと落とさず、Git LFSのRange requestで内部configだけを
+読みます。READMEとmodel実体、デモのaction indexと出力head順を比較できます。現在の
+pinned releaseでは、root READMEの`256-dim/2-layer`に対しartifactは
+`128-dim/4-layer`、デモのaction indexも`runners.py`の出力順と一致しません。
+既知状態は[`state/model_contract_baseline.json`](state/model_contract_baseline.json)に固定し、
+`--fail-on-drift`は既知不整合では失敗せず、LFS OID・model寸法・README・action順の
+新しい変更だけをexit 1で通知します。
+
+### 5. 上流変更の自動検知
 
 ```bash
 python -m xalgo.cli diff --since 2026-05-01
@@ -74,7 +90,7 @@ python -m xalgo.cli diff --since 2026-05-01
 していますが、その場合もcommit監視は継続し、PR APIが公開された時点から
 ファイル単位のPR検査が自動で有効になります。
 
-### 5. 分析 issue の一括登録
+### 6. 分析 issue の一括登録
 
 ```bash
 ./issues/create_issues.sh <owner/repo>   # gh CLIで7本を冪等に登録
@@ -83,7 +99,7 @@ python -m xalgo.cli diff --since 2026-05-01
 001 重み逆推定 / 002 Phoenix mini ローカル推論 / 003 Author Diversity /
 004 負シグナル / 005 取得信頼性 / 006 動画VQV / 007 追跡精度。
 
-### 6. 実投稿での検証
+### 7. 実投稿での検証
 
 ```bash
 python scripts/validate_popular.py            # 2026-07-20のスナップショット
@@ -94,6 +110,18 @@ python scripts/validate_popular.py --json > result.json
 実測結果と解釈は [`docs/validation-findings.md`](docs/validation-findings.md) を参照
 してください。組み込み標本は第三者サイトXBeastの一時点のランキングであり、
 母集団を代表する検証セットではありません。
+
+### 8. 匿名化した実For You順位との比較
+
+```bash
+python scripts/evaluate_feed_snapshot.py examples/feed_snapshot.example.csv
+python scripts/evaluate_feed_snapshot.py my-anonymized-feed.csv --k 5,10,20 --json
+```
+
+同一viewer・同一refresh内で、代理スコア順と実表示順のSpearman、Kendall tau-b、
+NDCG@K、Top-K overlapを計算します。credential列を拒否し、入力SHA-256と層別結果も
+出力します。CSV仕様と限界は
+[`docs/feed-snapshot-evaluation.md`](docs/feed-snapshot-evaluation.md)を参照してください。
 
 ## テスト
 

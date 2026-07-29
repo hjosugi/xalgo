@@ -20,6 +20,13 @@ class TrackUpstreamTests(unittest.TestCase):
         self.assertEqual(len(result), 1)
         self.assertEqual(result[0]["path"], files[0]["filename"])
         self.assertEqual(len(result[0]["signal_lines"]), 2)
+        self.assertTrue(track_upstream._is_algorithm_path("README.md"))
+        self.assertTrue(track_upstream._is_algorithm_path("phoenix/README.md"))
+        self.assertTrue(
+            track_upstream._is_algorithm_path(
+                "phoenix/artifacts/oss-phoenix-artifacts.zip"
+            )
+        )
 
     @patch.object(track_upstream, "_get")
     def test_merged_pr_files_are_inspected(self, get):
