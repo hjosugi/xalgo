@@ -1,4 +1,4 @@
-# Author Diversity・負シグナル感度分析
+# Author Diversity・VQV・負シグナル感度分析
 
 公開コードに式はありますが、係数は`xai_feature_switches`から注入されるため
 本番値は公開されていません。ここで扱う結果は、指定した仮定に対する再現可能な
@@ -33,6 +33,45 @@ python scripts/simulate_author_diversity.py \
 `break_even_score_uplift = 1 / multiplier - 1`は、減衰後も無補正時と同じスコアを
 保つために必要なbase score上昇率です。competitor候補とPhoenix予測自体は固定するため、
 投稿時刻による候補集合や予測値の変化はモデル化していません。
+
+## VQV duration gate
+
+固定commit `0bfc2795d3`の`home-mixer/scorers/weighted_scorer.rs`は、VQV予測へ
+`VQV_WEIGHT`を掛ける前に次の条件を適用します。
+
+```text
+eligible = video_duration_ms > MIN_VIDEO_DURATION_MS
+vqv contribution = eligible ? VQV_WEIGHT * P(VQV) : 0
+```
+
+比較は`>=`ではなく厳密な`>`です。`MIN_VIDEO_DURATION_MS`、`VQV_WEIGHT`、
+viewer別`P(VQV)`は公開されていません。URLスコアでは、これらを仮説値として明示できます。
+FxTwitterの`duration`は秒単位なので取得時にmsへ変換します。他のfallback backendでは
+動画長を取得できない場合があり、その場合は閾値を満たしたと仮定せずVQVを0扱いします。
+
+```bash
+python -m xalgo.cli score <URL> --preset full_template \
+  --weight vqv=1 --vqv-p 0.1 --vqv-min-duration-ms 10000
+python scripts/analyze_vqv_threshold.py \
+  --durations-ms 2000,5000,10000,30000,60000 \
+  --thresholds-ms 0,5000,10000,30000 --vqv-p 0.1 --vqv-weight 1
+```
+
+`scripts/analyze_vqv_threshold.py`は各閾値について、動画ごとのeligible判定と
+`vqv_weight × vqv_p`の寄与を出します。`--snapshots`へ次のCSVを渡すと、同じ投稿の
+最初と最後の観測から`views_delta / elapsed_hours`を計算し、eligible/ineligible群の
+平均・中央値を併記します。
+
+```csv
+post_id,video_duration_ms,observed_at,views
+anonymized-a,5000,2026-07-01T00:00:00Z,1000
+anonymized-a,5000,2026-07-01T06:00:00Z,1360
+```
+
+各投稿には異なる時刻の2行以上が必要です。cookie、token、session等を含む列は拒否します。
+例の[`examples/vqv_snapshots.example.csv`](../examples/vqv_snapshots.example.csv)は
+入出力確認用の合成データで、実測結果ではありません。JSON出力には入力とtoolのSHA-256が
+入り、同じ入力・引数から再生成できます。
 
 ## Negative score offset
 
@@ -69,7 +108,9 @@ python scripts/analyze_negative_signals.py \
 ## 解釈上の限界
 
 - Phoenix確率はviewer、履歴、候補集合ごとに変わり、公開countからは直接得られない。
-- author decay、floor、負重み、offsetの本番値は非公開。
+- author decay、floor、VQV閾値・重み、負重み、offsetの本番値は非公開。
+- 公開view増加は露出後の観測値であり、動画長以外のauthor、topic、投稿時刻、
+  candidate selection、exposureが交絡する。閾値前後の群差は本番閾値や因果効果を特定しない。
 - `normalize_score()`の実装は公開スナップショットにないため、この段階は再現しない。
 - responseを分けても同じ候補集合・同じ予測値になるという保証はない。
 - 感度分析は相関や因果効果の推定ではなく、式の挙動を確認するためのもの。

@@ -5,7 +5,7 @@ import xalgo
 
 class VersionTests(unittest.TestCase):
     def test_release_version(self):
-        self.assertEqual(xalgo.__version__, "0.1.0")
+        self.assertEqual(xalgo.__version__, "0.1.1")
 
 
 if __name__ == "__main__":

@@ -3,6 +3,7 @@
 Usage:
   python -m xalgo.cli score <post-url> [--preset repo_demo] [--json]
                                        [--dwell-p 0.3] [--vqv-p 0.1]
+                                       [--vqv-min-duration-ms 10000]
                                        [--weight vqv=1.0]
   python -m xalgo.cli diff  [--since 2026-05-01] [--json]
 """
@@ -42,8 +43,17 @@ def cmd_score(args: argparse.Namespace) -> int:
     extra_p = {}
     if args.dwell_p is not None:
         extra_p["dwell"] = args.dwell_p
-    if args.vqv_p is not None and post.has_video:
-        extra_p["vqv"] = args.vqv_p
+    if args.vqv_min_duration_ms is not None and args.vqv_p is None:
+        raise ValueError("--vqv-min-duration-ms requires --vqv-p")
+    if args.vqv_min_duration_ms is not None and args.vqv_min_duration_ms < 0:
+        raise ValueError("--vqv-min-duration-ms must be non-negative")
+    if args.vqv_p is not None:
+        if post.has_video:
+            extra_p["vqv"] = args.vqv_p
+        else:
+            post.warnings.append(
+                "VQV probability ignored because no video was detected"
+            )
 
     result = score_post(
         post,
@@ -51,6 +61,7 @@ def cmd_score(args: argparse.Namespace) -> int:
         preset_name,
         extra_p,
         negative_scores_offset=cfg.get("negative_scores_offset", 0.0),
+        vqv_min_duration_ms=args.vqv_min_duration_ms,
     )
 
     if args.json:
@@ -106,6 +117,15 @@ def main() -> int:
     sc.add_argument("--dwell-p", type=float, default=None, help="assumed P(dwell)")
     sc.add_argument(
         "--vqv-p", type=float, default=None, help="assumed P(video quality view)"
+    )
+    sc.add_argument(
+        "--vqv-min-duration-ms",
+        type=int,
+        default=None,
+        help=(
+            "hypothetical unpublished MIN_VIDEO_DURATION_MS; VQV applies only "
+            "when the fetched duration is strictly greater"
+        ),
     )
     sc.add_argument(
         "--weight",

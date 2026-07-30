@@ -1,0 +1,7 @@
+post_id,video_duration_ms,observed_at,views
+synthetic-short,5000,2026-07-01T00:00:00Z,1000
+synthetic-short,5000,2026-07-01T06:00:00Z,1360
+synthetic-boundary,10000,2026-07-01T00:00:00Z,1000
+synthetic-boundary,10000,2026-07-01T06:00:00Z,1480
+synthetic-long,30000,2026-07-01T00:00:00Z,1000
+synthetic-long,30000,2026-07-01T06:00:00Z,1660

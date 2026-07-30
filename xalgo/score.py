@@ -125,21 +125,46 @@ def offset_score(
     return combined_score + negative_scores_offset
 
 
+def vqv_weight_eligibility(
+    video_duration_ms: Optional[int],
+    min_video_duration_ms: int,
+    vqv_weight: float,
+) -> float:
+    """Mirror the upstream strict VQV duration gate for a threshold hypothesis.
+
+    The production value of ``MIN_VIDEO_DURATION_MS`` is unpublished.  Callers
+    must therefore supply an explicit hypothetical threshold rather than
+    treating this helper as a production-configuration lookup.
+    """
+    if min_video_duration_ms < 0:
+        raise ValueError("min_video_duration_ms must be non-negative")
+    if not math.isfinite(vqv_weight):
+        raise ValueError("vqv_weight must be finite")
+    if video_duration_ms is None:
+        return 0.0
+    if video_duration_ms < 0:
+        raise ValueError("video_duration_ms must be non-negative")
+    return vqv_weight if video_duration_ms > min_video_duration_ms else 0.0
+
+
 def score_post(
     post: PostData,
     weights: Dict[str, float],
     preset_name: str,
     extra_p: Optional[Dict[str, float]] = None,
     negative_scores_offset: Optional[float] = None,
+    vqv_min_duration_ms: Optional[int] = None,
 ) -> ScoreResult:
     """extra_p lets the caller inject probabilities that public data lacks,
     e.g. --dwell-p 0.3 for P(dwell).
 
     Pass ``negative_scores_offset`` to apply the upstream offset in rate mode.
     ``None`` preserves the historical library behavior for direct callers.
+    Pass a hypothetical ``vqv_min_duration_ms`` to reproduce the upstream
+    strict ``video_duration_ms > MIN_VIDEO_DURATION_MS`` eligibility gate.
     """
     warnings = list(post.warnings)
-    extra_p = extra_p or {}
+    extra_p = dict(extra_p or {})
     for action, probability in extra_p.items():
         if not math.isfinite(probability) or not 0.0 <= probability <= 1.0:
             raise ValueError(f"Probability for '{action}' must be between 0 and 1")
@@ -148,6 +173,36 @@ def score_post(
         raise KeyError(
             f"No weight configured for injected actions: {', '.join(unknown)}"
         )
+
+    if "vqv" in extra_p:
+        if vqv_min_duration_ms is None:
+            warnings.append(
+                "VQV probability injected without a duration gate; production "
+                "MIN_VIDEO_DURATION_MS is unpublished"
+            )
+        elif (
+            vqv_weight_eligibility(post.video_duration_ms, vqv_min_duration_ms, 1.0)
+            == 0.0
+        ):
+            del extra_p["vqv"]
+            if post.video_duration_ms is None:
+                warnings.append(
+                    "VQV probability treated as 0: video duration is unavailable, "
+                    f"so eligibility for the hypothetical {vqv_min_duration_ms} ms "
+                    "threshold cannot be established"
+                )
+            else:
+                warnings.append(
+                    "VQV probability treated as 0: video duration "
+                    f"{post.video_duration_ms} ms is not greater than the "
+                    f"hypothetical {vqv_min_duration_ms} ms threshold"
+                )
+        else:
+            warnings.append(
+                "VQV eligibility uses hypothetical "
+                f"MIN_VIDEO_DURATION_MS={vqv_min_duration_ms}; the production "
+                "value is unpublished"
+            )
 
     if post.views and post.views > 0:
         mode = "rate"

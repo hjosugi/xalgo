@@ -2,7 +2,11 @@ import math
 import unittest
 
 from xalgo.fetch import PostData
-from xalgo.score import author_diversity_multiplier, score_post
+from xalgo.score import (
+    author_diversity_multiplier,
+    score_post,
+    vqv_weight_eligibility,
+)
 
 
 class ScoreTests(unittest.TestCase):
@@ -36,11 +40,54 @@ class ScoreTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             author_diversity_multiplier(-1, 0.9, 0.2)
 
+    def test_vqv_duration_gate_is_strict(self):
+        self.assertEqual(vqv_weight_eligibility(None, 10_000, 2.0), 0.0)
+        self.assertEqual(vqv_weight_eligibility(10_000, 10_000, 2.0), 0.0)
+        self.assertEqual(vqv_weight_eligibility(10_001, 10_000, 2.0), 2.0)
+        with self.assertRaises(ValueError):
+            vqv_weight_eligibility(10_000, -1, 2.0)
+
+    def test_vqv_probability_respects_hypothetical_duration_gate(self):
+        weights = {"favorite": 1.0, "vqv": 2.0}
+        boundary = score_post(
+            PostData(
+                status_id="1",
+                likes=0,
+                views=100,
+                has_video=True,
+                video_duration_ms=10_000,
+            ),
+            weights,
+            "test",
+            {"vqv": 0.25},
+            vqv_min_duration_ms=10_000,
+        )
+        eligible = score_post(
+            PostData(
+                status_id="2",
+                likes=0,
+                views=100,
+                has_video=True,
+                video_duration_ms=10_001,
+            ),
+            weights,
+            "test",
+            {"vqv": 0.25},
+            vqv_min_duration_ms=10_000,
+        )
+        self.assertNotIn("vqv", boundary.p_hat)
+        self.assertAlmostEqual(boundary.score, 0.0)
+        self.assertAlmostEqual(eligible.p_hat["vqv"], 0.25)
+        self.assertAlmostEqual(eligible.score, 0.5)
+        self.assertTrue(any("hypothetical" in item for item in eligible.warnings))
+
     def test_historical_and_demo_presets_are_labeled(self):
         post = PostData(status_id="1", likes=1, views=10)
         demo = score_post(post, {"favorite": 1.0}, "repo_demo")
         legacy = score_post(post, {"favorite": 0.5}, "legacy_2023")
-        self.assertTrue(any("not a verified Phoenix score" in item for item in demo.warnings))
+        self.assertTrue(
+            any("not a verified Phoenix score" in item for item in demo.warnings)
+        )
         self.assertTrue(any("2023-04-05" in item for item in legacy.warnings))
 
 

@@ -1,6 +1,6 @@
 # xalgo — X「おすすめ」スコア推定・上流追跡ツール
 
-Version 0.1.0
+Version 0.1.1
 
 [xai-org/x-algorithm](https://github.com/xai-org/x-algorithm) の
 2026-05-15版（commit `0bfc2795d3`）を読み解き、投稿URLから公開カウントだけで
@@ -42,7 +42,8 @@ python -m xalgo.cli score "https://x.com/user/status/123456789"
 python -m xalgo.cli score <URL> --preset legacy_2023 --json
 python -m xalgo.cli score <URL> --dwell-p 0.3               # 非公開シグナルを仮定注入
 python -m xalgo.cli score <URL> --preset full_template \
-  --weight vqv=1.0 --vqv-p 0.1                              # 動画感度分析
+  --weight vqv=1.0 --vqv-p 0.1 \
+  --vqv-min-duration-ms 10000                               # 動画感度分析
 ```
 
 取得バックエンド（フォールバック順）: FxTwitter → VxTwitter →
@@ -157,7 +158,23 @@ python scripts/analyze_negative_signals.py --preset full_template \
 `--unit-negative-weights`は無次元の仮定にすぎません。指定しない場合は
 `weights.json`を使い、負重みがすべて0なら明示的なoverrideを要求します。
 
-### 11. 取得バックエンドの監査
+### 11. 動画 VQV 閾値の感度分析
+
+```bash
+python scripts/analyze_vqv_threshold.py \
+  --durations-ms 2000,5000,10000,30000 \
+  --thresholds-ms 0,5000,10000,30000 --vqv-p 0.1 --vqv-weight 1
+python scripts/analyze_vqv_threshold.py \
+  --snapshots examples/vqv_snapshots.example.csv --json
+```
+
+上流の厳密な`video_duration_ms > MIN_VIDEO_DURATION_MS`条件を、複数の閾値仮説で
+sweepします。繰り返しsnapshot CSVを渡すと、動画長で分けたviews/hourも比較できます。
+本番閾値・VQV重みは非公開で、公開view増加は露出後の観測値なので、差があっても本番閾値や
+因果効果を特定したことにはなりません。詳細は
+[`docs/sensitivity-analysis.md`](docs/sensitivity-analysis.md)を参照してください。
+
+### 12. 取得バックエンドの監査
 
 ```bash
 python scripts/audit_backends.py 123456789 987654321
@@ -182,7 +199,7 @@ python -m unittest discover -s tests -v
 - [`docs/feed-snapshot-evaluation.md`](docs/feed-snapshot-evaluation.md) — 匿名化For You順位の評価方法
 - [`docs/validation-findings.md`](docs/validation-findings.md) — 実測検証レポート
 - [`docs/backend-audit.md`](docs/backend-audit.md) — 取得先の成功率・欠損・数値差
-- [`docs/sensitivity-analysis.md`](docs/sensitivity-analysis.md) — Author Diversity・負シグナル感度分析
+- [`docs/sensitivity-analysis.md`](docs/sensitivity-analysis.md) — Author Diversity・VQV・負シグナル感度分析
 - [`docs/upstream-tracking-evaluation.md`](docs/upstream-tracking-evaluation.md) — 追跡精度・構造差分・重複抑止
 
 ## 免責

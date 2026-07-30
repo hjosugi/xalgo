@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.1.1 — 2026-07-30
+
+### Added
+
+- Hypothetical VQV duration-threshold sweep with explicit probability and
+  weight assumptions.
+- Repeated video snapshot analysis with credential-column rejection,
+  observational growth splits, and input/tool provenance hashes.
+
+### Changed
+
+- URL scoring can apply the upstream strict video-duration eligibility gate
+  through `--vqv-min-duration-ms`.
+- Missing video duration is treated conservatively when a threshold hypothesis
+  is supplied, with the unpublished production values called out explicitly.
+
 ## 0.1.0 — 2026-07-29
 
 Initial research release.
