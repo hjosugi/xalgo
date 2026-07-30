@@ -172,10 +172,16 @@ python scripts/analyze_vqv_threshold.py \
   --thresholds-ms 0,5000,10000,30000 --vqv-p 0.1 --vqv-weight 1
 python scripts/analyze_vqv_threshold.py \
   --snapshots examples/vqv_snapshots.example.csv --json
+python scripts/analyze_vqv_threshold.py \
+  --backend-receipt state/backend-audits/snapshot-01.json \
+  --backend-receipt state/backend-audits/snapshot-02.json \
+  --output state/vqv/analysis-current.json --json
 ```
 
 上流の厳密な`video_duration_ms > MIN_VIDEO_DURATION_MS`条件を、複数の閾値仮説で
 sweepします。繰り返しsnapshot CSVを渡すと、動画長で分けたviews/hourも比較できます。
+同じcohortのbackend監査receiptを2個以上渡すと、FxTwitterの公開動画長・view countを
+検証済みreceiptから直接抽出できます。
 本番閾値・VQV重みは非公開で、公開view増加は露出後の観測値なので、差があっても本番閾値や
 因果効果を特定したことにはなりません。詳細は
 [`docs/sensitivity-analysis.md`](docs/sensitivity-analysis.md)を参照してください。
@@ -185,10 +191,18 @@ sweepします。繰り返しsnapshot CSVを渡すと、動画長で分けたvie
 ```bash
 python scripts/audit_backends.py 123456789 987654321
 cat urls.txt | python scripts/audit_backends.py --stdin --json > backend-audit.json
+python scripts/audit_backends.py \
+  --input-file examples/backend_audit_cohort.txt \
+  --min-posts 100 \
+  --receipt state/backend-audits/snapshot-02.json
+python scripts/analyze_backend_snapshots.py state/backend-audits/snapshot-*.json
 ```
 
 3バックエンドを個別に呼び、成功率、成功時レイテンシ、各カウントの取得率、
 共通フィールドの相対差、標本内での推奨フォールバック順を出力します。
+`--receipt`は本文・著者・URL・cookie・credentialを保存せず、同一cohortの繰り返し観測に
+必要な公開countとprovenanceだけを残します。120件を異なる3 UTC時間帯で測定し、
+現行fallback順を維持、request timeoutを監査時の12秒から5秒へ短縮しました。
 
 ## テスト
 

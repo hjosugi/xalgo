@@ -1,0 +1,284 @@
+{
+  "schema_version": 1,
+  "cohort": {
+    "post_count": 120,
+    "ordered_status_ids_sha256": "f5029a47d466dbfb6c31f75bceee8e43243a9f254c29a15ee423e56a86323760",
+    "profile": {
+      "observable_posts": 107,
+      "unavailable_on_all_backends": 13,
+      "video_posts": 21,
+      "non_video_posts": 86,
+      "created_date_counts": {
+        "2025-12-30": 1,
+        "2026-02-24": 1,
+        "2026-05-14": 3,
+        "2026-05-15": 94,
+        "2026-07-20": 7,
+        "2026-07-21": 1
+      }
+    }
+  },
+  "snapshots": {
+    "count": 3,
+    "started_at": [
+      "2026-07-30T07:27:32.594312+00:00",
+      "2026-07-30T08:00:15.024570+00:00",
+      "2026-07-30T10:29:20.656917+00:00"
+    ],
+    "distinct_utc_hours": [
+      "2026-07-30T07+0000",
+      "2026-07-30T08+0000",
+      "2026-07-30T10+0000"
+    ],
+    "span_seconds": 10908.062605,
+    "receipts": [
+      {
+        "path": "state/backend-audits/snapshot-2026-07-30-01.json",
+        "sha256": "610017931a9bbe0d993b0ca0d118cba799d4c5799ca34bbf159c0f0800e18ac5"
+      },
+      {
+        "path": "state/backend-audits/snapshot-2026-07-30-02.json",
+        "sha256": "26258af8b2257da0b08a57064422bc460b2a9342ef11875f4a8440b9b5922a9b"
+      },
+      {
+        "path": "state/backend-audits/snapshot-2026-07-30-03.json",
+        "sha256": "5843f102891f1e9d11ba4ab79c4339c8942885ef63e9ff1fe5aae8e3e8a10036"
+      }
+    ],
+    "per_snapshot_recommended_order": [
+      {
+        "started_at": "2026-07-30T07:27:32.594312+00:00",
+        "recommended_order": [
+          "fxtwitter",
+          "vxtwitter",
+          "syndication"
+        ]
+      },
+      {
+        "started_at": "2026-07-30T08:00:15.024570+00:00",
+        "recommended_order": [
+          "fxtwitter",
+          "vxtwitter",
+          "syndication"
+        ]
+      },
+      {
+        "started_at": "2026-07-30T10:29:20.656917+00:00",
+        "recommended_order": [
+          "fxtwitter",
+          "vxtwitter",
+          "syndication"
+        ]
+      }
+    ]
+  },
+  "completion_criteria": {
+    "same_ordered_cohort": true,
+    "at_least_100_posts": true,
+    "mixed_media_types_observed": true,
+    "at_least_3_created_dates": true,
+    "at_least_3_snapshots": true,
+    "at_least_3_distinct_utc_hours": true,
+    "met": true
+  },
+  "backends": {
+    "fxtwitter": {
+      "attempts": 360,
+      "successes": 321,
+      "success_rate": 0.8916666666666667,
+      "success_rate_wilson_95": [
+        0.8553292667869178,
+        0.9197335886502723
+      ],
+      "mean_success_latency_ms": 327.4163617288282,
+      "median_success_latency_ms": 354.9475460022222,
+      "p95_success_latency_ms": 457.71283899375703,
+      "max_attempt_latency_ms": 1586.837866998394,
+      "timeout_failure_count": 0,
+      "field_coverage": {
+        "likes": {
+          "count": 321,
+          "rate": 0.8916666666666667
+        },
+        "retweets": {
+          "count": 321,
+          "rate": 0.8916666666666667
+        },
+        "replies": {
+          "count": 321,
+          "rate": 0.8916666666666667
+        },
+        "quotes": {
+          "count": 0,
+          "rate": 0.0
+        },
+        "bookmarks": {
+          "count": 321,
+          "rate": 0.8916666666666667
+        },
+        "views": {
+          "count": 321,
+          "rate": 0.8916666666666667
+        }
+      },
+      "failure_classes": {
+        "HTTPError": 39
+      }
+    },
+    "syndication": {
+      "attempts": 360,
+      "successes": 318,
+      "success_rate": 0.8833333333333333,
+      "success_rate_wilson_95": [
+        0.8460528614897193,
+        0.9125192948956157
+      ],
+      "mean_success_latency_ms": 387.67966549343294,
+      "median_success_latency_ms": 339.0780714980792,
+      "p95_success_latency_ms": 658.5520736960461,
+      "max_attempt_latency_ms": 955.9234519983875,
+      "timeout_failure_count": 0,
+      "field_coverage": {
+        "likes": {
+          "count": 318,
+          "rate": 0.8833333333333333
+        },
+        "retweets": {
+          "count": 0,
+          "rate": 0.0
+        },
+        "replies": {
+          "count": 318,
+          "rate": 0.8833333333333333
+        },
+        "quotes": {
+          "count": 0,
+          "rate": 0.0
+        },
+        "bookmarks": {
+          "count": 0,
+          "rate": 0.0
+        },
+        "views": {
+          "count": 0,
+          "rate": 0.0
+        }
+      },
+      "failure_classes": {
+        "LookupError": 42
+      }
+    },
+    "vxtwitter": {
+      "attempts": 360,
+      "successes": 321,
+      "success_rate": 0.8916666666666667,
+      "success_rate_wilson_95": [
+        0.8553292667869178,
+        0.9197335886502723
+      ],
+      "mean_success_latency_ms": 101.5401395266521,
+      "median_success_latency_ms": 80.88338399829809,
+      "p95_success_latency_ms": 202.71628300542943,
+      "max_attempt_latency_ms": 808.0018090113299,
+      "timeout_failure_count": 0,
+      "field_coverage": {
+        "likes": {
+          "count": 321,
+          "rate": 0.8916666666666667
+        },
+        "retweets": {
+          "count": 321,
+          "rate": 0.8916666666666667
+        },
+        "replies": {
+          "count": 321,
+          "rate": 0.8916666666666667
+        },
+        "quotes": {
+          "count": 0,
+          "rate": 0.0
+        },
+        "bookmarks": {
+          "count": 0,
+          "rate": 0.0
+        },
+        "views": {
+          "count": 0,
+          "rate": 0.0
+        }
+      },
+      "failure_classes": {
+        "JSONDecodeError": 39
+      }
+    }
+  },
+  "pairwise_consistency": {
+    "fxtwitter__syndication__likes": {
+      "comparisons": 318,
+      "exact_matches": 305,
+      "mean_relative_delta": 0.0001299496204364919,
+      "max_relative_delta": 0.012987012987012988
+    },
+    "fxtwitter__syndication__replies": {
+      "comparisons": 318,
+      "exact_matches": 318,
+      "mean_relative_delta": 0.0,
+      "max_relative_delta": 0.0
+    },
+    "fxtwitter__vxtwitter__likes": {
+      "comparisons": 321,
+      "exact_matches": 283,
+      "mean_relative_delta": 0.00016322656176658514,
+      "max_relative_delta": 0.012987012987012988
+    },
+    "fxtwitter__vxtwitter__replies": {
+      "comparisons": 321,
+      "exact_matches": 319,
+      "mean_relative_delta": 1.3172367008489592e-05,
+      "max_relative_delta": 0.0021141649048625794
+    },
+    "fxtwitter__vxtwitter__retweets": {
+      "comparisons": 321,
+      "exact_matches": 314,
+      "mean_relative_delta": 4.788119175955133e-06,
+      "max_relative_delta": 0.0006472491909385113
+    },
+    "vxtwitter__syndication__likes": {
+      "comparisons": 318,
+      "exact_matches": 291,
+      "mean_relative_delta": 3.469086306905309e-05,
+      "max_relative_delta": 0.0019851116625310174
+    },
+    "vxtwitter__syndication__replies": {
+      "comparisons": 318,
+      "exact_matches": 316,
+      "mean_relative_delta": 1.3296634621777229e-05,
+      "max_relative_delta": 0.0021141649048625794
+    }
+  },
+  "recommendation": {
+    "current_order": [
+      "fxtwitter",
+      "vxtwitter",
+      "syndication"
+    ],
+    "aggregate_order": [
+      "fxtwitter",
+      "vxtwitter",
+      "syndication"
+    ],
+    "decision": "retain current fallback order",
+    "timeout": {
+      "audited_seconds": 12,
+      "recommended_seconds": 5,
+      "maximum_attempt_latency_ms": 1586.837866998394,
+      "timeout_failure_count": 0,
+      "decision": "reduce timeout from 12s to 5s"
+    }
+  },
+  "limitations": [
+    "Backend observations are unauthenticated public endpoint checks, not SLA data.",
+    "Count differences include growth during sequential requests.",
+    "A fixed public cohort may lose posts over time because of deletion or visibility changes."
+  ]
+}

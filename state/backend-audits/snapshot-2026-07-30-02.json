@@ -1,0 +1,6437 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-07-30T08:00:15.024570+00:00",
+  "finished_at": "2026-07-30T08:02:08.101937+00:00",
+  "cohort": {
+    "post_count": 120,
+    "ordered_status_ids_sha256": "f5029a47d466dbfb6c31f75bceee8e43243a9f254c29a15ee423e56a86323760",
+    "source": {
+      "kind": "file",
+      "name": "backend_audit_cohort.txt",
+      "sha256": "0ad1b7b44b76e853a4a67dfeb5a9be9496797422067f6ddc9dcb99c80a480f11"
+    }
+  },
+  "tool": {
+    "path": "scripts/audit_backends.py",
+    "sha256": "bb37acee5e7a7fbd21a24255200658c26518105a88db1e7096883a35c586c0de"
+  },
+  "records": [
+    {
+      "status_id": "2055382844306797051",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 373.7238269968657,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 20:20:31 +0000 2026",
+            "likes": 121,
+            "retweets": 3,
+            "replies": 9,
+            "quotes": null,
+            "bookmarks": 2,
+            "views": 7466,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 100.8153149887221,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 20:20:31 +0000 2026",
+            "likes": 121,
+            "retweets": 3,
+            "replies": 9,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 616.3887010043254,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T20:20:31.000Z",
+            "likes": 121,
+            "retweets": null,
+            "replies": 9,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055381895001628796",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 357.3592489992734,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 20:16:45 +0000 2026",
+            "likes": 26,
+            "retweets": 3,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 487,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 57.121092002489604,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 20:16:45 +0000 2026",
+            "likes": 26,
+            "retweets": 3,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 354.4013330101734,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T20:16:45.000Z",
+            "likes": 26,
+            "retweets": null,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055381110968705123",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 257.03006799449213,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 20:13:38 +0000 2026",
+            "likes": 34,
+            "retweets": 1,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 4,
+            "views": 324,
+            "has_video": true,
+            "video_duration_ms": 44356
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 102.18754201196134,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 20:13:38 +0000 2026",
+            "likes": 34,
+            "retweets": 1,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 308.0046640097862,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T20:13:38.000Z",
+            "likes": 34,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055380438965698988",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 360.5754000018351,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 20:10:58 +0000 2026",
+            "likes": 67,
+            "retweets": 2,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 3,
+            "views": 10561,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 101.67347600508947,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 20:10:58 +0000 2026",
+            "likes": 67,
+            "retweets": 2,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 405.27508000377566,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T20:10:58.000Z",
+            "likes": 67,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055379704413090263",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 268.8233289954951,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 20:08:03 +0000 2026",
+            "likes": 11,
+            "retweets": 3,
+            "replies": 14,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 15501,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 57.11027199868113,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 20:08:03 +0000 2026",
+            "likes": 11,
+            "retweets": 3,
+            "replies": 14,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 343.8075939920964,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T20:08:03.000Z",
+            "likes": 11,
+            "retweets": null,
+            "replies": 14,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055378989888438275",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 260.107408001204,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 20:05:12 +0000 2026",
+            "likes": 145,
+            "retweets": 5,
+            "replies": 3,
+            "quotes": null,
+            "bookmarks": 14,
+            "views": 6160,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 101.48537300119642,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 20:05:12 +0000 2026",
+            "likes": 145,
+            "retweets": 5,
+            "replies": 3,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 306.5059099899372,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T20:05:12.000Z",
+            "likes": 145,
+            "retweets": null,
+            "replies": 3,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055378389653979501",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 264.9043979909038,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 20:02:49 +0000 2026",
+            "likes": 12,
+            "retweets": 6,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 399,
+            "has_video": true,
+            "video_duration_ms": 46188
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 95.33067299344111,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 20:02:49 +0000 2026",
+            "likes": 12,
+            "retweets": 6,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 200.56345500051975,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T20:02:49.000Z",
+            "likes": 12,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055377861440045410",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 260.8118300122442,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 20:00:43 +0000 2026",
+            "likes": 3,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 1109,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 68.88781399175059,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 20:00:43 +0000 2026",
+            "likes": 3,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 446.57350300985854,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T20:00:43.000Z",
+            "likes": 3,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055377418093781109",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 1185.2497799991397,
+          "ok": false,
+          "error_class": "HTTPError",
+          "post": null
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 88.16857999772765,
+          "ok": false,
+          "error_class": "JSONDecodeError",
+          "post": null
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 506.91697699949145,
+          "ok": false,
+          "error_class": "LookupError",
+          "post": null
+        }
+      ]
+    },
+    {
+      "status_id": "2055376911585452100",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 358.9548359886976,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:56:57 +0000 2026",
+            "likes": 89,
+            "retweets": 17,
+            "replies": 2,
+            "quotes": null,
+            "bookmarks": 2,
+            "views": 20033,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 108.42757199134212,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:56:57 +0000 2026",
+            "likes": 89,
+            "retweets": 17,
+            "replies": 2,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 713.4586309985025,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T19:56:57.000Z",
+            "likes": 89,
+            "retweets": null,
+            "replies": 2,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055376408109560182",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 358.20745199453086,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:54:57 +0000 2026",
+            "likes": 11,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 308,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 59.33810600254219,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:54:57 +0000 2026",
+            "likes": 11,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 353.0132799933199,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T19:54:57.000Z",
+            "likes": 11,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055375926133670140",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 256.55461399583146,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:53:02 +0000 2026",
+            "likes": 799,
+            "retweets": 47,
+            "replies": 32,
+            "quotes": null,
+            "bookmarks": 2,
+            "views": 104064,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 99.42464400955942,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:53:02 +0000 2026",
+            "likes": 799,
+            "retweets": 47,
+            "replies": 32,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 413.87070099881385,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T19:53:02.000Z",
+            "likes": 799,
+            "retweets": null,
+            "replies": 32,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055375510255849518",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 283.02598200389184,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:51:23 +0000 2026",
+            "likes": 61,
+            "retweets": 2,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 2,
+            "views": 677,
+            "has_video": true,
+            "video_duration_ms": 60923
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 73.9172210014658,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:51:23 +0000 2026",
+            "likes": 61,
+            "retweets": 2,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 219.96353199938312,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T19:51:23.000Z",
+            "likes": 61,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055375131392819621",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 347.1634349989472,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:49:53 +0000 2026",
+            "likes": 43,
+            "retweets": 0,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 4463,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 102.20784301054664,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:49:53 +0000 2026",
+            "likes": 43,
+            "retweets": 0,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 317.2609790053684,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T19:49:53.000Z",
+            "likes": 43,
+            "retweets": null,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055374724822081675",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 348.5811419959646,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:48:16 +0000 2026",
+            "likes": 370,
+            "retweets": 8,
+            "replies": 3,
+            "quotes": null,
+            "bookmarks": 5,
+            "views": 48787,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 62.126687000272796,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:48:16 +0000 2026",
+            "likes": 370,
+            "retweets": 8,
+            "replies": 3,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 347.8849609964527,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T19:48:16.000Z",
+            "likes": 370,
+            "retweets": null,
+            "replies": 3,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055374318494679120",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 256.6112110071117,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:46:39 +0000 2026",
+            "likes": 4,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 156,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 99.10018800292164,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:46:39 +0000 2026",
+            "likes": 4,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 316.5300719992956,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T19:46:39.000Z",
+            "likes": 4,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055373910556729829",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 354.13454299850855,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:45:01 +0000 2026",
+            "likes": 23,
+            "retweets": 2,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 1,
+            "views": 559,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 58.35484999988694,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:45:01 +0000 2026",
+            "likes": 23,
+            "retweets": 2,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 658.2653740042588,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T19:45:01.000Z",
+            "likes": 23,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055373579970101506",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 256.7594279971672,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:43:43 +0000 2026",
+            "likes": 227,
+            "retweets": 2,
+            "replies": 4,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 7317,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 60.88558198825922,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:43:43 +0000 2026",
+            "likes": 227,
+            "retweets": 2,
+            "replies": 4,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 243.10369999147952,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T19:43:43.000Z",
+            "likes": 227,
+            "retweets": null,
+            "replies": 4,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055373162292940938",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 364.05448999721557,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:42:03 +0000 2026",
+            "likes": 10,
+            "retweets": 1,
+            "replies": 7,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 1759,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 68.17789899650961,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:42:03 +0000 2026",
+            "likes": 10,
+            "retweets": 1,
+            "replies": 7,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 446.32483199529815,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T19:42:03.000Z",
+            "likes": 10,
+            "retweets": null,
+            "replies": 7,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055372602139394323",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 1276.3887320033973,
+          "ok": false,
+          "error_class": "HTTPError",
+          "post": null
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 100.80334600934293,
+          "ok": false,
+          "error_class": "JSONDecodeError",
+          "post": null
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 510.1701989915455,
+          "ok": false,
+          "error_class": "LookupError",
+          "post": null
+        }
+      ]
+    },
+    {
+      "status_id": "2055372090081951844",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 1279.1526270011673,
+          "ok": false,
+          "error_class": "HTTPError",
+          "post": null
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 101.09894900233485,
+          "ok": false,
+          "error_class": "JSONDecodeError",
+          "post": null
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 203.5818360018311,
+          "ok": false,
+          "error_class": "LookupError",
+          "post": null
+        }
+      ]
+    },
+    {
+      "status_id": "2055371588388655449",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 267.75734400143847,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:35:48 +0000 2026",
+            "likes": 4,
+            "retweets": 1,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 64,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 61.83879800664727,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:35:48 +0000 2026",
+            "likes": 4,
+            "retweets": 1,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 234.04227099672426,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T19:35:48.000Z",
+            "likes": 4,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055371128017743978",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 265.6529769883491,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:33:58 +0000 2026",
+            "likes": 44,
+            "retweets": 0,
+            "replies": 11,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 9194,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 93.9945840073051,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:33:58 +0000 2026",
+            "likes": 44,
+            "retweets": 0,
+            "replies": 11,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 309.9371349962894,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T19:33:58.000Z",
+            "likes": 44,
+            "retweets": null,
+            "replies": 11,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055370664068964857",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 255.26146199263167,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:32:07 +0000 2026",
+            "likes": 19,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 207,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 70.37879699782934,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:32:07 +0000 2026",
+            "likes": 19,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 233.14878800010774,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T19:32:07.000Z",
+            "likes": 19,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055370222136127825",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 363.0898160045035,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:30:22 +0000 2026",
+            "likes": 12,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 673,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 104.19255499436986,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:30:22 +0000 2026",
+            "likes": 12,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 612.4072329985211,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T19:30:22.000Z",
+            "likes": 12,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055369819357090093",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 565.882998998859,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:28:46 +0000 2026",
+            "likes": 317,
+            "retweets": 60,
+            "replies": 50,
+            "quotes": null,
+            "bookmarks": 8,
+            "views": 19661,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 56.372278995695524,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:28:46 +0000 2026",
+            "likes": 317,
+            "retweets": 60,
+            "replies": 50,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 264.43874299002346,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T19:28:46.000Z",
+            "likes": 317,
+            "retweets": null,
+            "replies": 50,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055369392590881270",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 345.6253839976853,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:27:04 +0000 2026",
+            "likes": 14,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 1,
+            "views": 3481,
+            "has_video": true,
+            "video_duration_ms": 173560
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 100.48542299773544,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:27:04 +0000 2026",
+            "likes": 14,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 620.101316992077,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T19:27:04.000Z",
+            "likes": 14,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055368927568376245",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 353.2814809877891,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:25:13 +0000 2026",
+            "likes": 21,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 818,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 73.13372600765433,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:25:13 +0000 2026",
+            "likes": 21,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 644.1423110081814,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T19:25:13.000Z",
+            "likes": 21,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055368444657512615",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 1182.075980992522,
+          "ok": false,
+          "error_class": "HTTPError",
+          "post": null
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 96.40418100752868,
+          "ok": false,
+          "error_class": "JSONDecodeError",
+          "post": null
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 305.7575819984777,
+          "ok": false,
+          "error_class": "LookupError",
+          "post": null
+        }
+      ]
+    },
+    {
+      "status_id": "2055368004074910134",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 255.2978739986429,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:21:33 +0000 2026",
+            "likes": 100,
+            "retweets": 1,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 21,
+            "views": 1277,
+            "has_video": true,
+            "video_duration_ms": 32127
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 103.8051869982155,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:21:33 +0000 2026",
+            "likes": 100,
+            "retweets": 1,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 409.40946999762673,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T19:21:33.000Z",
+            "likes": 100,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055367602206097810",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 359.6892810019199,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:19:57 +0000 2026",
+            "likes": 24,
+            "retweets": 4,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 1,
+            "views": 3186,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 101.81492699484807,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:19:57 +0000 2026",
+            "likes": 24,
+            "retweets": 4,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 614.592319005169,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T19:19:57.000Z",
+            "likes": 24,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055367187171344761",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 359.30661599559244,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:18:18 +0000 2026",
+            "likes": 2,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 129,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 49.79660999379121,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:18:18 +0000 2026",
+            "likes": 2,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 193.09376100136433,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T19:18:18.000Z",
+            "likes": 2,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055366735906119735",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 1084.5531160011888,
+          "ok": false,
+          "error_class": "HTTPError",
+          "post": null
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 155.58158900239505,
+          "ok": false,
+          "error_class": "JSONDecodeError",
+          "post": null
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 302.57445700408425,
+          "ok": false,
+          "error_class": "LookupError",
+          "post": null
+        }
+      ]
+    },
+    {
+      "status_id": "2055366317922779369",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 1385.1977580052335,
+          "ok": false,
+          "error_class": "HTTPError",
+          "post": null
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 97.41133499483112,
+          "ok": false,
+          "error_class": "JSONDecodeError",
+          "post": null
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 422.2371609939728,
+          "ok": false,
+          "error_class": "LookupError",
+          "post": null
+        }
+      ]
+    },
+    {
+      "status_id": "2055365879114645940",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 250.389840992284,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:13:07 +0000 2026",
+            "likes": 15,
+            "retweets": 0,
+            "replies": 2,
+            "quotes": null,
+            "bookmarks": 2,
+            "views": 17769,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 99.52121500100475,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:13:07 +0000 2026",
+            "likes": 15,
+            "retweets": 0,
+            "replies": 2,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 335.02488100202754,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T19:13:07.000Z",
+            "likes": 15,
+            "retweets": null,
+            "replies": 2,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055365458832871441",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 229.38083799090236,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:11:26 +0000 2026",
+            "likes": 2,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 137,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 98.34307800338138,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:11:26 +0000 2026",
+            "likes": 2,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 204.4046899973182,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T19:11:26.000Z",
+            "likes": 2,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055365025502560483",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 362.96019099245314,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:09:43 +0000 2026",
+            "likes": 1416,
+            "retweets": 17,
+            "replies": 13,
+            "quotes": null,
+            "bookmarks": 46,
+            "views": 131125,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 103.3146800036775,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:09:43 +0000 2026",
+            "likes": 1418,
+            "retweets": 17,
+            "replies": 13,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 716.0744139982853,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T19:09:43.000Z",
+            "likes": 1418,
+            "retweets": null,
+            "replies": 13,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055364591786590502",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 356.8818750063656,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:08:00 +0000 2026",
+            "likes": 6,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 722,
+            "has_video": true,
+            "video_duration_ms": 10944
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 105.12667399598286,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:08:00 +0000 2026",
+            "likes": 6,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 307.0135290035978,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T19:08:00.000Z",
+            "likes": 6,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055364212352856432",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 294.001713002217,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:06:29 +0000 2026",
+            "likes": 9,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 1,
+            "views": 1364,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 63.04947299940977,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:06:29 +0000 2026",
+            "likes": 9,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 306.6916579991812,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T19:06:29.000Z",
+            "likes": 9,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055363802535723151",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 1284.3840190034825,
+          "ok": false,
+          "error_class": "HTTPError",
+          "post": null
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 56.61386800056789,
+          "ok": false,
+          "error_class": "JSONDecodeError",
+          "post": null
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 657.7023410063703,
+          "ok": false,
+          "error_class": "LookupError",
+          "post": null
+        }
+      ]
+    },
+    {
+      "status_id": "2055363379607285767",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 257.4179179937346,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:03:11 +0000 2026",
+            "likes": 7,
+            "retweets": 0,
+            "replies": 3,
+            "quotes": null,
+            "bookmarks": 1,
+            "views": 2238,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 55.03459900501184,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:03:11 +0000 2026",
+            "likes": 7,
+            "retweets": 0,
+            "replies": 3,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 250.44665799941868,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T19:03:11.000Z",
+            "likes": 7,
+            "retweets": null,
+            "replies": 3,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055362940232941936",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 286.91384599369485,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:01:26 +0000 2026",
+            "likes": 153,
+            "retweets": 3,
+            "replies": 9,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 27626,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 72.05949199851602,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:01:26 +0000 2026",
+            "likes": 153,
+            "retweets": 3,
+            "replies": 9,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 509.53872200625483,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T19:01:26.000Z",
+            "likes": 153,
+            "retweets": null,
+            "replies": 9,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055362582090018911",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 359.88389399426524,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:00:01 +0000 2026",
+            "likes": 128,
+            "retweets": 40,
+            "replies": 3,
+            "quotes": null,
+            "bookmarks": 5,
+            "views": 5585,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 104.593335010577,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 19:00:01 +0000 2026",
+            "likes": 128,
+            "retweets": 40,
+            "replies": 3,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 308.67041999590583,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T19:00:01.000Z",
+            "likes": 128,
+            "retweets": null,
+            "replies": 3,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055362135400522033",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 560.3627880045678,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:58:14 +0000 2026",
+            "likes": 42,
+            "retweets": 14,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 9071,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 105.18929800309706,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:58:14 +0000 2026",
+            "likes": 42,
+            "retweets": 14,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 307.9562210041331,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T18:58:14.000Z",
+            "likes": 42,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055361593001599032",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 461.6699019970838,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:56:05 +0000 2026",
+            "likes": 3,
+            "retweets": 1,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 505,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 98.99132999998983,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:56:05 +0000 2026",
+            "likes": 3,
+            "retweets": 1,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 312.82166599703487,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T18:56:05.000Z",
+            "likes": 3,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055361023754871260",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 664.5304249977926,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:53:49 +0000 2026",
+            "likes": 31,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 381,
+            "has_video": true,
+            "video_duration_ms": 46300
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 56.75380700267851,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:53:49 +0000 2026",
+            "likes": 31,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 352.49586899590213,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T18:53:49.000Z",
+            "likes": 31,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055360447075721243",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 254.5403459953377,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:51:31 +0000 2026",
+            "likes": 25,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 1793,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 104.79562800901476,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:51:31 +0000 2026",
+            "likes": 25,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 409.9294309999095,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T18:51:31.000Z",
+            "likes": 25,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055359827438633077",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 257.0641149941366,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:49:04 +0000 2026",
+            "likes": 7,
+            "retweets": 2,
+            "replies": 2,
+            "quotes": null,
+            "bookmarks": 1,
+            "views": 93,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 63.88452500686981,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:49:04 +0000 2026",
+            "likes": 7,
+            "retweets": 2,
+            "replies": 2,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 244.0297129942337,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T18:49:04.000Z",
+            "likes": 7,
+            "retweets": null,
+            "replies": 2,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055359227145711904",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 359.73972200008575,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:46:41 +0000 2026",
+            "likes": 6,
+            "retweets": 0,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 269,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 61.502302007284015,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:46:41 +0000 2026",
+            "likes": 6,
+            "retweets": 0,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 552.9162219900172,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T18:46:41.000Z",
+            "likes": 6,
+            "retweets": null,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055358640438030718",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 359.6298670017859,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:44:21 +0000 2026",
+            "likes": 457,
+            "retweets": 5,
+            "replies": 5,
+            "quotes": null,
+            "bookmarks": 26,
+            "views": 39393,
+            "has_video": true,
+            "video_duration_ms": 27223
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 54.3448160024127,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:44:21 +0000 2026",
+            "likes": 457,
+            "retweets": 5,
+            "replies": 5,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 264.11609900242183,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T18:44:21.000Z",
+            "likes": 457,
+            "retweets": null,
+            "replies": 5,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055358043064590605",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 346.9606059952639,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:41:58 +0000 2026",
+            "likes": 44,
+            "retweets": 8,
+            "replies": 2,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 1077,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 99.33149300923105,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:41:58 +0000 2026",
+            "likes": 44,
+            "retweets": 8,
+            "replies": 2,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 414.9376409914112,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T18:41:58.000Z",
+            "likes": 44,
+            "retweets": null,
+            "replies": 2,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055357439084552442",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 250.6842639995739,
+          "ok": false,
+          "error_class": "HTTPError",
+          "post": null
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 104.50309500447474,
+          "ok": false,
+          "error_class": "JSONDecodeError",
+          "post": null
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 306.744786008494,
+          "ok": false,
+          "error_class": "LookupError",
+          "post": null
+        }
+      ]
+    },
+    {
+      "status_id": "2055356782604620118",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 257.1431949909311,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:36:58 +0000 2026",
+            "likes": 155,
+            "retweets": 3,
+            "replies": 43,
+            "quotes": null,
+            "bookmarks": 4,
+            "views": 29019,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 102.33222199894954,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:36:58 +0000 2026",
+            "likes": 155,
+            "retweets": 3,
+            "replies": 43,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 307.057972997427,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T18:36:58.000Z",
+            "likes": 155,
+            "retweets": null,
+            "replies": 43,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055356114997281171",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 257.29834999947343,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:34:19 +0000 2026",
+            "likes": 52,
+            "retweets": 4,
+            "replies": 8,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 2889,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 60.680923008476384,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:34:19 +0000 2026",
+            "likes": 52,
+            "retweets": 4,
+            "replies": 8,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 261.49024699407164,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T18:34:19.000Z",
+            "likes": 52,
+            "retweets": null,
+            "replies": 8,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055355411029536778",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 238.5903859976679,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:31:31 +0000 2026",
+            "likes": 695,
+            "retweets": 3,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 3,
+            "views": 5877,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 53.19439400045667,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:31:31 +0000 2026",
+            "likes": 695,
+            "retweets": 3,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 254.63326799217612,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T18:31:31.000Z",
+            "likes": 695,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055354790784225389",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 273.2562519959174,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:29:03 +0000 2026",
+            "likes": 29,
+            "retweets": 3,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 2,
+            "views": 446,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 60.089188991696574,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:29:03 +0000 2026",
+            "likes": 29,
+            "retweets": 3,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 333.39039600105025,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T18:29:03.000Z",
+            "likes": 29,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055354111378284849",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 362.71088699868415,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:26:21 +0000 2026",
+            "likes": 16,
+            "retweets": 6,
+            "replies": 3,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 1904,
+            "has_video": true,
+            "video_duration_ms": 568416
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 102.53288099193014,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:26:21 +0000 2026",
+            "likes": 16,
+            "retweets": 6,
+            "replies": 3,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 306.8653929949505,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T18:26:21.000Z",
+            "likes": 16,
+            "retweets": null,
+            "replies": 3,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055353426419069375",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 359.2180169944186,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:23:38 +0000 2026",
+            "likes": 18,
+            "retweets": 1,
+            "replies": 2,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 6300,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 98.49330798897427,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:23:38 +0000 2026",
+            "likes": 18,
+            "retweets": 1,
+            "replies": 2,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 311.29937700461596,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T18:23:38.000Z",
+            "likes": 18,
+            "retweets": null,
+            "replies": 2,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055352715551625571",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 355.38809800345916,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:20:48 +0000 2026",
+            "likes": 214,
+            "retweets": 4,
+            "replies": 2,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 6590,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 105.80412100534886,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:20:48 +0000 2026",
+            "likes": 214,
+            "retweets": 4,
+            "replies": 2,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 308.29004300176166,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T18:20:48.000Z",
+            "likes": 214,
+            "retweets": null,
+            "replies": 2,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055351945536188866",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 466.20466400054283,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:17:45 +0000 2026",
+            "likes": 7,
+            "retweets": 0,
+            "replies": 3,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 338,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 94.76994899159763,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:17:45 +0000 2026",
+            "likes": 7,
+            "retweets": 0,
+            "replies": 3,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 307.2658079909161,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T18:17:45.000Z",
+            "likes": 7,
+            "retweets": null,
+            "replies": 3,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055351175059300485",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 362.5211829930777,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:14:41 +0000 2026",
+            "likes": 6,
+            "retweets": 0,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": 1,
+            "views": 462,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 102.59098598908167,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:14:41 +0000 2026",
+            "likes": 6,
+            "retweets": 0,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 306.92578401067294,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T18:14:41.000Z",
+            "likes": 6,
+            "retweets": null,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055350343270006982",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 338.26699400378857,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:11:23 +0000 2026",
+            "likes": 8,
+            "retweets": 0,
+            "replies": 4,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 1743,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 76.17880699399393,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:11:23 +0000 2026",
+            "likes": 8,
+            "retweets": 0,
+            "replies": 4,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 189.7462429915322,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T18:11:23.000Z",
+            "likes": 8,
+            "retweets": null,
+            "replies": 4,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055349499774542237",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 219.02766500716098,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:08:01 +0000 2026",
+            "likes": 12,
+            "retweets": 2,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 244,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 63.27510600385722,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:08:01 +0000 2026",
+            "likes": 12,
+            "retweets": 2,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 561.285121992114,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T18:08:01.000Z",
+            "likes": 12,
+            "retweets": null,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055348598632743343",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 345.389822992729,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:04:27 +0000 2026",
+            "likes": 14,
+            "retweets": 7,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 484,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 203.78966799762566,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:04:27 +0000 2026",
+            "likes": 14,
+            "retweets": 7,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 208.01634099916555,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T18:04:27.000Z",
+            "likes": 14,
+            "retweets": null,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055347696396112031",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 286.55132598942146,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:00:51 +0000 2026",
+            "likes": 687,
+            "retweets": 89,
+            "replies": 7,
+            "quotes": null,
+            "bookmarks": 29,
+            "views": 24771,
+            "has_video": true,
+            "video_duration_ms": 26433
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 174.81720898649655,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 18:00:51 +0000 2026",
+            "likes": 687,
+            "retweets": 89,
+            "replies": 7,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 307.46260899468325,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T18:00:51.000Z",
+            "likes": 687,
+            "retweets": null,
+            "replies": 7,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055346921284256128",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 1076.602436005487,
+          "ok": false,
+          "error_class": "HTTPError",
+          "post": null
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 100.18765499989968,
+          "ok": false,
+          "error_class": "JSONDecodeError",
+          "post": null
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 203.14997898822185,
+          "ok": false,
+          "error_class": "LookupError",
+          "post": null
+        }
+      ]
+    },
+    {
+      "status_id": "2055345917004243101",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 358.71718601265457,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 17:53:47 +0000 2026",
+            "likes": 4,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 664,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 102.88279500673525,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 17:53:47 +0000 2026",
+            "likes": 4,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 201.83799500227906,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T17:53:47.000Z",
+            "likes": 4,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055344983348023736",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 367.3622880014591,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 17:50:05 +0000 2026",
+            "likes": 57,
+            "retweets": 3,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 13735,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 59.74063200119417,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 17:50:05 +0000 2026",
+            "likes": 57,
+            "retweets": 3,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 653.8093280105386,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T17:50:05.000Z",
+            "likes": 57,
+            "retweets": null,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055343975477788704",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 257.7252079936443,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 17:46:04 +0000 2026",
+            "likes": 5087,
+            "retweets": 11,
+            "replies": 146,
+            "quotes": null,
+            "bookmarks": 233,
+            "views": 857970,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 204.3226080131717,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 17:46:04 +0000 2026",
+            "likes": 5087,
+            "retweets": 11,
+            "replies": 146,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 409.63876200839877,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T17:46:04.000Z",
+            "likes": 5087,
+            "retweets": null,
+            "replies": 146,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055342829828972839",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 252.00520100770518,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 17:41:31 +0000 2026",
+            "likes": 15,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 1,
+            "views": 734,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 106.46244900999591,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 17:41:31 +0000 2026",
+            "likes": 15,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 304.0255179948872,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T17:41:31.000Z",
+            "likes": 15,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055341667612258447",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 362.5046020024456,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 17:36:54 +0000 2026",
+            "likes": 5275,
+            "retweets": 51,
+            "replies": 125,
+            "quotes": null,
+            "bookmarks": 32,
+            "views": 146372,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 99.90787599235773,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 17:36:54 +0000 2026",
+            "likes": 5274,
+            "retweets": 51,
+            "replies": 125,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 310.0153559935279,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T17:36:54.000Z",
+            "likes": 5275,
+            "retweets": null,
+            "replies": 125,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055340416614969386",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 355.3937440010486,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 17:31:56 +0000 2026",
+            "likes": 61,
+            "retweets": 10,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 1886,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 72.35905699781142,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 17:31:56 +0000 2026",
+            "likes": 61,
+            "retweets": 10,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 649.4334599992726,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T17:31:56.000Z",
+            "likes": 61,
+            "retweets": null,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055339214158393561",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 360.797276996891,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 17:27:09 +0000 2026",
+            "likes": 69,
+            "retweets": 0,
+            "replies": 4,
+            "quotes": null,
+            "bookmarks": 4,
+            "views": 6039,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 101.35954098950606,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 17:27:09 +0000 2026",
+            "likes": 69,
+            "retweets": 0,
+            "replies": 4,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 204.73440099158324,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T17:27:09.000Z",
+            "likes": 69,
+            "retweets": null,
+            "replies": 4,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055337852221677727",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 354.6992519986816,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 17:21:44 +0000 2026",
+            "likes": 26,
+            "retweets": 1,
+            "replies": 2,
+            "quotes": null,
+            "bookmarks": 6,
+            "views": 29243,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 62.29515800077934,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 17:21:44 +0000 2026",
+            "likes": 26,
+            "retweets": 1,
+            "replies": 2,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 248.25941400195006,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T17:21:44.000Z",
+            "likes": 26,
+            "retweets": null,
+            "replies": 2,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055336378573947391",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 360.0297710072482,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 17:15:53 +0000 2026",
+            "likes": 4,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 3350,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 102.38471999764442,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 17:15:53 +0000 2026",
+            "likes": 4,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 306.92326599091757,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T17:15:53.000Z",
+            "likes": 4,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055334870071546360",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 356.05541001132224,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 17:09:53 +0000 2026",
+            "likes": 1228,
+            "retweets": 50,
+            "replies": 43,
+            "quotes": null,
+            "bookmarks": 89,
+            "views": 253327,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 106.8858700018609,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 17:09:53 +0000 2026",
+            "likes": 1228,
+            "retweets": 50,
+            "replies": 43,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 404.10328400321305,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T17:09:53.000Z",
+            "likes": 1228,
+            "retweets": null,
+            "replies": 43,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055333273245516158",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 363.00226498860866,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 17:03:33 +0000 2026",
+            "likes": 10,
+            "retweets": 0,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 726,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 57.11614499159623,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 17:03:33 +0000 2026",
+            "likes": 10,
+            "retweets": 0,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 554.9509050033521,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T17:03:33.000Z",
+            "likes": 10,
+            "retweets": null,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055331764516643180",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 460.99111999501474,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 16:57:33 +0000 2026",
+            "likes": 2712,
+            "retweets": 91,
+            "replies": 2,
+            "quotes": null,
+            "bookmarks": 50,
+            "views": 44053,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 109.31322700344026,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 16:57:33 +0000 2026",
+            "likes": 2712,
+            "retweets": 91,
+            "replies": 2,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 202.08270200237166,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T16:57:33.000Z",
+            "likes": 2712,
+            "retweets": null,
+            "replies": 2,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055330132647170352",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 1280.3105710045202,
+          "ok": false,
+          "error_class": "HTTPError",
+          "post": null
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 54.72002600436099,
+          "ok": false,
+          "error_class": "JSONDecodeError",
+          "post": null
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 559.5348680071766,
+          "ok": false,
+          "error_class": "LookupError",
+          "post": null
+        }
+      ]
+    },
+    {
+      "status_id": "2055328385509847412",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 256.7386099981377,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 16:44:07 +0000 2026",
+            "likes": 25,
+            "retweets": 2,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 3177,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 102.96856799686793,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 16:44:07 +0000 2026",
+            "likes": 25,
+            "retweets": 2,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 306.06766599521507,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T16:44:07.000Z",
+            "likes": 25,
+            "retweets": null,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055326490753945667",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 358.54548000497743,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 16:36:36 +0000 2026",
+            "likes": 11,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 359,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 102.29542500746902,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 16:36:36 +0000 2026",
+            "likes": 11,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 205.51879399863537,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T16:36:36.000Z",
+            "likes": 11,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055324562049380514",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 257.2210070065921,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 16:28:56 +0000 2026",
+            "likes": 74,
+            "retweets": 4,
+            "replies": 6,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 4477,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 156.12331200100016,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 16:28:56 +0000 2026",
+            "likes": 74,
+            "retweets": 4,
+            "replies": 6,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 254.5285010128282,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T16:28:56.000Z",
+            "likes": 74,
+            "retweets": null,
+            "replies": 6,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055322383104250020",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 1582.0106260071043,
+          "ok": false,
+          "error_class": "HTTPError",
+          "post": null
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 104.75801100255921,
+          "ok": false,
+          "error_class": "JSONDecodeError",
+          "post": null
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 306.7457459983416,
+          "ok": false,
+          "error_class": "LookupError",
+          "post": null
+        }
+      ]
+    },
+    {
+      "status_id": "2055320108306681943",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 462.00280998891685,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 16:11:14 +0000 2026",
+            "likes": 104,
+            "retweets": 1,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 14,
+            "views": 1549,
+            "has_video": true,
+            "video_duration_ms": 104560
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 102.31813399877865,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 16:11:14 +0000 2026",
+            "likes": 104,
+            "retweets": 1,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 508.42575400019996,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T16:11:14.000Z",
+            "likes": 104,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055317732342616213",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 261.1852280097082,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 16:01:48 +0000 2026",
+            "likes": 3,
+            "retweets": 0,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 173,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 52.77763999765739,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 16:01:48 +0000 2026",
+            "likes": 3,
+            "retweets": 0,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 664.0214710059809,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T16:01:48.000Z",
+            "likes": 3,
+            "retweets": null,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055315504932241635",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 355.25750399392564,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 15:52:56 +0000 2026",
+            "likes": 22,
+            "retweets": 2,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 627,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 106.46817399538122,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 15:52:56 +0000 2026",
+            "likes": 22,
+            "retweets": 2,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 307.29710099694785,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T15:52:56.000Z",
+            "likes": 22,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055312813153718439",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 358.91182599880267,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 15:42:15 +0000 2026",
+            "likes": 303,
+            "retweets": 4,
+            "replies": 12,
+            "quotes": null,
+            "bookmarks": 7,
+            "views": 8030,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 103.59826798958238,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 15:42:15 +0000 2026",
+            "likes": 303,
+            "retweets": 4,
+            "replies": 12,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 305.78560900175944,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T15:42:15.000Z",
+            "likes": 303,
+            "retweets": null,
+            "replies": 12,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055309883163967542",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 360.6424500030698,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 15:30:36 +0000 2026",
+            "likes": 17,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 578,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 64.81524999253452,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 15:30:36 +0000 2026",
+            "likes": 17,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 549.1445460065734,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T15:30:36.000Z",
+            "likes": 17,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055306780666683497",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 1179.2521979950834,
+          "ok": false,
+          "error_class": "HTTPError",
+          "post": null
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 53.15298700588755,
+          "ok": false,
+          "error_class": "JSONDecodeError",
+          "post": null
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 352.72754899051506,
+          "ok": false,
+          "error_class": "LookupError",
+          "post": null
+        }
+      ]
+    },
+    {
+      "status_id": "2055303372010344709",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 359.38901400368195,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 15:04:44 +0000 2026",
+            "likes": 9,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 266,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 141.49242998973932,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 15:04:44 +0000 2026",
+            "likes": 9,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 269.56496300408617,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T15:04:44.000Z",
+            "likes": 9,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055300003309007254",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 255.45454199891537,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 14:51:21 +0000 2026",
+            "likes": 31,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 2,
+            "views": 729,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 56.5196020033909,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 14:51:21 +0000 2026",
+            "likes": 31,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 255.94549901143182,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T14:51:21.000Z",
+            "likes": 31,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055296390742622552",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 254.02898000902496,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 14:36:59 +0000 2026",
+            "likes": 2011,
+            "retweets": 86,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": 23,
+            "views": 28823,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 100.02168599748984,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 14:36:59 +0000 2026",
+            "likes": 2015,
+            "retweets": 86,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 308.2866750046378,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T14:36:59.000Z",
+            "likes": 2011,
+            "retweets": null,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055292201731609050",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 355.7933569973102,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 14:20:21 +0000 2026",
+            "likes": 7517,
+            "retweets": 199,
+            "replies": 74,
+            "quotes": null,
+            "bookmarks": 691,
+            "views": 711938,
+            "has_video": true,
+            "video_duration_ms": 20041
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 54.95480900572147,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 14:20:21 +0000 2026",
+            "likes": 7516,
+            "retweets": 199,
+            "replies": 74,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 255.7770800049184,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T14:20:21.000Z",
+            "likes": 7517,
+            "retweets": null,
+            "replies": 74,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055287521538457931",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 356.0372979991371,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 14:01:45 +0000 2026",
+            "likes": 201,
+            "retweets": 2,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 3394,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 56.15340601070784,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 14:01:45 +0000 2026",
+            "likes": 201,
+            "retweets": 2,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 561.7941570089897,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T14:01:45.000Z",
+            "likes": 201,
+            "retweets": null,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055282169514242438",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 355.44375400058925,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 13:40:29 +0000 2026",
+            "likes": 4,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 535,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 106.13911799737252,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 13:40:29 +0000 2026",
+            "likes": 4,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 315.1529150054557,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T13:40:29.000Z",
+            "likes": 4,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055276876935913833",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 249.69260398938786,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 13:19:27 +0000 2026",
+            "likes": 616,
+            "retweets": 37,
+            "replies": 30,
+            "quotes": null,
+            "bookmarks": 5,
+            "views": 6489,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 102.0642599905841,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 13:19:27 +0000 2026",
+            "likes": 616,
+            "retweets": 37,
+            "replies": 30,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 303.2683899946278,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T13:19:27.000Z",
+            "likes": 616,
+            "retweets": null,
+            "replies": 30,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055270845229191560",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 363.95374599669594,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 12:55:29 +0000 2026",
+            "likes": 3,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 73,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 98.36258299765177,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 12:55:29 +0000 2026",
+            "likes": 3,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 334.2833770002471,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T12:55:29.000Z",
+            "likes": 3,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055262987150082537",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 235.0265999994008,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 12:24:15 +0000 2026",
+            "likes": 2800,
+            "retweets": 87,
+            "replies": 15,
+            "quotes": null,
+            "bookmarks": 79,
+            "views": 177877,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 98.74144299828913,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 12:24:15 +0000 2026",
+            "likes": 2800,
+            "retweets": 87,
+            "replies": 15,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 308.74704899906646,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T12:24:15.000Z",
+            "likes": 2800,
+            "retweets": null,
+            "replies": 15,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055254627289886767",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 257.6500980067067,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 11:51:02 +0000 2026",
+            "likes": 20,
+            "retweets": 1,
+            "replies": 4,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 2612,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 99.10199001024012,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 11:51:02 +0000 2026",
+            "likes": 20,
+            "retweets": 1,
+            "replies": 4,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 514.9264409992611,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T11:51:02.000Z",
+            "likes": 20,
+            "retweets": null,
+            "replies": 4,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055244678895751450",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 359.8483489913633,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 11:11:30 +0000 2026",
+            "likes": 76,
+            "retweets": 2,
+            "replies": 9,
+            "quotes": null,
+            "bookmarks": 6,
+            "views": 19740,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 98.48344900819939,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 11:11:30 +0000 2026",
+            "likes": 77,
+            "retweets": 2,
+            "replies": 9,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 618.8615199935157,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T11:11:30.000Z",
+            "likes": 77,
+            "retweets": null,
+            "replies": 9,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055232372686086305",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 259.23070299904794,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 10:22:36 +0000 2026",
+            "likes": 45,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 6966,
+            "has_video": true,
+            "video_duration_ms": 9920
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 80.88338399829809,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 10:22:36 +0000 2026",
+            "likes": 45,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 731.9660730136093,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T10:22:36.000Z",
+            "likes": 45,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055215731462050301",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 257.71017000079155,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 09:16:29 +0000 2026",
+            "likes": 3191,
+            "retweets": 173,
+            "replies": 9,
+            "quotes": null,
+            "bookmarks": 18,
+            "views": 62331,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 105.93123400758486,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 09:16:29 +0000 2026",
+            "likes": 3192,
+            "retweets": 173,
+            "replies": 9,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 512.1678800060181,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T09:16:29.000Z",
+            "likes": 3192,
+            "retweets": null,
+            "replies": 9,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055193275540398281",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 355.95194800407626,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 07:47:15 +0000 2026",
+            "likes": 27,
+            "retweets": 5,
+            "replies": 5,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 186,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 107.33736600377597,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 07:47:15 +0000 2026",
+            "likes": 27,
+            "retweets": 5,
+            "replies": 5,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 613.855029005208,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T07:47:15.000Z",
+            "likes": 27,
+            "retweets": null,
+            "replies": 5,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055157733628719310",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 252.78993099345826,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 05:26:01 +0000 2026",
+            "likes": 10,
+            "retweets": 2,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 205,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 104.89447700092569,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 05:26:01 +0000 2026",
+            "likes": 10,
+            "retweets": 2,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 717.8588490060065,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T05:26:01.000Z",
+            "likes": 10,
+            "retweets": null,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055122957471563980",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 359.7693780029658,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 03:07:50 +0000 2026",
+            "likes": 53,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 1725,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 97.97152399551123,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 03:07:50 +0000 2026",
+            "likes": 53,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 209.01375598623417,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T03:07:50.000Z",
+            "likes": 53,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055096346558779422",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 359.73152601218317,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 01:22:05 +0000 2026",
+            "likes": 25,
+            "retweets": 1,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": 1,
+            "views": 782,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 58.6972599994624,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Fri May 15 01:22:05 +0000 2026",
+            "likes": 25,
+            "retweets": 1,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 658.4403449960519,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-15T01:22:05.000Z",
+            "likes": 25,
+            "retweets": null,
+            "replies": 1,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055069746765115434",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 355.1930590037955,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Thu May 14 23:36:23 +0000 2026",
+            "likes": 20,
+            "retweets": 2,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 3,
+            "views": 2541,
+            "has_video": true,
+            "video_duration_ms": 58892
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 105.96960499242414,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Thu May 14 23:36:23 +0000 2026",
+            "likes": 20,
+            "retweets": 2,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 407.6501840027049,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-14T23:36:23.000Z",
+            "likes": 20,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055041757813801053",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 258.70588299585506,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Thu May 14 21:45:10 +0000 2026",
+            "likes": 9,
+            "retweets": 1,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 273,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 98.92831199977081,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Thu May 14 21:45:10 +0000 2026",
+            "likes": 9,
+            "retweets": 1,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 311.7553080082871,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-14T21:45:10.000Z",
+            "likes": 9,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2055021024198996263",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 359.32176900678314,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Thu May 14 20:22:47 +0000 2026",
+            "likes": 10,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": 0,
+            "views": 1945,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 52.51054900872987,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Thu May 14 20:22:47 +0000 2026",
+            "likes": 10,
+            "retweets": 0,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 561.2844330025837,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-05-14T20:22:47.000Z",
+            "likes": 10,
+            "retweets": null,
+            "replies": 0,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2079205509727478218",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 360.31908199947793,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Mon Jul 20 14:03:17 +0000 2026",
+            "likes": 38951,
+            "retweets": 1544,
+            "replies": 757,
+            "quotes": null,
+            "bookmarks": 9558,
+            "views": 18935993,
+            "has_video": true,
+            "video_duration_ms": 12373
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 102.17153800476808,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Mon Jul 20 14:03:17 +0000 2026",
+            "likes": 38953,
+            "retweets": 1544,
+            "replies": 757,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 205.0632539903745,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-07-20T14:03:17.000Z",
+            "likes": 38951,
+            "retweets": null,
+            "replies": 757,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2079222259802054870",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 356.2250020040665,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Mon Jul 20 15:09:51 +0000 2026",
+            "likes": 19992,
+            "retweets": 839,
+            "replies": 313,
+            "quotes": null,
+            "bookmarks": 5079,
+            "views": 10172619,
+            "has_video": true,
+            "video_duration_ms": 15041
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 65.06199299474247,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Mon Jul 20 15:09:51 +0000 2026",
+            "likes": 19992,
+            "retweets": 839,
+            "replies": 313,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 348.2276569993701,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-07-20T15:09:51.000Z",
+            "likes": 19992,
+            "retweets": null,
+            "replies": 313,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2079224829845422393",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 260.0092719949316,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Mon Jul 20 15:20:04 +0000 2026",
+            "likes": 7345,
+            "retweets": 509,
+            "replies": 233,
+            "quotes": null,
+            "bookmarks": 3182,
+            "views": 8175727,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 99.10556599788833,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Mon Jul 20 15:20:04 +0000 2026",
+            "likes": 7346,
+            "retweets": 509,
+            "replies": 233,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 199.261658010073,
+          "ok": false,
+          "error_class": "LookupError",
+          "post": null
+        }
+      ]
+    },
+    {
+      "status_id": "2079288782130417741",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 363.6537519923877,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Mon Jul 20 19:34:11 +0000 2026",
+            "likes": 195117,
+            "retweets": 22193,
+            "replies": 944,
+            "quotes": null,
+            "bookmarks": 16570,
+            "views": 6173318,
+            "has_video": true,
+            "video_duration_ms": 14831
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 60.013858004822396,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Mon Jul 20 19:34:11 +0000 2026",
+            "likes": 195121,
+            "retweets": 22194,
+            "replies": 944,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 300.6112529983511,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-07-20T19:34:11.000Z",
+            "likes": 195117,
+            "retweets": null,
+            "replies": 944,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2079172194882445346",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 1021.5516650059726,
+          "ok": false,
+          "error_class": "HTTPError",
+          "post": null
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 59.25796199881006,
+          "ok": false,
+          "error_class": "JSONDecodeError",
+          "post": null
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 346.90578599111177,
+          "ok": false,
+          "error_class": "LookupError",
+          "post": null
+        }
+      ]
+    },
+    {
+      "status_id": "2079272919700517166",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 359.48518800432794,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Mon Jul 20 18:31:09 +0000 2026",
+            "likes": 306572,
+            "retweets": 13738,
+            "replies": 2308,
+            "quotes": null,
+            "bookmarks": 18538,
+            "views": 21491212,
+            "has_video": true,
+            "video_duration_ms": 38233
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 69.03374100511428,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Mon Jul 20 18:31:09 +0000 2026",
+            "likes": 306571,
+            "retweets": 13738,
+            "replies": 2308,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 237.8510979906423,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-07-20T18:31:09.000Z",
+            "likes": 306572,
+            "retweets": null,
+            "replies": 2308,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2079256963196567576",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 359.3431360059185,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Mon Jul 20 17:27:45 +0000 2026",
+            "likes": 79632,
+            "retweets": 4879,
+            "replies": 253,
+            "quotes": null,
+            "bookmarks": 4748,
+            "views": 2903979,
+            "has_video": true,
+            "video_duration_ms": 26525
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 56.37490100343712,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Mon Jul 20 17:27:45 +0000 2026",
+            "likes": 79630,
+            "retweets": 4879,
+            "replies": 253,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 554.2742210091092,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-07-20T17:27:45.000Z",
+            "likes": 79630,
+            "retweets": null,
+            "replies": 253,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": true,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2079214333725380662",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 261.2050419993466,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Mon Jul 20 14:38:21 +0000 2026",
+            "likes": 13166,
+            "retweets": 409,
+            "replies": 472,
+            "quotes": null,
+            "bookmarks": 2189,
+            "views": 8855199,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 102.14952599199023,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Mon Jul 20 14:38:21 +0000 2026",
+            "likes": 13167,
+            "retweets": 409,
+            "replies": 473,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 615.1209479867248,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-07-20T14:38:21.000Z",
+            "likes": 13165,
+            "retweets": null,
+            "replies": 472,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2079493434512232838",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 358.9471660088748,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Tue Jul 21 09:07:24 +0000 2026",
+            "likes": 22801,
+            "retweets": 4711,
+            "replies": 43,
+            "quotes": null,
+            "bookmarks": 504,
+            "views": 791007,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 98.07006700430065,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Tue Jul 21 09:07:24 +0000 2026",
+            "likes": 22801,
+            "retweets": 4710,
+            "replies": 43,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 630.178994993912,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-07-21T09:07:24.000Z",
+            "likes": 22799,
+            "retweets": null,
+            "replies": 43,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2026203633281274048",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 348.3762679970823,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Tue Feb 24 07:52:45 +0000 2026",
+            "likes": 71,
+            "retweets": 39,
+            "replies": 27,
+            "quotes": null,
+            "bookmarks": 13,
+            "views": 2089,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 57.70709499483928,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Tue Feb 24 07:52:45 +0000 2026",
+            "likes": 71,
+            "retweets": 39,
+            "replies": 27,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 245.7706099958159,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2026-02-24T07:52:45.000Z",
+            "likes": 71,
+            "retweets": null,
+            "replies": 27,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "status_id": "2006038274167460015",
+      "attempts": [
+        {
+          "backend": "fxtwitter",
+          "elapsed_ms": 262.8801769897109,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Tue Dec 30 16:22:49 +0000 2025",
+            "likes": 4,
+            "retweets": 0,
+            "replies": 7,
+            "quotes": null,
+            "bookmarks": 1,
+            "views": 1065,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "vxtwitter",
+          "elapsed_ms": 55.81329099368304,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "Tue Dec 30 16:22:49 +0000 2025",
+            "likes": 4,
+            "retweets": 0,
+            "replies": 7,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        },
+        {
+          "backend": "syndication",
+          "elapsed_ms": 559.1309680021368,
+          "ok": true,
+          "error_class": null,
+          "post": {
+            "created_at": "2025-12-30T16:22:49.000Z",
+            "likes": 4,
+            "retweets": null,
+            "replies": 7,
+            "quotes": null,
+            "bookmarks": null,
+            "views": null,
+            "has_video": false,
+            "video_duration_ms": null
+          }
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "posts": 120,
+    "backends": {
+      "fxtwitter": {
+        "attempts": 120,
+        "successes": 107,
+        "success_rate": 0.8916666666666667,
+        "mean_success_latency_ms": 328.5334358493924,
+        "field_coverage": {
+          "likes": 107,
+          "retweets": 107,
+          "replies": 107,
+          "quotes": 0,
+          "bookmarks": 107,
+          "views": 107
+        }
+      },
+      "syndication": {
+        "attempts": 120,
+        "successes": 106,
+        "success_rate": 0.8833333333333333,
+        "mean_success_latency_ms": 386.082441961988,
+        "field_coverage": {
+          "likes": 106,
+          "retweets": 0,
+          "replies": 106,
+          "quotes": 0,
+          "bookmarks": 0,
+          "views": 0
+        }
+      },
+      "vxtwitter": {
+        "attempts": 120,
+        "successes": 107,
+        "success_rate": 0.8916666666666667,
+        "mean_success_latency_ms": 88.82078929901097,
+        "field_coverage": {
+          "likes": 107,
+          "retweets": 107,
+          "replies": 107,
+          "quotes": 0,
+          "bookmarks": 0,
+          "views": 0
+        }
+      }
+    },
+    "pairwise_consistency": {
+      "fxtwitter__syndication__likes": {
+        "comparisons": 106,
+        "exact_matches": 100,
+        "mean_relative_delta": 0.0001405614870369652,
+        "max_relative_delta": 0.012987012987012988
+      },
+      "fxtwitter__syndication__replies": {
+        "comparisons": 106,
+        "exact_matches": 106,
+        "mean_relative_delta": 0.0,
+        "max_relative_delta": 0.0
+      },
+      "fxtwitter__vxtwitter__likes": {
+        "comparisons": 107,
+        "exact_matches": 95,
+        "mean_relative_delta": 0.000161969604974496,
+        "max_relative_delta": 0.012987012987012988
+      },
+      "fxtwitter__vxtwitter__replies": {
+        "comparisons": 107,
+        "exact_matches": 106,
+        "mean_relative_delta": 1.9758550512734387e-05,
+        "max_relative_delta": 0.0021141649048625794
+      },
+      "fxtwitter__vxtwitter__retweets": {
+        "comparisons": 107,
+        "exact_matches": 105,
+        "mean_relative_delta": 2.4049194389181312e-06,
+        "max_relative_delta": 0.00021226915729144556
+      },
+      "vxtwitter__syndication__likes": {
+        "comparisons": 106,
+        "exact_matches": 98,
+        "mean_relative_delta": 2.4739935475344925e-05,
+        "max_relative_delta": 0.0019851116625310174
+      },
+      "vxtwitter__syndication__replies": {
+        "comparisons": 106,
+        "exact_matches": 105,
+        "mean_relative_delta": 1.9944951932665843e-05,
+        "max_relative_delta": 0.0021141649048625794
+      }
+    },
+    "sample_based_recommended_order": [
+      "fxtwitter",
+      "vxtwitter",
+      "syndication"
+    ]
+  },
+  "privacy": "Public status IDs and count fields only; post text, author identity, URLs, cookies, and credentials are excluded."
+}

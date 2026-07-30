@@ -1,0 +1,1089 @@
+{
+  "upstream_contract": {
+    "repository": "xai-org/x-algorithm",
+    "commit": "0bfc2795d308f90032544322747caacd535f75ae",
+    "predicate": "video_duration_ms > MIN_VIDEO_DURATION_MS",
+    "production_threshold": "unpublished",
+    "production_vqv_weight": "unpublished"
+  },
+  "assumptions": {
+    "vqv_probability": 0.1,
+    "vqv_weight": 1.0,
+    "eligible_vqv_contribution": 0.1
+  },
+  "posts": [
+    {
+      "post_id": "2055069746765115434",
+      "video_duration_ms": 58892,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 0,
+      "views_per_hour": 0.0,
+      "count_decreased": false
+    },
+    {
+      "post_id": "2055232372686086305",
+      "video_duration_ms": 9920,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 0,
+      "views_per_hour": 0.0,
+      "count_decreased": false
+    },
+    {
+      "post_id": "2055292201731609050",
+      "video_duration_ms": 20041,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 2,
+      "views_per_hour": 0.6600622182622686,
+      "count_decreased": false
+    },
+    {
+      "post_id": "2055320108306681943",
+      "video_duration_ms": 104560,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 0,
+      "views_per_hour": 0.0,
+      "count_decreased": false
+    },
+    {
+      "post_id": "2055347696396112031",
+      "video_duration_ms": 26433,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 0,
+      "views_per_hour": 0.0,
+      "count_decreased": false
+    },
+    {
+      "post_id": "2055354111378284849",
+      "video_duration_ms": 568416,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 0,
+      "views_per_hour": 0.0,
+      "count_decreased": false
+    },
+    {
+      "post_id": "2055358640438030718",
+      "video_duration_ms": 27223,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 0,
+      "views_per_hour": 0.0,
+      "count_decreased": false
+    },
+    {
+      "post_id": "2055361023754871260",
+      "video_duration_ms": 46300,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 0,
+      "views_per_hour": 0.0,
+      "count_decreased": false
+    },
+    {
+      "post_id": "2055364591786590502",
+      "video_duration_ms": 10944,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 0,
+      "views_per_hour": 0.0,
+      "count_decreased": false
+    },
+    {
+      "post_id": "2055368004074910134",
+      "video_duration_ms": 32127,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 0,
+      "views_per_hour": 0.0,
+      "count_decreased": false
+    },
+    {
+      "post_id": "2055369392590881270",
+      "video_duration_ms": 173560,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 0,
+      "views_per_hour": 0.0,
+      "count_decreased": false
+    },
+    {
+      "post_id": "2055375510255849518",
+      "video_duration_ms": 60923,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 0,
+      "views_per_hour": 0.0,
+      "count_decreased": false
+    },
+    {
+      "post_id": "2055378389653979501",
+      "video_duration_ms": 46188,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 0,
+      "views_per_hour": 0.0,
+      "count_decreased": false
+    },
+    {
+      "post_id": "2055381110968705123",
+      "video_duration_ms": 44356,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 0,
+      "views_per_hour": 0.0,
+      "count_decreased": false
+    },
+    {
+      "post_id": "2079205509727478218",
+      "video_duration_ms": 12373,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 508,
+      "views_per_hour": 167.65580343861623,
+      "count_decreased": false
+    },
+    {
+      "post_id": "2079222259802054870",
+      "video_duration_ms": 15041,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 140,
+      "views_per_hour": 46.204355278358804,
+      "count_decreased": false
+    },
+    {
+      "post_id": "2079256963196567576",
+      "video_duration_ms": 26525,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 137,
+      "views_per_hour": 45.2142619509654,
+      "count_decreased": false
+    },
+    {
+      "post_id": "2079272919700517166",
+      "video_duration_ms": 38233,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 449,
+      "views_per_hour": 148.18396799987931,
+      "count_decreased": false
+    },
+    {
+      "post_id": "2079288782130417741",
+      "video_duration_ms": 14831,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 159,
+      "views_per_hour": 52.474946351850356,
+      "count_decreased": false
+    }
+  ],
+  "thresholds": [
+    {
+      "threshold_ms": 0,
+      "predicate": "video_duration_ms > 0",
+      "eligible_duration_count": 19,
+      "duration_cases": [
+        {
+          "video_duration_ms": 58892,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 9920,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 20041,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 104560,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 26433,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 568416,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 27223,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 46300,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 10944,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 32127,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 173560,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 60923,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 46188,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 44356,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 12373,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 15041,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 26525,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 38233,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 14831,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        }
+      ],
+      "observed_growth": {
+        "eligible": {
+          "n": 19,
+          "mean_views_per_hour": 24.231231433575388,
+          "median_views_per_hour": 0.0
+        },
+        "ineligible": {
+          "n": 0,
+          "mean_views_per_hour": null,
+          "median_views_per_hour": null
+        },
+        "mean_difference_views_per_hour": null
+      }
+    },
+    {
+      "threshold_ms": 5000,
+      "predicate": "video_duration_ms > 5000",
+      "eligible_duration_count": 19,
+      "duration_cases": [
+        {
+          "video_duration_ms": 58892,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 9920,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 20041,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 104560,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 26433,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 568416,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 27223,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 46300,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 10944,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 32127,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 173560,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 60923,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 46188,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 44356,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 12373,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 15041,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 26525,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 38233,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 14831,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        }
+      ],
+      "observed_growth": {
+        "eligible": {
+          "n": 19,
+          "mean_views_per_hour": 24.231231433575388,
+          "median_views_per_hour": 0.0
+        },
+        "ineligible": {
+          "n": 0,
+          "mean_views_per_hour": null,
+          "median_views_per_hour": null
+        },
+        "mean_difference_views_per_hour": null
+      }
+    },
+    {
+      "threshold_ms": 10000,
+      "predicate": "video_duration_ms > 10000",
+      "eligible_duration_count": 18,
+      "duration_cases": [
+        {
+          "video_duration_ms": 58892,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 9920,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 20041,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 104560,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 26433,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 568416,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 27223,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 46300,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 10944,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 32127,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 173560,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 60923,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 46188,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 44356,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 12373,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 15041,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 26525,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 38233,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 14831,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        }
+      ],
+      "observed_growth": {
+        "eligible": {
+          "n": 18,
+          "mean_views_per_hour": 25.57741095766291,
+          "median_views_per_hour": 0.0
+        },
+        "ineligible": {
+          "n": 1,
+          "mean_views_per_hour": 0.0,
+          "median_views_per_hour": 0.0
+        },
+        "mean_difference_views_per_hour": 25.57741095766291
+      }
+    },
+    {
+      "threshold_ms": 15000,
+      "predicate": "video_duration_ms > 15000",
+      "eligible_duration_count": 15,
+      "duration_cases": [
+        {
+          "video_duration_ms": 58892,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 9920,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 20041,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 104560,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 26433,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 568416,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 27223,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 46300,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 10944,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 32127,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 173560,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 60923,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 46188,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 44356,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 12373,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 15041,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 26525,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 38233,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 14831,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        }
+      ],
+      "observed_growth": {
+        "eligible": {
+          "n": 15,
+          "mean_views_per_hour": 16.017509829831052,
+          "median_views_per_hour": 0.0
+        },
+        "ineligible": {
+          "n": 4,
+          "mean_views_per_hour": 55.032687447616645,
+          "median_views_per_hour": 26.237473175925178
+        },
+        "mean_difference_views_per_hour": -39.0151776177856
+      }
+    },
+    {
+      "threshold_ms": 20000,
+      "predicate": "video_duration_ms > 20000",
+      "eligible_duration_count": 14,
+      "duration_cases": [
+        {
+          "video_duration_ms": 58892,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 9920,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 20041,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 104560,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 26433,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 568416,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 27223,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 46300,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 10944,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 32127,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 173560,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 60923,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 46188,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 44356,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 12373,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 15041,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 26525,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 38233,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 14831,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        }
+      ],
+      "observed_growth": {
+        "eligible": {
+          "n": 14,
+          "mean_views_per_hour": 13.861306583507641,
+          "median_views_per_hour": 0.0
+        },
+        "ineligible": {
+          "n": 5,
+          "mean_views_per_hour": 53.267021013765074,
+          "median_views_per_hour": 46.204355278358804
+        },
+        "mean_difference_views_per_hour": -39.40571443025743
+      }
+    },
+    {
+      "threshold_ms": 30000,
+      "predicate": "video_duration_ms > 30000",
+      "eligible_duration_count": 10,
+      "duration_cases": [
+        {
+          "video_duration_ms": 58892,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 9920,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 20041,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 104560,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 26433,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 568416,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 27223,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 46300,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 10944,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 32127,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 173560,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 60923,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 46188,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 44356,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 12373,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 15041,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 26525,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 38233,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 14831,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        }
+      ],
+      "observed_growth": {
+        "eligible": {
+          "n": 10,
+          "mean_views_per_hour": 14.818396799987932,
+          "median_views_per_hour": 0.0
+        },
+        "ineligible": {
+          "n": 9,
+          "mean_views_per_hour": 34.6899365820059,
+          "median_views_per_hour": 0.6600622182622686
+        },
+        "mean_difference_views_per_hour": -19.87153978201797
+      }
+    },
+    {
+      "threshold_ms": 60000,
+      "predicate": "video_duration_ms > 60000",
+      "eligible_duration_count": 4,
+      "duration_cases": [
+        {
+          "video_duration_ms": 58892,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 9920,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 20041,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 104560,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 26433,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 568416,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 27223,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 46300,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 10944,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 32127,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 173560,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 60923,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 46188,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 44356,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 12373,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 15041,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 26525,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 38233,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 14831,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        }
+      ],
+      "observed_growth": {
+        "eligible": {
+          "n": 4,
+          "mean_views_per_hour": 0.0,
+          "median_views_per_hour": 0.0
+        },
+        "ineligible": {
+          "n": 15,
+          "mean_views_per_hour": 30.69289314919549,
+          "median_views_per_hour": 0.0
+        },
+        "mean_difference_views_per_hour": -30.69289314919549
+      }
+    }
+  ],
+  "limitations": [
+    "Public view growth is post-exposure observational data, not a Phoenix prediction or a randomized estimate of VQV treatment.",
+    "Duration, author, topic, posting time, candidate selection, and exposure are confounded; a group difference does not identify the production threshold.",
+    "The production threshold and feature-switch VQV weight are unpublished."
+  ],
+  "input": {
+    "kind": "backend_audit_receipts",
+    "backend": "fxtwitter",
+    "cohort": {
+      "post_count": 120,
+      "ordered_status_ids_sha256": "f5029a47d466dbfb6c31f75bceee8e43243a9f254c29a15ee423e56a86323760"
+    },
+    "receipt_count": 3,
+    "receipts": [
+      {
+        "path": "state/backend-audits/snapshot-2026-07-30-01.json",
+        "sha256": "610017931a9bbe0d993b0ca0d118cba799d4c5799ca34bbf159c0f0800e18ac5",
+        "started_at": "2026-07-30T07:27:32.594312+00:00",
+        "counts": {
+          "backend_failed": 13,
+          "missing_video_duration_ms": 2,
+          "not_video": 86,
+          "usable_video_observations": 19
+        }
+      },
+      {
+        "path": "state/backend-audits/snapshot-2026-07-30-02.json",
+        "sha256": "26258af8b2257da0b08a57064422bc460b2a9342ef11875f4a8440b9b5922a9b",
+        "started_at": "2026-07-30T08:00:15.024570+00:00",
+        "counts": {
+          "backend_failed": 13,
+          "missing_video_duration_ms": 2,
+          "not_video": 86,
+          "usable_video_observations": 19
+        }
+      },
+      {
+        "path": "state/backend-audits/snapshot-2026-07-30-03.json",
+        "sha256": "5843f102891f1e9d11ba4ab79c4339c8942885ef63e9ff1fe5aae8e3e8a10036",
+        "started_at": "2026-07-30T10:29:20.656917+00:00",
+        "counts": {
+          "backend_failed": 13,
+          "missing_video_duration_ms": 2,
+          "not_video": 86,
+          "usable_video_observations": 19
+        }
+      }
+    ],
+    "raw_usable_observation_count": 57,
+    "observation_count": 57,
+    "post_count": 19,
+    "single_observation_post_count": 0
+  },
+  "tool": {
+    "path": "scripts/analyze_vqv_threshold.py",
+    "sha256": "1cb24658a6f8653814ab7087845f8d45258c4c2ff40fe82f3bb111530f94cca1"
+  }
+}

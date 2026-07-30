@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.1.3 — 2026-07-30
+
+### Added
+
+- Fixed-cohort backend audit receipts that exclude post text, authors, URLs,
+  cookies, and credentials while retaining public counts and provenance hashes.
+- Repeated-snapshot aggregation with Wilson success-rate intervals, latency
+  quantiles, field coverage, cohort checks, and explicit completion gates.
+- A 120-post cohort and all three required time-separated reliability snapshots.
+- Direct VQV view-growth analysis from repeated privacy-minimized backend audit
+  receipts, including per-receipt attrition metadata.
+
+### Fixed
+
+- Syndication tombstone payloads no longer count as successful post fetches.
+
+### Changed
+
+- Public backend request timeout reduced from 12 to 5 seconds after 1,080
+  attempts across three UTC hours completed with no timeout failures and a
+  maximum observed latency below 1.6 seconds.
+
 ## 0.1.2 — 2026-07-30
 
 ### Added

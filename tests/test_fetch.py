@@ -1,7 +1,12 @@
 import unittest
 from unittest.mock import Mock, patch
 
-from xalgo.fetch import _from_vxtwitter, _syndication_token, extract_status_id
+from xalgo.fetch import (
+    _from_syndication,
+    _from_vxtwitter,
+    _syndication_token,
+    extract_status_id,
+)
 
 
 class FetchTests(unittest.TestCase):
@@ -25,6 +30,34 @@ class FetchTests(unittest.TestCase):
         self.assertEqual(_syndication_token("2079205509727478218"), "51g")
 
     @patch("xalgo.fetch.requests.get")
+    def test_syndication_tombstone_is_not_a_success(self, get):
+        response = Mock()
+        response.raise_for_status.return_value = None
+        response.json.return_value = {
+            "__typename": "TweetTombstone",
+            "tombstone": {"text": {"text": "Post unavailable"}},
+        }
+        get.return_value = response
+
+        with self.assertRaisesRegex(LookupError, "TweetTombstone"):
+            _from_syndication("123")
+
+    @patch("xalgo.fetch.requests.get")
+    def test_syndication_payload_must_match_requested_post(self, get):
+        response = Mock()
+        response.raise_for_status.return_value = None
+        response.json.return_value = {
+            "__typename": "Tweet",
+            "id_str": "999",
+            "text": "wrong post",
+            "user": {"screen_name": "example"},
+        }
+        get.return_value = response
+
+        with self.assertRaisesRegex(LookupError, "instead of post 123"):
+            _from_syndication("123")
+
+    @patch("xalgo.fetch.requests.get")
     def test_vxtwitter_uses_status_only_route_to_avoid_stale_username_cache(self, get):
         response = Mock()
         response.raise_for_status.return_value = None
@@ -42,6 +75,7 @@ class FetchTests(unittest.TestCase):
         post = _from_vxtwitter("123")
 
         self.assertEqual(get.call_args.args[0], "https://api.vxtwitter.com/status/123")
+        self.assertEqual(get.call_args.kwargs["timeout"], 5)
         self.assertEqual(post.likes, 10)
 
 

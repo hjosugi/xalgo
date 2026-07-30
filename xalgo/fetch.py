@@ -14,12 +14,11 @@ import math
 import re
 import time
 from dataclasses import dataclass, field
-from typing import Optional
 
 import requests
 
 UA = {"User-Agent": "Mozilla/5.0 (xalgo-scorer; research tool)"}
-TIMEOUT = 12
+TIMEOUT = 5
 
 _ID_RE = re.compile(
     r"(?:twitter\.com|x\.com|fxtwitter\.com|vxtwitter\.com|fixupx\.com)"
@@ -33,16 +32,16 @@ class PostData:
     url: str = ""
     text: str = ""
     author: str = ""
-    author_followers: Optional[int] = None
+    author_followers: int | None = None
     created_at: str = ""
-    likes: Optional[int] = None
-    retweets: Optional[int] = None
-    replies: Optional[int] = None
-    quotes: Optional[int] = None
-    bookmarks: Optional[int] = None
-    views: Optional[int] = None
+    likes: int | None = None
+    retweets: int | None = None
+    replies: int | None = None
+    quotes: int | None = None
+    bookmarks: int | None = None
+    views: int | None = None
     has_video: bool = False
-    video_duration_ms: Optional[int] = None
+    video_duration_ms: int | None = None
     source_backend: str = ""
     warnings: list = field(default_factory=list)
 
@@ -51,8 +50,8 @@ class PostData:
 class BackendAttempt:
     backend: str
     elapsed_ms: float
-    post: Optional[PostData] = None
-    error: Optional[str] = None
+    post: PostData | None = None
+    error: str | None = None
 
     @property
     def ok(self) -> bool:
@@ -145,6 +144,11 @@ def _from_syndication(status_id: str) -> PostData:
     )
     r.raise_for_status()
     t = r.json()
+    if str(t.get("id_str", "")) != status_id:
+        payload_type = t.get("__typename", "unknown")
+        raise LookupError(
+            f"syndication returned {payload_type} instead of post {status_id}"
+        )
     d = PostData(
         status_id=status_id,
         text=t.get("text", ""),

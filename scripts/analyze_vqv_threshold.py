@@ -10,6 +10,7 @@ Snapshot CSV columns:
     post_id,video_duration_ms,observed_at,views
 
 Each post must appear at least twice.  Credential-like columns are rejected.
+Repeated privacy-minimized backend-audit receipts can be used instead of CSV.
 """
 
 from __future__ import annotations
@@ -22,15 +23,20 @@ import math
 import statistics
 import sys
 from collections import defaultdict
+from collections.abc import Iterable
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import Iterable
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from xalgo.score import vqv_weight_eligibility  # noqa: E402
+from scripts.analyze_backend_snapshots import (
+    SnapshotError,
+    aggregate_snapshots,
+    load_snapshot,
+)
+from xalgo.score import vqv_weight_eligibility
 
 DEFAULT_DURATIONS_MS = (2_000, 5_000, 10_000, 30_000, 60_000)
 DEFAULT_THRESHOLDS_MS = (0, 2_000, 5_000, 10_000, 30_000, 60_000)
@@ -118,6 +124,123 @@ def load_observations(path: Path) -> list[Observation]:
     if not rows:
         raise ValueError("snapshot CSV has no data rows")
     return rows
+
+
+def load_backend_observations(
+    paths: Iterable[Path], backend: str
+) -> tuple[list[Observation], dict]:
+    """Extract repeated public video observations from backend-audit receipts."""
+    receipt_paths = list(paths)
+    if len(receipt_paths) < 2:
+        raise ValueError("at least two backend audit receipts are required")
+    if not backend.strip():
+        raise ValueError("backend must not be empty")
+
+    snapshots = [load_snapshot(path) for path in receipt_paths]
+    aggregate_snapshots(snapshots)
+    snapshots.sort(key=lambda snapshot: _parse_datetime(snapshot["started_at"]))
+
+    observations = []
+    per_receipt = []
+    for snapshot in snapshots:
+        observed_at = _parse_datetime(snapshot["started_at"])
+        receipt_counts = defaultdict(int)
+        backend_present = False
+        for record in snapshot["records"]:
+            attempt = next(
+                (item for item in record["attempts"] if item["backend"] == backend),
+                None,
+            )
+            if attempt is None:
+                receipt_counts["backend_attempt_missing"] += 1
+                continue
+            backend_present = True
+            if not attempt["ok"]:
+                receipt_counts["backend_failed"] += 1
+                continue
+            post = attempt["post"]
+            if post.get("has_video") is not True:
+                receipt_counts["not_video"] += 1
+                continue
+            duration = post.get("video_duration_ms")
+            views = post.get("views")
+            if duration is None:
+                receipt_counts["missing_video_duration_ms"] += 1
+                continue
+            if views is None:
+                receipt_counts["missing_views"] += 1
+                continue
+            if (
+                isinstance(duration, bool)
+                or not isinstance(duration, int)
+                or duration < 0
+            ):
+                raise ValueError(
+                    f"{snapshot['_receipt']['path']}: "
+                    f"{record['status_id']} has invalid video_duration_ms"
+                )
+            if isinstance(views, bool) or not isinstance(views, int) or views < 0:
+                raise ValueError(
+                    f"{snapshot['_receipt']['path']}: "
+                    f"{record['status_id']} has invalid views"
+                )
+            observations.append(
+                Observation(
+                    post_id=record["status_id"],
+                    video_duration_ms=duration,
+                    observed_at=observed_at,
+                    views=views,
+                )
+            )
+            receipt_counts["usable_video_observations"] += 1
+
+        if not backend_present:
+            raise ValueError(
+                f"{snapshot['_receipt']['path']}: backend {backend!r} is absent"
+            )
+        per_receipt.append(
+            {
+                **snapshot["_receipt"],
+                "started_at": snapshot["started_at"],
+                "counts": dict(sorted(receipt_counts.items())),
+            }
+        )
+
+    observation_counts: dict[str, int] = defaultdict(int)
+    for observation in observations:
+        observation_counts[observation.post_id] += 1
+    repeated_ids = {
+        post_id for post_id, count in observation_counts.items() if count >= 2
+    }
+    filtered = [
+        observation
+        for observation in observations
+        if observation.post_id in repeated_ids
+    ]
+    if not filtered:
+        raise ValueError(
+            f"backend {backend!r} has no video posts with at least two "
+            "duration-and-view observations"
+        )
+
+    return filtered, {
+        "kind": "backend_audit_receipts",
+        "backend": backend,
+        "cohort": {
+            "post_count": snapshots[0]["cohort"]["post_count"],
+            "ordered_status_ids_sha256": snapshots[0]["cohort"][
+                "ordered_status_ids_sha256"
+            ],
+        },
+        "receipt_count": len(snapshots),
+        "receipts": per_receipt,
+        "raw_usable_observation_count": len(observations),
+        "observation_count": len(filtered),
+        "post_count": len(repeated_ids),
+        "single_observation_post_count": sum(
+            count == 1 for count in observation_counts.values()
+        ),
+    }
 
 
 def summarize_posts(observations: Iterable[Observation]) -> list[dict]:
@@ -263,10 +386,15 @@ def analyze_thresholds(
         "posts": post_rows,
         "thresholds": cases,
         "limitations": [
-            "Public view growth is post-exposure observational data, not a Phoenix "
-            "prediction or a randomized estimate of VQV treatment.",
-            "Duration, author, topic, posting time, candidate selection, and exposure "
-            "are confounded; a group difference does not identify the production threshold.",
+            (
+                "Public view growth is post-exposure observational data, not a "
+                "Phoenix prediction or a randomized estimate of VQV treatment."
+            ),
+            (
+                "Duration, author, topic, posting time, candidate selection, and "
+                "exposure are confounded; a group difference does not identify "
+                "the production threshold."
+            ),
             "The production threshold and feature-switch VQV weight are unpublished.",
         ],
     }
@@ -315,6 +443,16 @@ def _print_report(report: dict) -> None:
     )
 
 
+def _write_json(path: Path, report: dict, *, force: bool) -> None:
+    if path.exists() and not force:
+        raise FileExistsError(f"output already exists: {path}; pass --force to replace")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(report, ensure_ascii=False, indent=2, allow_nan=False) + "\n",
+        encoding="utf-8",
+    )
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -335,12 +473,32 @@ def main(argv: list[str] | None = None) -> int:
         type=Path,
         help="optional repeated snapshot CSV for observational view-growth splits",
     )
+    parser.add_argument(
+        "--backend-receipt",
+        action="append",
+        type=Path,
+        help=(
+            "privacy-minimized backend audit receipt; repeat for two or more "
+            "time-separated receipts (mutually exclusive with --snapshots)"
+        ),
+    )
+    parser.add_argument(
+        "--backend",
+        default="fxtwitter",
+        help="backend to extract from --backend-receipt (default: fxtwitter)",
+    )
     parser.add_argument("--vqv-p", type=float, default=0.1)
     parser.add_argument("--vqv-weight", type=float, default=1.0)
     parser.add_argument("--json", action="store_true")
+    parser.add_argument("--output", type=Path)
+    parser.add_argument(
+        "--force", action="store_true", help="allow replacing an existing output"
+    )
     args = parser.parse_args(argv)
 
     try:
+        if args.snapshots is not None and args.backend_receipt is not None:
+            raise ValueError("--snapshots and --backend-receipt are mutually exclusive")
         thresholds = _parse_int_list(args.thresholds_ms, "thresholds_ms")
         posts = []
         input_meta = None
@@ -353,6 +511,11 @@ def main(argv: list[str] | None = None) -> int:
                 "observation_count": len(observations),
                 "post_count": len(posts),
             }
+        elif args.backend_receipt is not None:
+            observations, input_meta = load_backend_observations(
+                args.backend_receipt, args.backend
+            )
+            posts = summarize_posts(observations)
         durations = (
             _parse_int_list(args.durations_ms, "durations_ms")
             if args.durations_ms is not None
@@ -366,7 +529,9 @@ def main(argv: list[str] | None = None) -> int:
             "path": str(Path(__file__).relative_to(ROOT)),
             "sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         }
-    except (OSError, ValueError) as exc:
+        if args.output is not None:
+            _write_json(args.output, report, force=args.force)
+    except (OSError, SnapshotError, ValueError) as exc:
         parser.error(str(exc))
 
     if args.json:

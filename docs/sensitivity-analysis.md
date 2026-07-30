@@ -73,6 +73,42 @@ anonymized-a,5000,2026-07-01T06:00:00Z,1360
 入出力確認用の合成データで、実測結果ではありません。JSON出力には入力とtoolのSHA-256が
 入り、同じ入力・引数から再生成できます。
 
+取得信頼性監査のprivacy-minimized receiptも直接入力できます。同一cohortのreceiptを
+2個以上指定し、既定の`fxtwitter`（または`--backend`指定）のうち、動画長とview countが
+両時点以上で取得できた投稿だけを比較します。入力metadataにはreceiptごとのSHA-256、
+除外理由別件数、単一観測しかない投稿数を残すため、attritionを確認できます。
+
+```bash
+python scripts/analyze_vqv_threshold.py \
+  --backend-receipt state/backend-audits/snapshot-01.json \
+  --backend-receipt state/backend-audits/snapshot-02.json \
+  --thresholds-ms 0,5000,10000,30000 \
+  --output state/vqv/analysis-current.json --json
+```
+
+### 2026-07-30 実動画cohortの3時間結果
+
+固定120投稿のbackend監査3回（07:27 / 08:00 / 10:29 UTC、間隔3.03時間）から、
+FxTwitterで全時点の動画長とview countを取得できた19動画を比較した。動画長は
+9,920–568,416ms、各動画3観測で、単一観測への脱落は0件だった。
+
+- analysis receipt:
+  [`state/vqv/analysis-2026-07-30-03.json`](../state/vqv/analysis-2026-07-30-03.json)
+- analysis SHA-256:
+  `add1a08676b02d47134adb61c1dfb1fb9e38fec15e91d67e80f0a7b21186935a`
+- tool SHA-256:
+  `1cb24658a6f8653814ab7087845f8d45258c4c2ff40fe82f3bb111530f94cca1`
+- 19本中6本でviewが増加し、13本は変化なし
+- 30日未満の5本は全て増加（合計+1,393 views、平均91.95 views/hour）
+- 30日以上の14本は1本だけ+2（平均0.047 views/hour）
+- 15秒閾値の平均差（eligible − ineligible）は−39.0 views/hour
+- 20秒閾値は−39.4、30秒閾値は−19.9、60秒閾値は−30.7 views/hour
+
+この短い観測では新しい投稿だけが伸びており、動画長より投稿時期の交絡が支配的である。
+各群も最大19本と小さいため、負の差をVQVの効果や本番閾値とは解釈しない。投稿30日を
+境界に層別しても群間差が極端で、時間交絡を除去できる標本ではない。privacy要件により
+receiptは著者・本文を保持しないので、author/topic層別には別の匿名化metadataが必要である。
+
 ## Negative score offset
 
 同じ固定commitの`ScoringWeights::from_params`と`offset_score()`に合わせ、
