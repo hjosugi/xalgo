@@ -81,6 +81,12 @@ pinned releaseでは、root READMEの`256-dim/2-layer`に対しartifactは
 `--fail-on-drift`は既知不整合では失敗せず、LFS OID・model寸法・README・action順の
 新しい変更だけをexit 1で通知します。
 
+約3GBのartifactを実際に取得したfull inferenceでは、84,564候補からretrieval 200件、
+ranking 200件を完走し、19列の確率分布を決定的に再生成できました。再現patch、receipt、
+全列histogram、公開count proxyとの比較は
+[`docs/phoenix-local-inference.md`](docs/phoenix-local-inference.md)を参照してください。
+READMEの`~537K sports posts`に対し、配布corpus実体が84,564件という追加driftも記録しています。
+
 ### 5. 上流変更の自動検知
 
 ```bash

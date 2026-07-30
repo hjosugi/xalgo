@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-07-30T06:23:49Z",
+  "upstream": {
+    "repository": "xai-org/x-algorithm",
+    "commit": "0bfc2795d308f90032544322747caacd535f75ae"
+  },
+  "artifact": {
+    "lfs_sha256": "fbc6017d00588754e22e0c7eb2f786a008a74d309c03c8085fa2fad418a83dac",
+    "archive_size_bytes": 2903518802,
+    "extracted_size_bytes": 3124043128,
+    "corpus_candidate_count": 84564,
+    "corpus_representation_shape": [
+      84564,
+      128
+    ]
+  },
+  "input": {
+    "example_sequence_sha256": "ec53ed1d58f8b69aa6ee121e8cf1090e10e89cf4cd635ccf22b3d314d50838e7",
+    "user_id": 12345,
+    "history_item_count": 3
+  },
+  "instrumentation": {
+    "patch": "experiments/phoenix/export_probabilities.patch",
+    "patch_sha256": "388669a966c24c64a9225e3545aa8a1f4173962ed078bd639fe2d8879f32638c"
+  },
+  "output": {
+    "probability_export_sha256": "7214149cc04f68a451849b00f49fef78debb5b7471adb3d4bf463754d6d84e47",
+    "candidate_count": 200,
+    "output_column_count": 19,
+    "retrieval_score_min": 0.8790421485900879,
+    "retrieval_score_max": 0.9382263422012329,
+    "demo_weighted_score_min": 0.0022,
+    "demo_weighted_score_max": 0.3922,
+    "identical_export_runs": 2
+  },
+  "runtime": {
+    "python": "3.13.13",
+    "jax": "0.8.1",
+    "standard_pipeline_seconds": 15.772,
+    "upstream_unit_tests_passed": 34
+  },
+  "label_status": "unverified: runners.py labels conflict with run_pipeline.py indices and the checkpoint has no semantic head metadata"
+}

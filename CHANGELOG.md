@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.1.2 — 2026-07-30
+
+### Added
+
+- Deterministic full-artifact Phoenix inference receipt with an exact
+  instrumentation patch, 19-column probability histograms, and provenance
+  hashes.
+- Standard-library probability export validator and public-count proxy
+  summarizer.
+
+### Documented
+
+- The bundled sports corpus contains 84,564 candidates despite the upstream
+  README's approximately 537K claim.
+- Public count rates cannot calibrate the example Phoenix output without
+  matched viewers, candidates, times, and a resolved action-head contract.
+
 ## 0.1.1 — 2026-07-30
 
 ### Added

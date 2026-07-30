@@ -1,0 +1,38 @@
+diff --git a/phoenix/run_pipeline.py b/phoenix/run_pipeline.py
+--- a/phoenix/run_pipeline.py
++++ b/phoenix/run_pipeline.py
+@@ -177,4 +177,9 @@ def main():
+     )
+     parser.add_argument("--top_k_retrieval", type=int, default=200)
+     parser.add_argument("--top_k_display", type=int, default=30)
++    parser.add_argument(
++        "--probabilities_output",
++        default=None,
++        help="Optional JSON path for candidate probability vectors indexed by output column.",
++    )
+     args = parser.parse_args()
+@@ -354,4 +359,24 @@ def main():
+     all_probs = np.concatenate(all_probs)
++    if args.probabilities_output:
++        payload = {
++            "schema_version": 1,
++            "num_actions": int(all_probs.shape[1]),
++            "candidates": [
++                {
++                    "post_id": int(ret_post_ids[i]),
++                    "author_id": int(ret_author_ids[i]),
++                    "retrieval_score": float(ret_scores[i]),
++                    "probabilities_by_column": [
++                        float(value) for value in all_probs[i]
++                    ],
++                }
++                for i in range(TOP_K)
++            ],
++        }
++        with open(args.probabilities_output, "w") as f:
++            json.dump(payload, f, indent=2)
++        log.info("Wrote probability vectors to %s", args.probabilities_output)
++
+     weighted = (
+         all_probs[:, IDX_FAV] * 1.0
+         + all_probs[:, IDX_REPLY] * 0.5

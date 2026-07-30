@@ -118,5 +118,6 @@ exposure biasがあるため、「高順位だからengagementされた」の逆
 1. URL cohortの定点観測collectorと匿名化schema。
 2. temporal splitを備えた評価notebook/CLI。
 3. L0監査結果のbaseline差分をupstream追跡Issueへ統合。
-4. 公開Phoenix artifactのdeterministic receipt生成。
+4. 公開Phoenix artifactのdeterministic receipt生成（
+   [`phoenix-local-inference.md`](phoenix-local-inference.md)で完了）。
 5. viewer自身が提供した匿名化feed snapshotとのNDCG比較（CLI実装済み、実標本待ち）。
