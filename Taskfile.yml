@@ -1,0 +1,33 @@
+version: "3"
+
+tasks:
+  test:
+    desc: Run the Python and browser test suites
+    cmds:
+      - python -m unittest discover -s tests -v
+      - node --test tests/test_web_scoring.cjs
+
+  lint:
+    desc: Check Python lint and formatting
+    cmds:
+      - ruff check --ignore EXE001,E402 scripts tests xalgo
+      - ruff format --check scripts tests xalgo
+      - nixfmt --check flake.nix
+      - actionlint
+
+  format:
+    desc: Format Python and Nix sources
+    cmds:
+      - ruff format scripts tests xalgo
+      - nixfmt flake.nix
+
+  ci:
+    desc: Run all CI checks
+    cmds:
+      - task: lint
+      - task: test
+
+  web:
+    desc: Start the local learning lab
+    cmds:
+      - python -m xalgo.web

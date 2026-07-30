@@ -19,11 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - run: pip install requests
+      - uses: cachix/install-nix-action@v31.10.6
 
       - name: Detect scoring changes
         id: detect
@@ -31,7 +27,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set +e
-          python scripts/track_upstream.py
+          nix develop --command python scripts/track_upstream.py
           code=$?
           set -e
           echo "changed=$([ $code -eq 2 ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
@@ -43,7 +39,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set +e
-          python scripts/audit_model_contract.py \
+          nix develop --command python scripts/audit_model_contract.py \
             --ref main --json --fail-on-drift > model-contract.json
           audit_code=$?
           set -e

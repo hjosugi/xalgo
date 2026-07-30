@@ -1,0 +1,3407 @@
+{
+  "upstream_contract": {
+    "repository": "xai-org/x-algorithm",
+    "commit": "0bfc2795d308f90032544322747caacd535f75ae",
+    "predicate": "video_duration_ms > MIN_VIDEO_DURATION_MS",
+    "production_threshold": "unpublished",
+    "production_vqv_weight": "unpublished"
+  },
+  "assumptions": {
+    "vqv_probability": 0.1,
+    "vqv_weight": 1.0,
+    "eligible_vqv_contribution": 0.1
+  },
+  "posts": [
+    {
+      "post_id": "2055069746765115434",
+      "video_duration_ms": 58892,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 0,
+      "views_per_hour": 0.0,
+      "count_decreased": false,
+      "author_group": "author-01",
+      "topic_group": "other-sport"
+    },
+    {
+      "post_id": "2055232372686086305",
+      "video_duration_ms": 9920,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 0,
+      "views_per_hour": 0.0,
+      "count_decreased": false,
+      "author_group": "author-02",
+      "topic_group": "football"
+    },
+    {
+      "post_id": "2055292201731609050",
+      "video_duration_ms": 20041,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 2,
+      "views_per_hour": 0.6600622182622686,
+      "count_decreased": false,
+      "author_group": "author-03",
+      "topic_group": "unclassified"
+    },
+    {
+      "post_id": "2055320108306681943",
+      "video_duration_ms": 104560,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 0,
+      "views_per_hour": 0.0,
+      "count_decreased": false,
+      "author_group": "author-04",
+      "topic_group": "other-sport"
+    },
+    {
+      "post_id": "2055347696396112031",
+      "video_duration_ms": 26433,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 0,
+      "views_per_hour": 0.0,
+      "count_decreased": false,
+      "author_group": "author-05",
+      "topic_group": "other-sport"
+    },
+    {
+      "post_id": "2055354111378284849",
+      "video_duration_ms": 568416,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 0,
+      "views_per_hour": 0.0,
+      "count_decreased": false,
+      "author_group": "author-06",
+      "topic_group": "football"
+    },
+    {
+      "post_id": "2055358640438030718",
+      "video_duration_ms": 27223,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 0,
+      "views_per_hour": 0.0,
+      "count_decreased": false,
+      "author_group": "author-07",
+      "topic_group": "football"
+    },
+    {
+      "post_id": "2055361023754871260",
+      "video_duration_ms": 46300,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 0,
+      "views_per_hour": 0.0,
+      "count_decreased": false,
+      "author_group": "author-08",
+      "topic_group": "football"
+    },
+    {
+      "post_id": "2055364591786590502",
+      "video_duration_ms": 10944,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 0,
+      "views_per_hour": 0.0,
+      "count_decreased": false,
+      "author_group": "author-09",
+      "topic_group": "football"
+    },
+    {
+      "post_id": "2055368004074910134",
+      "video_duration_ms": 32127,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 0,
+      "views_per_hour": 0.0,
+      "count_decreased": false,
+      "author_group": "author-10",
+      "topic_group": "football"
+    },
+    {
+      "post_id": "2055369392590881270",
+      "video_duration_ms": 173560,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 0,
+      "views_per_hour": 0.0,
+      "count_decreased": false,
+      "author_group": "author-11",
+      "topic_group": "football"
+    },
+    {
+      "post_id": "2055375510255849518",
+      "video_duration_ms": 60923,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 0,
+      "views_per_hour": 0.0,
+      "count_decreased": false,
+      "author_group": "author-12",
+      "topic_group": "unclassified"
+    },
+    {
+      "post_id": "2055378389653979501",
+      "video_duration_ms": 46188,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 0,
+      "views_per_hour": 0.0,
+      "count_decreased": false,
+      "author_group": "author-13",
+      "topic_group": "football"
+    },
+    {
+      "post_id": "2055381110968705123",
+      "video_duration_ms": 44356,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 0,
+      "views_per_hour": 0.0,
+      "count_decreased": false,
+      "author_group": "author-14",
+      "topic_group": "football"
+    },
+    {
+      "post_id": "2079205509727478218",
+      "video_duration_ms": 12373,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 508,
+      "views_per_hour": 167.65580343861623,
+      "count_decreased": false,
+      "author_group": "author-15",
+      "topic_group": "unclassified"
+    },
+    {
+      "post_id": "2079222259802054870",
+      "video_duration_ms": 15041,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 140,
+      "views_per_hour": 46.204355278358804,
+      "count_decreased": false,
+      "author_group": "author-16",
+      "topic_group": "unclassified"
+    },
+    {
+      "post_id": "2079256963196567576",
+      "video_duration_ms": 26525,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 137,
+      "views_per_hour": 45.2142619509654,
+      "count_decreased": false,
+      "author_group": "author-17",
+      "topic_group": "football"
+    },
+    {
+      "post_id": "2079272919700517166",
+      "video_duration_ms": 38233,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 449,
+      "views_per_hour": 148.18396799987931,
+      "count_decreased": false,
+      "author_group": "author-18",
+      "topic_group": "unclassified"
+    },
+    {
+      "post_id": "2079288782130417741",
+      "video_duration_ms": 14831,
+      "observation_count": 3,
+      "first_observed_at": "2026-07-30T07:27:32.594312+00:00",
+      "last_observed_at": "2026-07-30T10:29:20.656917+00:00",
+      "elapsed_hours": 3.0300173902777776,
+      "views_delta": 159,
+      "views_per_hour": 52.474946351850356,
+      "count_decreased": false,
+      "author_group": "author-19",
+      "topic_group": "football"
+    }
+  ],
+  "thresholds": [
+    {
+      "threshold_ms": 0,
+      "predicate": "video_duration_ms > 0",
+      "eligible_duration_count": 19,
+      "duration_cases": [
+        {
+          "video_duration_ms": 58892,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 9920,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 20041,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 104560,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 26433,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 568416,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 27223,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 46300,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 10944,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 32127,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 173560,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 60923,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 46188,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 44356,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 12373,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 15041,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 26525,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 38233,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 14831,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        }
+      ],
+      "observed_growth": {
+        "eligible": {
+          "n": 19,
+          "mean_views_per_hour": 24.231231433575388,
+          "median_views_per_hour": 0.0
+        },
+        "ineligible": {
+          "n": 0,
+          "mean_views_per_hour": null,
+          "median_views_per_hour": null
+        },
+        "mean_difference_views_per_hour": null
+      },
+      "observed_growth_by_stratum": {
+        "author_group": {
+          "group_count": 19,
+          "multi_post_group_count": 0,
+          "comparable_group_count": 0,
+          "groups": {
+            "author-01": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-02": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-03": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.6600622182622686,
+                "median_views_per_hour": 0.6600622182622686
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-04": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-05": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-06": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-07": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-08": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-09": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-10": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-11": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-12": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-13": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-14": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-15": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 167.65580343861623,
+                "median_views_per_hour": 167.65580343861623
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-16": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 46.204355278358804,
+                "median_views_per_hour": 46.204355278358804
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-17": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 45.2142619509654,
+                "median_views_per_hour": 45.2142619509654
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-18": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 148.18396799987931,
+                "median_views_per_hour": 148.18396799987931
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-19": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 52.474946351850356,
+                "median_views_per_hour": 52.474946351850356
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            }
+          }
+        },
+        "topic_group": {
+          "group_count": 3,
+          "multi_post_group_count": 3,
+          "comparable_group_count": 0,
+          "groups": {
+            "football": {
+              "post_count": 11,
+              "eligible": {
+                "n": 11,
+                "mean_views_per_hour": 8.880837118437796,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "other-sport": {
+              "post_count": 3,
+              "eligible": {
+                "n": 3,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "unclassified": {
+              "post_count": 5,
+              "eligible": {
+                "n": 5,
+                "mean_views_per_hour": 72.54083778702332,
+                "median_views_per_hour": 46.204355278358804
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "threshold_ms": 5000,
+      "predicate": "video_duration_ms > 5000",
+      "eligible_duration_count": 19,
+      "duration_cases": [
+        {
+          "video_duration_ms": 58892,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 9920,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 20041,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 104560,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 26433,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 568416,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 27223,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 46300,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 10944,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 32127,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 173560,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 60923,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 46188,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 44356,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 12373,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 15041,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 26525,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 38233,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 14831,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        }
+      ],
+      "observed_growth": {
+        "eligible": {
+          "n": 19,
+          "mean_views_per_hour": 24.231231433575388,
+          "median_views_per_hour": 0.0
+        },
+        "ineligible": {
+          "n": 0,
+          "mean_views_per_hour": null,
+          "median_views_per_hour": null
+        },
+        "mean_difference_views_per_hour": null
+      },
+      "observed_growth_by_stratum": {
+        "author_group": {
+          "group_count": 19,
+          "multi_post_group_count": 0,
+          "comparable_group_count": 0,
+          "groups": {
+            "author-01": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-02": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-03": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.6600622182622686,
+                "median_views_per_hour": 0.6600622182622686
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-04": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-05": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-06": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-07": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-08": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-09": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-10": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-11": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-12": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-13": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-14": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-15": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 167.65580343861623,
+                "median_views_per_hour": 167.65580343861623
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-16": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 46.204355278358804,
+                "median_views_per_hour": 46.204355278358804
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-17": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 45.2142619509654,
+                "median_views_per_hour": 45.2142619509654
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-18": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 148.18396799987931,
+                "median_views_per_hour": 148.18396799987931
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-19": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 52.474946351850356,
+                "median_views_per_hour": 52.474946351850356
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            }
+          }
+        },
+        "topic_group": {
+          "group_count": 3,
+          "multi_post_group_count": 3,
+          "comparable_group_count": 0,
+          "groups": {
+            "football": {
+              "post_count": 11,
+              "eligible": {
+                "n": 11,
+                "mean_views_per_hour": 8.880837118437796,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "other-sport": {
+              "post_count": 3,
+              "eligible": {
+                "n": 3,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "unclassified": {
+              "post_count": 5,
+              "eligible": {
+                "n": 5,
+                "mean_views_per_hour": 72.54083778702332,
+                "median_views_per_hour": 46.204355278358804
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "threshold_ms": 10000,
+      "predicate": "video_duration_ms > 10000",
+      "eligible_duration_count": 18,
+      "duration_cases": [
+        {
+          "video_duration_ms": 58892,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 9920,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 20041,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 104560,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 26433,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 568416,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 27223,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 46300,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 10944,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 32127,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 173560,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 60923,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 46188,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 44356,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 12373,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 15041,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 26525,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 38233,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 14831,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        }
+      ],
+      "observed_growth": {
+        "eligible": {
+          "n": 18,
+          "mean_views_per_hour": 25.57741095766291,
+          "median_views_per_hour": 0.0
+        },
+        "ineligible": {
+          "n": 1,
+          "mean_views_per_hour": 0.0,
+          "median_views_per_hour": 0.0
+        },
+        "mean_difference_views_per_hour": 25.57741095766291
+      },
+      "observed_growth_by_stratum": {
+        "author_group": {
+          "group_count": 19,
+          "multi_post_group_count": 0,
+          "comparable_group_count": 0,
+          "groups": {
+            "author-01": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-02": {
+              "post_count": 1,
+              "eligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-03": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.6600622182622686,
+                "median_views_per_hour": 0.6600622182622686
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-04": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-05": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-06": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-07": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-08": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-09": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-10": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-11": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-12": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-13": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-14": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-15": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 167.65580343861623,
+                "median_views_per_hour": 167.65580343861623
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-16": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 46.204355278358804,
+                "median_views_per_hour": 46.204355278358804
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-17": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 45.2142619509654,
+                "median_views_per_hour": 45.2142619509654
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-18": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 148.18396799987931,
+                "median_views_per_hour": 148.18396799987931
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-19": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 52.474946351850356,
+                "median_views_per_hour": 52.474946351850356
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            }
+          }
+        },
+        "topic_group": {
+          "group_count": 3,
+          "multi_post_group_count": 3,
+          "comparable_group_count": 1,
+          "groups": {
+            "football": {
+              "post_count": 11,
+              "eligible": {
+                "n": 10,
+                "mean_views_per_hour": 9.768920830281576,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "mean_difference_views_per_hour": 9.768920830281576
+            },
+            "other-sport": {
+              "post_count": 3,
+              "eligible": {
+                "n": 3,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "unclassified": {
+              "post_count": 5,
+              "eligible": {
+                "n": 5,
+                "mean_views_per_hour": 72.54083778702332,
+                "median_views_per_hour": 46.204355278358804
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "threshold_ms": 15000,
+      "predicate": "video_duration_ms > 15000",
+      "eligible_duration_count": 15,
+      "duration_cases": [
+        {
+          "video_duration_ms": 58892,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 9920,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 20041,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 104560,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 26433,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 568416,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 27223,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 46300,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 10944,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 32127,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 173560,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 60923,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 46188,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 44356,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 12373,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 15041,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 26525,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 38233,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 14831,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        }
+      ],
+      "observed_growth": {
+        "eligible": {
+          "n": 15,
+          "mean_views_per_hour": 16.017509829831052,
+          "median_views_per_hour": 0.0
+        },
+        "ineligible": {
+          "n": 4,
+          "mean_views_per_hour": 55.032687447616645,
+          "median_views_per_hour": 26.237473175925178
+        },
+        "mean_difference_views_per_hour": -39.0151776177856
+      },
+      "observed_growth_by_stratum": {
+        "author_group": {
+          "group_count": 19,
+          "multi_post_group_count": 0,
+          "comparable_group_count": 0,
+          "groups": {
+            "author-01": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-02": {
+              "post_count": 1,
+              "eligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-03": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.6600622182622686,
+                "median_views_per_hour": 0.6600622182622686
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-04": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-05": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-06": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-07": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-08": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-09": {
+              "post_count": 1,
+              "eligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-10": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-11": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-12": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-13": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-14": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-15": {
+              "post_count": 1,
+              "eligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 167.65580343861623,
+                "median_views_per_hour": 167.65580343861623
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-16": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 46.204355278358804,
+                "median_views_per_hour": 46.204355278358804
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-17": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 45.2142619509654,
+                "median_views_per_hour": 45.2142619509654
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-18": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 148.18396799987931,
+                "median_views_per_hour": 148.18396799987931
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-19": {
+              "post_count": 1,
+              "eligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 52.474946351850356,
+                "median_views_per_hour": 52.474946351850356
+              },
+              "mean_difference_views_per_hour": null
+            }
+          }
+        },
+        "topic_group": {
+          "group_count": 3,
+          "multi_post_group_count": 3,
+          "comparable_group_count": 2,
+          "groups": {
+            "football": {
+              "post_count": 11,
+              "eligible": {
+                "n": 8,
+                "mean_views_per_hour": 5.651782743870675,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 3,
+                "mean_views_per_hour": 17.49164878395012,
+                "median_views_per_hour": 0.0
+              },
+              "mean_difference_views_per_hour": -11.839866040079443
+            },
+            "other-sport": {
+              "post_count": 3,
+              "eligible": {
+                "n": 3,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "unclassified": {
+              "post_count": 5,
+              "eligible": {
+                "n": 4,
+                "mean_views_per_hour": 48.76209637412509,
+                "median_views_per_hour": 23.432208748310536
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 167.65580343861623,
+                "median_views_per_hour": 167.65580343861623
+              },
+              "mean_difference_views_per_hour": -118.89370706449114
+            }
+          }
+        }
+      }
+    },
+    {
+      "threshold_ms": 20000,
+      "predicate": "video_duration_ms > 20000",
+      "eligible_duration_count": 14,
+      "duration_cases": [
+        {
+          "video_duration_ms": 58892,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 9920,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 20041,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 104560,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 26433,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 568416,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 27223,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 46300,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 10944,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 32127,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 173560,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 60923,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 46188,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 44356,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 12373,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 15041,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 26525,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 38233,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 14831,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        }
+      ],
+      "observed_growth": {
+        "eligible": {
+          "n": 14,
+          "mean_views_per_hour": 13.861306583507641,
+          "median_views_per_hour": 0.0
+        },
+        "ineligible": {
+          "n": 5,
+          "mean_views_per_hour": 53.267021013765074,
+          "median_views_per_hour": 46.204355278358804
+        },
+        "mean_difference_views_per_hour": -39.40571443025743
+      },
+      "observed_growth_by_stratum": {
+        "author_group": {
+          "group_count": 19,
+          "multi_post_group_count": 0,
+          "comparable_group_count": 0,
+          "groups": {
+            "author-01": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-02": {
+              "post_count": 1,
+              "eligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-03": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.6600622182622686,
+                "median_views_per_hour": 0.6600622182622686
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-04": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-05": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-06": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-07": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-08": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-09": {
+              "post_count": 1,
+              "eligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-10": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-11": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-12": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-13": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-14": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-15": {
+              "post_count": 1,
+              "eligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 167.65580343861623,
+                "median_views_per_hour": 167.65580343861623
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-16": {
+              "post_count": 1,
+              "eligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 46.204355278358804,
+                "median_views_per_hour": 46.204355278358804
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-17": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 45.2142619509654,
+                "median_views_per_hour": 45.2142619509654
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-18": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 148.18396799987931,
+                "median_views_per_hour": 148.18396799987931
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-19": {
+              "post_count": 1,
+              "eligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 52.474946351850356,
+                "median_views_per_hour": 52.474946351850356
+              },
+              "mean_difference_views_per_hour": null
+            }
+          }
+        },
+        "topic_group": {
+          "group_count": 3,
+          "multi_post_group_count": 3,
+          "comparable_group_count": 2,
+          "groups": {
+            "football": {
+              "post_count": 11,
+              "eligible": {
+                "n": 8,
+                "mean_views_per_hour": 5.651782743870675,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 3,
+                "mean_views_per_hour": 17.49164878395012,
+                "median_views_per_hour": 0.0
+              },
+              "mean_difference_views_per_hour": -11.839866040079443
+            },
+            "other-sport": {
+              "post_count": 3,
+              "eligible": {
+                "n": 3,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "unclassified": {
+              "post_count": 5,
+              "eligible": {
+                "n": 3,
+                "mean_views_per_hour": 49.614676739380535,
+                "median_views_per_hour": 0.6600622182622686
+              },
+              "ineligible": {
+                "n": 2,
+                "mean_views_per_hour": 106.93007935848752,
+                "median_views_per_hour": 106.93007935848752
+              },
+              "mean_difference_views_per_hour": -57.31540261910698
+            }
+          }
+        }
+      }
+    },
+    {
+      "threshold_ms": 30000,
+      "predicate": "video_duration_ms > 30000",
+      "eligible_duration_count": 10,
+      "duration_cases": [
+        {
+          "video_duration_ms": 58892,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 9920,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 20041,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 104560,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 26433,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 568416,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 27223,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 46300,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 10944,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 32127,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 173560,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 60923,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 46188,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 44356,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 12373,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 15041,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 26525,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 38233,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 14831,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        }
+      ],
+      "observed_growth": {
+        "eligible": {
+          "n": 10,
+          "mean_views_per_hour": 14.818396799987932,
+          "median_views_per_hour": 0.0
+        },
+        "ineligible": {
+          "n": 9,
+          "mean_views_per_hour": 34.6899365820059,
+          "median_views_per_hour": 0.6600622182622686
+        },
+        "mean_difference_views_per_hour": -19.87153978201797
+      },
+      "observed_growth_by_stratum": {
+        "author_group": {
+          "group_count": 19,
+          "multi_post_group_count": 0,
+          "comparable_group_count": 0,
+          "groups": {
+            "author-01": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-02": {
+              "post_count": 1,
+              "eligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-03": {
+              "post_count": 1,
+              "eligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.6600622182622686,
+                "median_views_per_hour": 0.6600622182622686
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-04": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-05": {
+              "post_count": 1,
+              "eligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-06": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-07": {
+              "post_count": 1,
+              "eligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-08": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-09": {
+              "post_count": 1,
+              "eligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-10": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-11": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-12": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-13": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-14": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-15": {
+              "post_count": 1,
+              "eligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 167.65580343861623,
+                "median_views_per_hour": 167.65580343861623
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-16": {
+              "post_count": 1,
+              "eligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 46.204355278358804,
+                "median_views_per_hour": 46.204355278358804
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-17": {
+              "post_count": 1,
+              "eligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 45.2142619509654,
+                "median_views_per_hour": 45.2142619509654
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-18": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 148.18396799987931,
+                "median_views_per_hour": 148.18396799987931
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-19": {
+              "post_count": 1,
+              "eligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 52.474946351850356,
+                "median_views_per_hour": 52.474946351850356
+              },
+              "mean_difference_views_per_hour": null
+            }
+          }
+        },
+        "topic_group": {
+          "group_count": 3,
+          "multi_post_group_count": 3,
+          "comparable_group_count": 3,
+          "groups": {
+            "football": {
+              "post_count": 11,
+              "eligible": {
+                "n": 6,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 5,
+                "mean_views_per_hour": 19.537841660563153,
+                "median_views_per_hour": 0.0
+              },
+              "mean_difference_views_per_hour": -19.537841660563153
+            },
+            "other-sport": {
+              "post_count": 3,
+              "eligible": {
+                "n": 2,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "mean_difference_views_per_hour": 0.0
+            },
+            "unclassified": {
+              "post_count": 5,
+              "eligible": {
+                "n": 2,
+                "mean_views_per_hour": 74.09198399993966,
+                "median_views_per_hour": 74.09198399993966
+              },
+              "ineligible": {
+                "n": 3,
+                "mean_views_per_hour": 71.50674031174577,
+                "median_views_per_hour": 46.204355278358804
+              },
+              "mean_difference_views_per_hour": 2.5852436881938843
+            }
+          }
+        }
+      }
+    },
+    {
+      "threshold_ms": 60000,
+      "predicate": "video_duration_ms > 60000",
+      "eligible_duration_count": 4,
+      "duration_cases": [
+        {
+          "video_duration_ms": 58892,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 9920,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 20041,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 104560,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 26433,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 568416,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 27223,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 46300,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 10944,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 32127,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 173560,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 60923,
+          "eligible": true,
+          "vqv_contribution": 0.1
+        },
+        {
+          "video_duration_ms": 46188,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 44356,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 12373,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 15041,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 26525,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 38233,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        },
+        {
+          "video_duration_ms": 14831,
+          "eligible": false,
+          "vqv_contribution": 0.0
+        }
+      ],
+      "observed_growth": {
+        "eligible": {
+          "n": 4,
+          "mean_views_per_hour": 0.0,
+          "median_views_per_hour": 0.0
+        },
+        "ineligible": {
+          "n": 15,
+          "mean_views_per_hour": 30.69289314919549,
+          "median_views_per_hour": 0.0
+        },
+        "mean_difference_views_per_hour": -30.69289314919549
+      },
+      "observed_growth_by_stratum": {
+        "author_group": {
+          "group_count": 19,
+          "multi_post_group_count": 0,
+          "comparable_group_count": 0,
+          "groups": {
+            "author-01": {
+              "post_count": 1,
+              "eligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-02": {
+              "post_count": 1,
+              "eligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-03": {
+              "post_count": 1,
+              "eligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.6600622182622686,
+                "median_views_per_hour": 0.6600622182622686
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-04": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-05": {
+              "post_count": 1,
+              "eligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-06": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-07": {
+              "post_count": 1,
+              "eligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-08": {
+              "post_count": 1,
+              "eligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-09": {
+              "post_count": 1,
+              "eligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-10": {
+              "post_count": 1,
+              "eligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-11": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-12": {
+              "post_count": 1,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-13": {
+              "post_count": 1,
+              "eligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-14": {
+              "post_count": 1,
+              "eligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-15": {
+              "post_count": 1,
+              "eligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 167.65580343861623,
+                "median_views_per_hour": 167.65580343861623
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-16": {
+              "post_count": 1,
+              "eligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 46.204355278358804,
+                "median_views_per_hour": 46.204355278358804
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-17": {
+              "post_count": 1,
+              "eligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 45.2142619509654,
+                "median_views_per_hour": 45.2142619509654
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-18": {
+              "post_count": 1,
+              "eligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 148.18396799987931,
+                "median_views_per_hour": 148.18396799987931
+              },
+              "mean_difference_views_per_hour": null
+            },
+            "author-19": {
+              "post_count": 1,
+              "eligible": {
+                "n": 0,
+                "mean_views_per_hour": null,
+                "median_views_per_hour": null
+              },
+              "ineligible": {
+                "n": 1,
+                "mean_views_per_hour": 52.474946351850356,
+                "median_views_per_hour": 52.474946351850356
+              },
+              "mean_difference_views_per_hour": null
+            }
+          }
+        },
+        "topic_group": {
+          "group_count": 3,
+          "multi_post_group_count": 3,
+          "comparable_group_count": 3,
+          "groups": {
+            "football": {
+              "post_count": 11,
+              "eligible": {
+                "n": 2,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 9,
+                "mean_views_per_hour": 10.85435647809064,
+                "median_views_per_hour": 0.0
+              },
+              "mean_difference_views_per_hour": -10.85435647809064
+            },
+            "other-sport": {
+              "post_count": 3,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 2,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "mean_difference_views_per_hour": 0.0
+            },
+            "unclassified": {
+              "post_count": 5,
+              "eligible": {
+                "n": 1,
+                "mean_views_per_hour": 0.0,
+                "median_views_per_hour": 0.0
+              },
+              "ineligible": {
+                "n": 4,
+                "mean_views_per_hour": 90.67604723377916,
+                "median_views_per_hour": 97.19416163911906
+              },
+              "mean_difference_views_per_hour": -90.67604723377916
+            }
+          }
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "Public view growth is post-exposure observational data, not a Phoenix prediction or a randomized estimate of VQV treatment.",
+    "Duration, author, topic, posting time, candidate selection, and exposure are confounded; a group difference does not identify the production threshold.",
+    "The production threshold and feature-switch VQV weight are unpublished.",
+    "Author/topic strata are user-supplied anonymous labels; their classification quality is not independently validated.",
+    "A stratum without both eligible and ineligible posts cannot provide a within-stratum threshold comparison."
+  ],
+  "input": {
+    "kind": "backend_audit_receipts",
+    "backend": "fxtwitter",
+    "cohort": {
+      "post_count": 120,
+      "ordered_status_ids_sha256": "f5029a47d466dbfb6c31f75bceee8e43243a9f254c29a15ee423e56a86323760"
+    },
+    "receipt_count": 3,
+    "receipts": [
+      {
+        "path": "state/backend-audits/snapshot-2026-07-30-01.json",
+        "sha256": "610017931a9bbe0d993b0ca0d118cba799d4c5799ca34bbf159c0f0800e18ac5",
+        "started_at": "2026-07-30T07:27:32.594312+00:00",
+        "counts": {
+          "backend_failed": 13,
+          "missing_video_duration_ms": 2,
+          "not_video": 86,
+          "usable_video_observations": 19
+        }
+      },
+      {
+        "path": "state/backend-audits/snapshot-2026-07-30-02.json",
+        "sha256": "26258af8b2257da0b08a57064422bc460b2a9342ef11875f4a8440b9b5922a9b",
+        "started_at": "2026-07-30T08:00:15.024570+00:00",
+        "counts": {
+          "backend_failed": 13,
+          "missing_video_duration_ms": 2,
+          "not_video": 86,
+          "usable_video_observations": 19
+        }
+      },
+      {
+        "path": "state/backend-audits/snapshot-2026-07-30-03.json",
+        "sha256": "5843f102891f1e9d11ba4ab79c4339c8942885ef63e9ff1fe5aae8e3e8a10036",
+        "started_at": "2026-07-30T10:29:20.656917+00:00",
+        "counts": {
+          "backend_failed": 13,
+          "missing_video_duration_ms": 2,
+          "not_video": 86,
+          "usable_video_observations": 19
+        }
+      }
+    ],
+    "raw_usable_observation_count": 57,
+    "observation_count": 57,
+    "post_count": 19,
+    "single_observation_post_count": 0
+  },
+  "strata_input": {
+    "path": "state/vqv/strata-2026-07-30-03.csv",
+    "sha256": "a3e80ad56cf757c2889a5bff51c27a7bd73731ad139e1b2f1aff7d95259d1117",
+    "row_count": 19,
+    "matched_post_count": 19,
+    "unused_post_count": 0,
+    "author_group_count": 19,
+    "topic_group_count": 3,
+    "privacy": "Only public post IDs and opaque author/topic group labels; raw author identity and post text are excluded."
+  },
+  "tool": {
+    "path": "scripts/analyze_vqv_threshold.py",
+    "sha256": "cba3e105cad65a2be1bf73f6e2e6727b913905b23c3392c0d55489d8f95bd170"
+  }
+}

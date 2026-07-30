@@ -152,11 +152,15 @@ def load_rows(path: Path) -> list[FeedRow]:
                 position = int(raw["position"])
                 score = float(raw["proxy_score"])
             except (TypeError, ValueError) as exc:
-                raise SnapshotError(f"invalid number at CSV line {line_number}") from exc
+                raise SnapshotError(
+                    f"invalid number at CSV line {line_number}"
+                ) from exc
             if position < 1:
                 raise SnapshotError(f"position must be >= 1 at CSV line {line_number}")
             if not math.isfinite(score):
-                raise SnapshotError(f"proxy_score must be finite at CSV line {line_number}")
+                raise SnapshotError(
+                    f"proxy_score must be finite at CSV line {line_number}"
+                )
             for name in ("snapshot_id", "viewer_hash", "post_id"):
                 if not (raw.get(name) or "").strip():
                     raise SnapshotError(f"{name} is empty at CSV line {line_number}")
@@ -328,7 +332,9 @@ def parse_ks(value: str) -> list[int]:
     try:
         ks = sorted({int(item) for item in value.split(",")})
     except ValueError as exc:
-        raise argparse.ArgumentTypeError("--k must be comma-separated integers") from exc
+        raise argparse.ArgumentTypeError(
+            "--k must be comma-separated integers"
+        ) from exc
     if not ks or any(k < 1 for k in ks):
         raise argparse.ArgumentTypeError("all --k values must be >= 1")
     return ks
@@ -337,7 +343,9 @@ def parse_ks(value: str) -> list[int]:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("csv_path", type=Path)
-    parser.add_argument("--k", type=parse_ks, default=[5, 10], help="for example 5,10,20")
+    parser.add_argument(
+        "--k", type=parse_ks, default=[5, 10], help="for example 5,10,20"
+    )
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args()
     try:
@@ -345,7 +353,11 @@ def main() -> int:
     except (OSError, SnapshotError) as exc:
         print(f"evaluation failed: {exc}", file=sys.stderr)
         return 2
-    print(json.dumps(report, ensure_ascii=False, indent=2) if args.json else render_text(report))
+    print(
+        json.dumps(report, ensure_ascii=False, indent=2)
+        if args.json
+        else render_text(report)
+    )
     return 0
 
 

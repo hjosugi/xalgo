@@ -187,9 +187,9 @@ def inspect_artifact(
             raise AuditError(f"missing artifact member: {name}")
         raw, member_bytes = read_zip_member(read_range, members[name])
         transferred += member_bytes
-        selected[name.rsplit("/", 2)[-2] if "/config.json" in name else "example_sequence"] = (
-            json.loads(raw)
-        )
+        selected[
+            name.rsplit("/", 2)[-2] if "/config.json" in name else "example_sequence"
+        ] = json.loads(raw)
     meta = {
         "lfs_oid": oid,
         "archive_size_bytes": total_size,
@@ -199,7 +199,9 @@ def inspect_artifact(
     return selected, meta
 
 
-def parse_readme_claims(root_readme: str, phoenix_readme: str) -> dict[str, dict[str, int]]:
+def parse_readme_claims(
+    root_readme: str, phoenix_readme: str
+) -> dict[str, dict[str, int]]:
     root = re.search(
         r"mini Phoenix model \((\d+)-dim embeddings, \d+ attention heads, (\d+) transformer layers\)",
         root_readme,
@@ -211,7 +213,10 @@ def parse_readme_claims(root_readme: str, phoenix_readme: str) -> dict[str, dict
     if not root or not phoenix:
         raise AuditError("could not parse architecture claims from upstream READMEs")
     return {
-        "root_readme": {"emb_size": int(root.group(1)), "num_layers": int(root.group(2))},
+        "root_readme": {
+            "emb_size": int(root.group(1)),
+            "num_layers": int(root.group(2)),
+        },
         "phoenix_readme": {
             "emb_size": int(phoenix.group(1)),
             "num_layers": int(phoenix.group(2)),
@@ -219,7 +224,9 @@ def parse_readme_claims(root_readme: str, phoenix_readme: str) -> dict[str, dict
     }
 
 
-def parse_action_contract(runners_source: str, pipeline_source: str) -> dict[str, object]:
+def parse_action_contract(
+    runners_source: str, pipeline_source: str
+) -> dict[str, object]:
     tree = ast.parse(runners_source)
     actions: list[str] | None = None
     for node in tree.body:
@@ -232,7 +239,9 @@ def parse_action_contract(runners_source: str, pipeline_source: str) -> dict[str
 
     constants = {
         name: int(value)
-        for name, value in re.findall(r"^(IDX_[A-Z]+)\s*=\s*(\d+)", pipeline_source, re.MULTILINE)
+        for name, value in re.findall(
+            r"^(IDX_[A-Z]+)\s*=\s*(\d+)", pipeline_source, re.MULTILINE
+        )
     }
     declared_semantics = {
         "IDX_FAV": "favorite_score",
@@ -316,7 +325,9 @@ def contract_snapshot(report: dict[str, object]) -> dict[str, object]:
     }
 
 
-def diff_values(expected: object, actual: object, path: str = "$") -> list[dict[str, object]]:
+def diff_values(
+    expected: object, actual: object, path: str = "$"
+) -> list[dict[str, object]]:
     """Build a compact, deterministic structural diff for JSON-compatible values."""
     if type(expected) is not type(actual):
         return [{"path": path, "expected": expected, "actual": actual}]
@@ -325,9 +336,13 @@ def diff_values(expected: object, actual: object, path: str = "$") -> list[dict[
         for key in sorted(set(expected) | set(actual)):
             key_path = f"{path}.{key}"
             if key not in expected:
-                differences.append({"path": key_path, "expected": None, "actual": actual[key]})
+                differences.append(
+                    {"path": key_path, "expected": None, "actual": actual[key]}
+                )
             elif key not in actual:
-                differences.append({"path": key_path, "expected": expected[key], "actual": None})
+                differences.append(
+                    {"path": key_path, "expected": expected[key], "actual": None}
+                )
             else:
                 differences.extend(diff_values(expected[key], actual[key], key_path))
         return differences
@@ -344,9 +359,15 @@ def diff_values(expected: object, actual: object, path: str = "$") -> list[dict[
                     {"path": item_path, "expected": expected[index], "actual": None}
                 )
             else:
-                differences.extend(diff_values(expected[index], actual[index], item_path))
+                differences.extend(
+                    diff_values(expected[index], actual[index], item_path)
+                )
         return differences
-    return [] if expected == actual else [{"path": path, "expected": expected, "actual": actual}]
+    return (
+        []
+        if expected == actual
+        else [{"path": path, "expected": expected, "actual": actual}]
+    )
 
 
 def compare_with_baseline(
@@ -356,7 +377,9 @@ def compare_with_baseline(
         baseline = json.loads(baseline_path.read_text(encoding="utf-8"))
     except FileNotFoundError as exc:
         raise AuditError(f"baseline file not found: {baseline_path}") from exc
-    if baseline.get("schema_version") != 1 or not isinstance(baseline.get("contract"), dict):
+    if baseline.get("schema_version") != 1 or not isinstance(
+        baseline.get("contract"), dict
+    ):
         raise AuditError(f"unsupported model-contract baseline: {baseline_path}")
     differences = diff_values(baseline["contract"], contract_snapshot(report))
     try:
@@ -426,8 +449,12 @@ def has_drift(report: dict[str, object]) -> bool:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--ref", default=DEFAULT_REF, help="upstream commit, tag, or branch")
-    parser.add_argument("--json", action="store_true", help="emit machine-readable JSON")
+    parser.add_argument(
+        "--ref", default=DEFAULT_REF, help="upstream commit, tag, or branch"
+    )
+    parser.add_argument(
+        "--json", action="store_true", help="emit machine-readable JSON"
+    )
     parser.add_argument(
         "--baseline",
         type=Path,
@@ -435,13 +462,19 @@ def main() -> int:
         help=f"known-contract baseline (default: {DEFAULT_BASELINE.relative_to(ROOT)})",
     )
     parser.add_argument(
-        "--no-baseline", action="store_true", help="skip known-vs-new contract comparison"
+        "--no-baseline",
+        action="store_true",
+        help="skip known-vs-new contract comparison",
     )
     parser.add_argument(
-        "--strict", action="store_true", help="exit 1 when an upstream mismatch is found"
+        "--strict",
+        action="store_true",
+        help="exit 1 when an upstream mismatch is found",
     )
     parser.add_argument(
-        "--fail-on-drift", action="store_true", help="exit 1 only for changes from baseline"
+        "--fail-on-drift",
+        action="store_true",
+        help="exit 1 only for changes from baseline",
     )
     args = parser.parse_args()
     try:
@@ -452,8 +485,14 @@ def main() -> int:
     except (AuditError, KeyError, ValueError, requests.RequestException) as exc:
         print(f"audit failed: {exc}", file=sys.stderr)
         return 2
-    print(json.dumps(report, ensure_ascii=False, indent=2) if args.json else render_text(report))
-    failed = (args.strict and has_mismatch(report)) or (args.fail_on_drift and has_drift(report))
+    print(
+        json.dumps(report, ensure_ascii=False, indent=2)
+        if args.json
+        else render_text(report)
+    )
+    failed = (args.strict and has_mismatch(report)) or (
+        args.fail_on_drift and has_drift(report)
+    )
     return 1 if failed else 0
 
 

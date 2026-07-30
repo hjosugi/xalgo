@@ -1,6 +1,6 @@
 # xalgo — X「おすすめ」スコア推定・上流追跡ツール
 
-Version 0.1.1
+Version 0.1.4
 
 [xai-org/x-algorithm](https://github.com/xai-org/x-algorithm) の
 2026-05-15版（commit `0bfc2795d3`）を読み解き、投稿URLから公開カウントだけで
@@ -14,10 +14,12 @@ Version 0.1.1
 ## セットアップ
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt   # requests のみ
+nix develop
+task test
 ```
+
+Nix flakeがPython 3.12、requests、Node.js、Go Task、Ruffを固定します。
+以降のコマンドは`nix develop`内で実行してください。
 
 ## 使い方
 
@@ -175,13 +177,15 @@ python scripts/analyze_vqv_threshold.py \
 python scripts/analyze_vqv_threshold.py \
   --backend-receipt state/backend-audits/snapshot-01.json \
   --backend-receipt state/backend-audits/snapshot-02.json \
+  --strata examples/vqv_strata.example.csv \
   --output state/vqv/analysis-current.json --json
 ```
 
 上流の厳密な`video_duration_ms > MIN_VIDEO_DURATION_MS`条件を、複数の閾値仮説で
 sweepします。繰り返しsnapshot CSVを渡すと、動画長で分けたviews/hourも比較できます。
 同じcohortのbackend監査receiptを2個以上渡すと、FxTwitterの公開動画長・view countを
-検証済みreceiptから直接抽出できます。
+検証済みreceiptから直接抽出できます。`--strata`には`post_id,author_group,topic_group`
+だけの補助CSVを渡し、匿名group内のeligible / ineligible差も確認できます。
 本番閾値・VQV重みは非公開で、公開view増加は露出後の観測値なので、差があっても本番閾値や
 因果効果を特定したことにはなりません。詳細は
 [`docs/sensitivity-analysis.md`](docs/sensitivity-analysis.md)を参照してください。
@@ -207,7 +211,10 @@ python scripts/analyze_backend_snapshots.py state/backend-audits/snapshot-*.json
 ## テスト
 
 ```bash
-python -m unittest discover -s tests -v
+task test
+task lint
+# shellへ入らず実行する場合:
+nix develop --command task ci
 ```
 
 ## ドキュメント

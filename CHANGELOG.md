@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.1.4 — 2026-07-31
+
+### Added
+
+- Privacy-safe VQV author/topic stratification from a strict auxiliary CSV
+  schema that excludes raw author identity, post text, and extra columns.
+- Per-threshold within-stratum view-growth splits and explicit comparable-cell
+  counts to expose sparse or one-sided anonymous groups.
+
+### Changed
+
+- Development and CI now use a pinned Nix flake and Go Task instead of
+  virtualenv/pip bootstrap commands.
+
 ## 0.1.3 — 2026-07-30
 
 ### Added

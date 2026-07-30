@@ -20,6 +20,7 @@ import csv
 import hashlib
 import json
 import math
+import re
 import statistics
 import sys
 from collections import defaultdict
@@ -41,6 +42,8 @@ from xalgo.score import vqv_weight_eligibility
 DEFAULT_DURATIONS_MS = (2_000, 5_000, 10_000, 30_000, 60_000)
 DEFAULT_THRESHOLDS_MS = (0, 2_000, 5_000, 10_000, 30_000, 60_000)
 REQUIRED_COLUMNS = {"post_id", "video_duration_ms", "observed_at", "views"}
+STRATA_COLUMNS = {"post_id", "author_group", "topic_group"}
+STRATA_FIELDS = ("author_group", "topic_group")
 CREDENTIAL_COLUMN_PARTS = {
     "authorization",
     "cookie",
@@ -49,6 +52,7 @@ CREDENTIAL_COLUMN_PARTS = {
     "session",
     "token",
 }
+STRATUM_LABEL_RE = re.compile(r"[a-z0-9][a-z0-9._-]{0,63}")
 
 
 @dataclass(frozen=True)
@@ -124,6 +128,75 @@ def load_observations(path: Path) -> list[Observation]:
     if not rows:
         raise ValueError("snapshot CSV has no data rows")
     return rows
+
+
+def load_strata(path: Path) -> dict[str, dict[str, str]]:
+    """Load privacy-safe, opaque author/topic labels keyed by public post ID."""
+    with path.open(newline="", encoding="utf-8") as handle:
+        reader = csv.DictReader(handle)
+        if reader.fieldnames is None:
+            raise ValueError("strata CSV has no header")
+        field_map = {name.strip().lower(): name for name in reader.fieldnames}
+        if len(field_map) != len(reader.fieldnames):
+            raise ValueError("strata CSV has duplicate normalized column names")
+        normalized = set(field_map)
+        missing = sorted(STRATA_COLUMNS - normalized)
+        if missing:
+            raise ValueError("strata CSV is missing columns: " + ", ".join(missing))
+        unexpected = sorted(normalized - STRATA_COLUMNS)
+        if unexpected:
+            raise ValueError(
+                "strata CSV permits only post_id, author_group, and topic_group; "
+                "remove columns: " + ", ".join(unexpected)
+            )
+
+        labels = {}
+        for row_number, row in enumerate(reader, start=2):
+            post_id = (row.get(field_map["post_id"]) or "").strip()
+            if not post_id:
+                raise ValueError(f"row {row_number}: post_id must not be empty")
+            if post_id in labels:
+                raise ValueError(f"row {row_number}: duplicate post_id {post_id!r}")
+
+            groups = {}
+            for field in STRATA_FIELDS:
+                value = (row.get(field_map[field]) or "").strip().lower()
+                if not STRATUM_LABEL_RE.fullmatch(value):
+                    raise ValueError(
+                        f"row {row_number}: {field} must be an opaque label of "
+                        "1-64 lowercase letters, digits, dots, underscores, or hyphens"
+                    )
+                groups[field] = value
+            labels[post_id] = groups
+
+    if not labels:
+        raise ValueError("strata CSV has no data rows")
+    return labels
+
+
+def apply_strata(
+    posts: Iterable[dict], labels: dict[str, dict[str, str]]
+) -> tuple[list[dict], dict]:
+    """Attach complete anonymous strata while reporting unused metadata rows."""
+    post_rows = list(posts)
+    post_ids = {row["post_id"] for row in post_rows}
+    missing = sorted(post_ids - labels.keys())
+    if missing:
+        preview = ", ".join(missing[:5])
+        suffix = "" if len(missing) <= 5 else ", ..."
+        raise ValueError(
+            f"strata CSV is missing {len(missing)} analyzed post IDs: {preview}{suffix}"
+        )
+
+    enriched = [{**row, **labels[row["post_id"]]} for row in post_rows]
+    unused = labels.keys() - post_ids
+    return enriched, {
+        "row_count": len(labels),
+        "matched_post_count": len(post_ids),
+        "unused_post_count": len(unused),
+        "author_group_count": len({row["author_group"] for row in enriched}),
+        "topic_group_count": len({row["topic_group"] for row in enriched}),
+    }
 
 
 def load_backend_observations(
@@ -291,6 +364,66 @@ def _metric_summary(values: Iterable[float]) -> dict:
     }
 
 
+def _observed_growth_split(post_rows: list[dict], threshold: int) -> dict:
+    eligible_posts = [
+        row
+        for row in post_rows
+        if vqv_weight_eligibility(row["video_duration_ms"], threshold, 1.0) != 0.0
+    ]
+    ineligible_posts = [
+        row
+        for row in post_rows
+        if vqv_weight_eligibility(row["video_duration_ms"], threshold, 1.0) == 0.0
+    ]
+    eligible_growth = _metric_summary(row["views_per_hour"] for row in eligible_posts)
+    ineligible_growth = _metric_summary(
+        row["views_per_hour"] for row in ineligible_posts
+    )
+    mean_difference = None
+    if (
+        eligible_growth["mean_views_per_hour"] is not None
+        and ineligible_growth["mean_views_per_hour"] is not None
+    ):
+        mean_difference = (
+            eligible_growth["mean_views_per_hour"]
+            - ineligible_growth["mean_views_per_hour"]
+        )
+    return {
+        "eligible": eligible_growth,
+        "ineligible": ineligible_growth,
+        "mean_difference_views_per_hour": mean_difference,
+    }
+
+
+def _stratified_growth(post_rows: list[dict], threshold: int) -> dict:
+    output = {}
+    for field in STRATA_FIELDS:
+        if not post_rows or any(field not in row for row in post_rows):
+            continue
+        grouped: dict[str, list[dict]] = defaultdict(list)
+        for row in post_rows:
+            grouped[row[field]].append(row)
+        groups = {
+            value: {
+                "post_count": len(rows),
+                **_observed_growth_split(rows, threshold),
+            }
+            for value, rows in sorted(grouped.items())
+        }
+        output[field] = {
+            "group_count": len(groups),
+            "multi_post_group_count": sum(
+                group["post_count"] >= 2 for group in groups.values()
+            ),
+            "comparable_group_count": sum(
+                group["mean_difference_views_per_hour"] is not None
+                for group in groups.values()
+            ),
+            "groups": groups,
+        }
+    return output
+
+
 def analyze_thresholds(
     durations_ms: Iterable[int],
     thresholds_ms: Iterable[int],
@@ -329,46 +462,17 @@ def analyze_thresholds(
             }
             for duration in all_durations
         ]
-        eligible_posts = [
-            row
-            for row in post_rows
-            if vqv_weight_eligibility(row["video_duration_ms"], threshold, 1.0) != 0.0
-        ]
-        ineligible_posts = [
-            row
-            for row in post_rows
-            if vqv_weight_eligibility(row["video_duration_ms"], threshold, 1.0) == 0.0
-        ]
-        eligible_growth = _metric_summary(
-            row["views_per_hour"] for row in eligible_posts
-        )
-        ineligible_growth = _metric_summary(
-            row["views_per_hour"] for row in ineligible_posts
-        )
-        mean_difference = None
-        if (
-            eligible_growth["mean_views_per_hour"] is not None
-            and ineligible_growth["mean_views_per_hour"] is not None
-        ):
-            mean_difference = (
-                eligible_growth["mean_views_per_hour"]
-                - ineligible_growth["mean_views_per_hour"]
-            )
-        cases.append(
-            {
-                "threshold_ms": threshold,
-                "predicate": f"video_duration_ms > {threshold}",
-                "eligible_duration_count": sum(
-                    item["eligible"] for item in duration_cases
-                ),
-                "duration_cases": duration_cases,
-                "observed_growth": {
-                    "eligible": eligible_growth,
-                    "ineligible": ineligible_growth,
-                    "mean_difference_views_per_hour": mean_difference,
-                },
-            }
-        )
+        case = {
+            "threshold_ms": threshold,
+            "predicate": f"video_duration_ms > {threshold}",
+            "eligible_duration_count": sum(item["eligible"] for item in duration_cases),
+            "duration_cases": duration_cases,
+            "observed_growth": _observed_growth_split(post_rows, threshold),
+        }
+        stratified = _stratified_growth(post_rows, threshold)
+        if stratified:
+            case["observed_growth_by_stratum"] = stratified
+        cases.append(case)
 
     return {
         "upstream_contract": {
@@ -396,6 +500,21 @@ def analyze_thresholds(
                 "the production threshold."
             ),
             "The production threshold and feature-switch VQV weight are unpublished.",
+            *(
+                [
+                    (
+                        "Author/topic strata are user-supplied anonymous labels; "
+                        "their classification quality is not independently validated."
+                    ),
+                    (
+                        "A stratum without both eligible and ineligible posts cannot "
+                        "provide a within-stratum threshold comparison."
+                    ),
+                ]
+                if post_rows
+                and all(field in row for row in post_rows for field in STRATA_FIELDS)
+                else []
+            ),
         ],
     }
 
@@ -441,6 +560,14 @@ def _print_report(report: dict) -> None:
         "\nNote: observed group differences are exploratory and do not identify "
         "the unpublished production threshold."
     )
+    strata_input = report.get("strata_input")
+    if strata_input:
+        print(
+            "anonymous strata: "
+            f"authors={strata_input['author_group_count']} "
+            f"topics={strata_input['topic_group_count']} "
+            f"matched_posts={strata_input['matched_post_count']}"
+        )
 
 
 def _write_json(path: Path, report: dict, *, force: bool) -> None:
@@ -487,6 +614,13 @@ def main(argv: list[str] | None = None) -> int:
         default="fxtwitter",
         help="backend to extract from --backend-receipt (default: fxtwitter)",
     )
+    parser.add_argument(
+        "--strata",
+        type=Path,
+        help=(
+            "optional privacy-safe CSV containing only post_id,author_group,topic_group"
+        ),
+    )
     parser.add_argument("--vqv-p", type=float, default=0.1)
     parser.add_argument("--vqv-weight", type=float, default=1.0)
     parser.add_argument("--json", action="store_true")
@@ -516,6 +650,22 @@ def main(argv: list[str] | None = None) -> int:
                 args.backend_receipt, args.backend
             )
             posts = summarize_posts(observations)
+        strata_meta = None
+        if args.strata is not None:
+            if not posts:
+                raise ValueError(
+                    "--strata requires --snapshots or --backend-receipt observations"
+                )
+            posts, strata_meta = apply_strata(posts, load_strata(args.strata))
+            strata_meta = {
+                "path": str(args.strata),
+                "sha256": hashlib.sha256(args.strata.read_bytes()).hexdigest(),
+                **strata_meta,
+                "privacy": (
+                    "Only public post IDs and opaque author/topic group labels; "
+                    "raw author identity and post text are excluded."
+                ),
+            }
         durations = (
             _parse_int_list(args.durations_ms, "durations_ms")
             if args.durations_ms is not None
@@ -525,6 +675,7 @@ def main(argv: list[str] | None = None) -> int:
             durations, thresholds, args.vqv_p, args.vqv_weight, posts
         )
         report["input"] = input_meta
+        report["strata_input"] = strata_meta
         report["tool"] = {
             "path": str(Path(__file__).relative_to(ROOT)),
             "sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),

@@ -6,8 +6,10 @@ from pathlib import Path
 from scripts.analyze_vqv_threshold import (
     _write_json,
     analyze_thresholds,
+    apply_strata,
     load_backend_observations,
     load_observations,
+    load_strata,
     summarize_posts,
 )
 from scripts.audit_backends import _receipt_payload, summarize
@@ -105,6 +107,59 @@ class VqvThresholdAnalysisTests(unittest.TestCase):
             path.write_text(csv_text, encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "credential-like"):
                 load_observations(path)
+
+    def test_anonymous_strata_are_validated_and_applied(self):
+        csv_text = (
+            "post_id,author_group,topic_group\n"
+            "a,author-01,football\n"
+            "b,author-01,football\n"
+            "unused,author-02,other-sport\n"
+        )
+        posts = [
+            {"post_id": "a", "video_duration_ms": 10_000, "views_per_hour": 10.0},
+            {"post_id": "b", "video_duration_ms": 10_001, "views_per_hour": 30.0},
+        ]
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "strata.csv"
+            path.write_text(csv_text, encoding="utf-8")
+            enriched, metadata = apply_strata(posts, load_strata(path))
+
+        report = analyze_thresholds([], [10_000], 0.1, 1.0, enriched)
+        author = report["thresholds"][0]["observed_growth_by_stratum"]["author_group"]
+        self.assertEqual(metadata["unused_post_count"], 1)
+        self.assertEqual(metadata["author_group_count"], 1)
+        self.assertEqual(author["comparable_group_count"], 1)
+        self.assertEqual(
+            author["groups"]["author-01"]["mean_difference_views_per_hour"],
+            20.0,
+        )
+
+    def test_strata_csv_rejects_raw_identity_or_text_columns(self):
+        csv_text = (
+            "post_id,author_group,topic_group,author_username,text\n"
+            "a,author-01,football,raw-user,raw text\n"
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "unsafe-strata.csv"
+            path.write_text(csv_text, encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "permits only"):
+                load_strata(path)
+
+    def test_strata_must_cover_every_analyzed_post(self):
+        posts = [
+            {"post_id": "a", "video_duration_ms": 10_000, "views_per_hour": 10.0},
+            {"post_id": "b", "video_duration_ms": 10_001, "views_per_hour": 30.0},
+        ]
+        with self.assertRaisesRegex(ValueError, "missing 1 analyzed post IDs"):
+            apply_strata(
+                posts,
+                {
+                    "a": {
+                        "author_group": "author-01",
+                        "topic_group": "football",
+                    }
+                },
+            )
 
     def test_backend_receipts_feed_repeated_video_observations(self):
         receipts = [

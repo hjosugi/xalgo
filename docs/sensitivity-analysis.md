@@ -82,9 +82,19 @@ anonymized-a,5000,2026-07-01T06:00:00Z,1360
 python scripts/analyze_vqv_threshold.py \
   --backend-receipt state/backend-audits/snapshot-01.json \
   --backend-receipt state/backend-audits/snapshot-02.json \
+  --strata examples/vqv_strata.example.csv \
   --thresholds-ms 0,5000,10000,30000 \
   --output state/vqv/analysis-current.json --json
 ```
+
+`--strata`へ渡す補助CSVは`post_id,author_group,topic_group`の3列だけを許可し、
+分析対象の全post IDを含む必要があります。著者名、本文、credential等の余分な列は
+拒否します。group labelは小文字ASCII、数字、ピリオド、underscore、hyphenの
+1–64文字に正規化し、実名ではなく`author-01`のような不透明labelを使用します。
+入力例は
+[`examples/vqv_strata.example.csv`](../examples/vqv_strata.example.csv)です。
+各仮説閾値についてgroupごとのeligible / ineligible成長率を出し、両側に投稿がある
+`comparable_group_count`も記録します。
 
 ### 2026-07-30 実動画cohortの3時間結果
 
@@ -93,11 +103,15 @@ FxTwitterで全時点の動画長とview countを取得できた19動画を比�
 9,920–568,416ms、各動画3観測で、単一観測への脱落は0件だった。
 
 - analysis receipt:
-  [`state/vqv/analysis-2026-07-30-03.json`](../state/vqv/analysis-2026-07-30-03.json)
+  [`state/vqv/analysis-2026-07-30-04.json`](../state/vqv/analysis-2026-07-30-04.json)
 - analysis SHA-256:
-  `add1a08676b02d47134adb61c1dfb1fb9e38fec15e91d67e80f0a7b21186935a`
+  `143f549529b9ab79bbf77c3ba24ab28a337886b054d06d0d2f8d5229631f7c5c`
+- anonymous strata:
+  [`state/vqv/strata-2026-07-30-03.csv`](../state/vqv/strata-2026-07-30-03.csv)
+- strata SHA-256:
+  `a3e80ad56cf757c2889a5bff51c27a7bd73731ad139e1b2f1aff7d95259d1117`
 - tool SHA-256:
-  `1cb24658a6f8653814ab7087845f8d45258c4c2ff40fe82f3bb111530f94cca1`
+  `cba3e105cad65a2be1bf73f6e2e6727b913905b23c3392c0d55489d8f95bd170`
 - 19本中6本でviewが増加し、13本は変化なし
 - 30日未満の5本は全て増加（合計+1,393 views、平均91.95 views/hour）
 - 30日以上の14本は1本だけ+2（平均0.047 views/hour）
@@ -106,8 +120,15 @@ FxTwitterで全時点の動画長とview countを取得できた19動画を比�
 
 この短い観測では新しい投稿だけが伸びており、動画長より投稿時期の交絡が支配的である。
 各群も最大19本と小さいため、負の差をVQVの効果や本番閾値とは解釈しない。投稿30日を
-境界に層別しても群間差が極端で、時間交絡を除去できる標本ではない。privacy要件により
-receiptは著者・本文を保持しないので、author/topic層別には別の匿名化metadataが必要である。
+境界に層別しても群間差が極端で、時間交絡を除去できる標本ではない。
+
+公開レスポンスから著者名・本文を保存せず、19件へ不透明なauthor groupと粗いtopic
+groupだけを付けた。著者は19件すべて異なるため、全閾値でauthorの
+`comparable_group_count`は0だった。topicはfootball 11件、other-sport 3件、
+unclassified 5件で、30秒と60秒の仮説では3群とも比較可能だった。30秒の
+eligible − ineligible平均差は順に−19.54、0、+2.59 views/hourで方向が揃わず、
+60秒では−10.85、0、−90.68だった。手作業の粗いtopic分類、小さいcell、投稿時期との
+交絡があるため、層別後の差もVQV閾値の証拠として扱わない。
 
 ## Negative score offset
 

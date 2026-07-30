@@ -28,10 +28,14 @@ class AuditModelContractTests(unittest.TestCase):
         self.assertEqual(claims["phoenix_readme"], {"emb_size": 128, "num_layers": 4})
 
     def test_maps_pipeline_indices_to_output_heads(self):
-        runners = 'ACTIONS: list[str] = ["favorite_score", "reply_score", "repost_score"]'
+        runners = (
+            'ACTIONS: list[str] = ["favorite_score", "reply_score", "repost_score"]'
+        )
         pipeline = "IDX_FAV = 1\nIDX_REPLY = 2\n"
         result = audit.parse_action_contract(runners, pipeline)
-        mappings = {item["constant"]: item for item in result["pipeline_index_mappings"]}
+        mappings = {
+            item["constant"]: item for item in result["pipeline_index_mappings"]
+        }
         self.assertEqual(mappings["IDX_FAV"]["actual_head_at_index"], "reply_score")
         self.assertFalse(mappings["IDX_FAV"]["matches"])
 

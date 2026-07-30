@@ -1,0 +1,4 @@
+post_id,author_group,topic_group
+synthetic-short,author-01,topic-sport-a
+synthetic-boundary,author-01,topic-sport-b
+synthetic-long,author-02,topic-sport-a

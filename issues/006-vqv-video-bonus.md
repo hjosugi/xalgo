@@ -17,7 +17,7 @@ vqv_weight は video_duration_ms > MIN_VIDEO_DURATION_MS のときのみ有効
 - [x] privacy-minimized backend監査receiptを実動画の繰り返し観測へ直接変換できる
 - [x] 閾値・重みが非公開で、観測差から因果効果を断定できない限界を明記する
 - [x] 実動画cohortを3時点で収集し、投稿時期で層別した結果を記録する
-- [ ] author/topicを匿名化した補助metadataで層別する
+- [x] author/topicを匿名化した補助metadataで層別する
 
 ## 実装
 
@@ -30,6 +30,7 @@ python scripts/analyze_vqv_threshold.py \
 python scripts/analyze_vqv_threshold.py \
   --backend-receipt state/backend-audits/snapshot-01.json \
   --backend-receipt state/backend-audits/snapshot-02.json \
+  --strata examples/vqv_strata.example.csv \
   --output state/vqv/analysis-current.json --json
 ```
 
@@ -44,8 +45,15 @@ backend監査の3 receiptを直接読み、全時点で動画長・viewsを持�
 15/20/30/60秒の各仮説でeligible群の平均views/hourはineligible群を下回ったが、
 投稿時期との完全な交絡、小標本、短い観測区間があるため閾値の証拠とは扱わない。
 
-分析receipt: `state/vqv/analysis-2026-07-30-03.json`
-（SHA-256 `add1a08676b02d47134adb61c1dfb1fb9e38fec15e91d67e80f0a7b21186935a`）
+分析receipt: `state/vqv/analysis-2026-07-30-04.json`
+（SHA-256 `143f549529b9ab79bbf77c3ba24ab28a337886b054d06d0d2f8d5229631f7c5c`）
 
 投稿30日を境界に層別しても、投稿時期の群間差が支配的だった。privacy-minimized receiptは
-著者と本文を保存しないため、author/topic層別には匿名化した補助metadataが別途必要。
+著者と本文を保存しないため、公開レスポンスから原文を保持せず、post IDと不透明author
+group、粗いtopic groupだけの補助metadataを作成した。著者は19件すべて異なり、全閾値で
+author内比較可能groupは0だった。topicはfootball 11件、other-sport 3件、
+unclassified 5件で、30秒仮説のeligible − ineligible平均差は−19.54、0、+2.59
+views/hourと方向が揃わなかった。分類品質、小cell、投稿時期交絡のため閾値の証拠とは扱わない。
+
+補助metadata: `state/vqv/strata-2026-07-30-03.csv`
+（SHA-256 `a3e80ad56cf757c2889a5bff51c27a7bd73731ad139e1b2f1aff7d95259d1117`）
