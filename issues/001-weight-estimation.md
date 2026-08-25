@@ -13,3 +13,19 @@
 
 ## 注意
 Phoenix はパーソナライズ予測なので、単一アカウント観測ではその人固有の重み近似になる。
+
+## 2026-08-26 実装
+
+`scripts/estimate_feed_weights.py`にpairwise logistic learning-to-rankを実装した。
+`p_ACTION`特徴、入力/tool SHA-256、公開2026年8月defaultとの比較を出力し、別test CSVの
+author/post overlapが0でなければ失敗する。実データのminimum gateはtrain 50行/test 20行。
+
+```bash
+python scripts/estimate_feed_weights.py train.csv --test-csv test.csv --json
+```
+
+公開default自体は`weights.json::upstream_2026_08`で利用可能になった。live overrideや
+viewer別Phoenix予測を推定したと断定するには、synthetic fixtureではなく匿名化した実cohortが
+必要であり、出力はcohort内の関連として解釈する。
+
+詳細: [`docs/weight-estimation.md`](../docs/weight-estimation.md)

@@ -14,3 +14,12 @@
 - [x] 低・中・高view帯で層別評価できる
 - [ ] 実cohortを用いてauthor-disjoint評価する
 - [x] input snapshot、commit、設定から結果を再生成できる
+
+## 2026-08-26 author-disjoint実装
+
+`scripts/estimate_feed_weights.py`はtrain/testで同じsaltの`author_hash`を要求し、author/postが
+1件でも重複すれば失敗する。held-out pairwise accuracy、Spearman、Kendall tau-bと入力/tool
+SHA-256を出力する。上の未完了条件をcheckするには、synthetic fixtureではなくユーザーが
+安全に匿名化した実viewer cohortが必要になる。
+
+詳細: [`docs/weight-estimation.md`](../docs/weight-estimation.md)

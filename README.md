@@ -139,6 +139,19 @@ NDCG@K、Top-K overlapを計算します。credential列を拒否し、入力SHA
 出力します。CSV仕様と限界は
 [`docs/feed-snapshot-evaluation.md`](docs/feed-snapshot-evaluation.md)を参照してください。
 
+### 8.1 匿名feed順位からの重み推定
+
+```bash
+python scripts/estimate_feed_weights.py train.csv \
+  --test-csv author-disjoint-test.csv --json > weight-estimation.json
+```
+
+同一snapshot内の表示pairからlogistic ranking係数を学習し、author集合が重ならないtest CSVで
+held-out評価します。raw viewer/author ID、cookie、tokenを拒否し、入力・tool hashと
+author/post overlap 0をreceiptへ残します。推定値はcohort内の関連であり、本番重みの復元や
+因果推定ではありません。CSV仕様とsynthetic fixtureは
+[`docs/weight-estimation.md`](docs/weight-estimation.md)を参照してください。
+
 ### 9. Author Diversityの感度分析
 
 ```bash
@@ -228,6 +241,7 @@ nix develop --command task ci
 - [`docs/external-analysis-review.md`](docs/external-analysis-review.md) — 外部記事・GitHub repo・論文の比較検証
 - [`docs/model-validation-plan.md`](docs/model-validation-plan.md) — モデルと実投稿を検証する実験計画
 - [`docs/feed-snapshot-evaluation.md`](docs/feed-snapshot-evaluation.md) — 匿名化For You順位の評価方法
+- [`docs/weight-estimation.md`](docs/weight-estimation.md) — pairwise重み推定とauthor-disjoint評価
 - [`docs/validation-findings.md`](docs/validation-findings.md) — 実測検証レポート
 - [`docs/backend-audit.md`](docs/backend-audit.md) — 取得先の成功率・欠損・数値差
 - [`docs/sensitivity-analysis.md`](docs/sensitivity-analysis.md) — Author Diversity・VQV・負シグナル感度分析

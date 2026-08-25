@@ -64,3 +64,10 @@ python scripts/evaluate_feed_snapshot.py my-anonymized-feed.csv --k 5,10,20 --js
 
 いずれも「代理scoreを上げれば露出が増える」という因果効果は示さない。実際のランカーが
 先に表示位置を決め、その位置がengagement countへ影響する逆向きの経路があるためである。
+
+## author-disjoint重み評価
+
+proxy係数を順位から学習し、学習に出ていないauthorだけで評価する場合は
+[`weight-estimation.md`](weight-estimation.md)の`estimate_feed_weights.py`を使う。
+train/test両方で同じ非公開saltの`author_hash`を作り、author/post overlapが1件でもあれば
+実行を失敗させる。実viewer cohortなしでsynthetic fixtureを実測結果とは扱わない。

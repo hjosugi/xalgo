@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- Privacy-safe pairwise learning-to-rank for anonymized feed snapshots, with
+  deterministic author/post-disjoint held-out validation and comparison to the
+  public August Home Mixer defaults.
+
 ## 0.2.0 — 2026-08-25
 
 ### Added

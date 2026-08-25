@@ -1,0 +1,7 @@
+snapshot_id,viewer_hash,requested_at,position,post_id,author_hash,p_favorite,p_reply,p_report
+synthetic-train,sha256:9999999999999999999999999999999999999999999999999999999999999999,2026-08-26T09:00:00+09:00,1,synthetic-train-1,sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,0.90,0.40,0.00
+synthetic-train,sha256:9999999999999999999999999999999999999999999999999999999999999999,2026-08-26T09:00:00+09:00,2,synthetic-train-2,sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,0.60,0.30,0.00
+synthetic-train,sha256:9999999999999999999999999999999999999999999999999999999999999999,2026-08-26T09:00:00+09:00,3,synthetic-train-3,sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc,0.75,0.10,0.01
+synthetic-train,sha256:9999999999999999999999999999999999999999999999999999999999999999,2026-08-26T09:00:00+09:00,4,synthetic-train-4,sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd,0.35,0.20,0.01
+synthetic-train,sha256:9999999999999999999999999999999999999999999999999999999999999999,2026-08-26T09:00:00+09:00,5,synthetic-train-5,sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee,0.40,0.05,0.03
+synthetic-train,sha256:9999999999999999999999999999999999999999999999999999999999999999,2026-08-26T09:00:00+09:00,6,synthetic-train-6,sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff,0.10,0.01,0.05
