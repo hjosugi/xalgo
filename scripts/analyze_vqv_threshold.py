@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Sweep hypothetical VQV duration thresholds over videos or snapshot data.
+"""Sweep VQV duration thresholds over videos or snapshot data.
 
-The pinned upstream scorer applies ``VQV_WEIGHT`` only when
-``video_duration_ms > MIN_VIDEO_DURATION_MS``.  The threshold and production
-weight are unpublished, so this tool reports reproducible what-if eligibility
-and observational view-growth splits without claiming to recover either value.
+The August 2026 upstream source publishes defaults of
+``MIN_VIDEO_DURATION_MS=10000`` and ``VQV_WEIGHT=0.05``.  Live feature
+switches may override them, so this tool preserves a threshold sweep while
+marking the published default explicitly.  Observational view-growth splits do
+not establish the causal effect of VQV eligibility.
 
 Snapshot CSV columns:
     post_id,video_duration_ms,observed_at,views
@@ -477,10 +478,12 @@ def analyze_thresholds(
     return {
         "upstream_contract": {
             "repository": "xai-org/x-algorithm",
-            "commit": "0bfc2795d308f90032544322747caacd535f75ae",
+            "commit": "d011592a1c8c4bfb23781ff15577a68dc08bdde1",
+            "introduced_commit": "47c1bcdadfe4911568fd6db4f8838b194325beab",
             "predicate": "video_duration_ms > MIN_VIDEO_DURATION_MS",
-            "production_threshold": "unpublished",
-            "production_vqv_weight": "unpublished",
+            "published_default_threshold_ms": 10_000,
+            "published_default_vqv_weight": 0.05,
+            "live_feature_switch_overrides_possible": True,
         },
         "assumptions": {
             "vqv_probability": vqv_probability,
@@ -497,9 +500,12 @@ def analyze_thresholds(
             (
                 "Duration, author, topic, posting time, candidate selection, and "
                 "exposure are confounded; a group difference does not identify "
-                "the production threshold."
+                "a live threshold override."
             ),
-            "The production threshold and feature-switch VQV weight are unpublished.",
+            (
+                "The published 10,000 ms and 0.05 values are feature-switch "
+                "defaults; the live request configuration is not observable."
+            ),
             *(
                 [
                     (
@@ -558,7 +564,7 @@ def _print_report(report: dict) -> None:
         )
     print(
         "\nNote: observed group differences are exploratory and do not identify "
-        "the unpublished production threshold."
+        "causal VQV effects or live feature-switch overrides."
     )
     strata_input = report.get("strata_input")
     if strata_input:
@@ -593,7 +599,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--thresholds-ms",
         default=",".join(map(str, DEFAULT_THRESHOLDS_MS)),
-        help="comma-separated hypothetical MIN_VIDEO_DURATION_MS values",
+        help="comma-separated MIN_VIDEO_DURATION_MS values; includes public default 10000",
     )
     parser.add_argument(
         "--snapshots",
@@ -622,7 +628,7 @@ def main(argv: list[str] | None = None) -> int:
         ),
     )
     parser.add_argument("--vqv-p", type=float, default=0.1)
-    parser.add_argument("--vqv-weight", type=float, default=1.0)
+    parser.add_argument("--vqv-weight", type=float, default=0.05)
     parser.add_argument("--json", action="store_true")
     parser.add_argument("--output", type=Path)
     parser.add_argument(

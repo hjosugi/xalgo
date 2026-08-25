@@ -1,5 +1,10 @@
 # Phoenixを理解するためのAI・ML・推薦モデル解説
 
+> [!NOTE]
+> checkpointとmini inferenceの記述は2026年5月demo世代を対象にしています。
+> 2026年8月の現行source世代は[`upstream-2026-08.md`](upstream-2026-08.md)を
+> 参照してください。
+
 ## まず用語を分ける
 
 | 用語 | このリポジトリでの意味 |

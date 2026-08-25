@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Sweep negative Phoenix probabilities through the upstream offset formula.
 
-Published artifacts do not contain production feature-switch weights.  Use
-``--unit-negative-weights`` for a dimensionless sensitivity check, or provide
-explicit ``--weight ACTION=VALUE`` overrides for a stated hypothesis.
+The August 2026 source publishes feature-switch defaults, while live overrides
+remain unobserved.  Use ``--unit-negative-weights`` for a dimensionless
+sensitivity check, or provide explicit ``--weight ACTION=VALUE`` overrides for
+a stated hypothesis.
 """
 
 from __future__ import annotations
@@ -23,6 +24,7 @@ from xalgo.score import (  # noqa: E402
     load_weights,
     normalization_sums,
     offset_score,
+    preset_settings,
 )
 
 DEFAULT_PROBABILITIES = (0.0, 0.01, 0.05, 0.10, 0.25, 0.50, 1.0)
@@ -186,7 +188,11 @@ def _print_report(report: dict) -> None:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, default=ROOT / "weights.json")
-    parser.add_argument("--preset", default="full_template")
+    parser.add_argument(
+        "--preset",
+        default=None,
+        help="weights preset (default: weights.json default_preset)",
+    )
     parser.add_argument(
         "--positive-score",
         type=float,
@@ -221,6 +227,7 @@ def main(argv: list[str] | None = None) -> int:
 
     try:
         preset_name, configured_weights, config = load_weights(args.config, args.preset)
+        settings = preset_settings(config, preset_name)
         weights = dict(configured_weights)
         if args.unit_negative_weights:
             for action in NEGATIVE_NORMALIZATION_ACTIONS:
@@ -231,7 +238,7 @@ def main(argv: list[str] | None = None) -> int:
                 weights[action] = -1.0
         _apply_overrides(weights, args.weight)
         probabilities = _parse_csv_floats(args.probabilities, "probabilities")
-        configured_offset = config.get("negative_scores_offset", 0.0)
+        configured_offset = settings["negative_scores_offset"]
         offset = (
             float(configured_offset)
             if args.negative_scores_offset is None
@@ -247,7 +254,7 @@ def main(argv: list[str] | None = None) -> int:
     report["parameter_status"] = (
         "hypothetical unit weights"
         if args.unit_negative_weights
-        else "user/config supplied; production feature-switch values are unpublished"
+        else "public defaults or user/config supplied; live overrides are unobserved"
     )
     if args.json:
         print(json.dumps(report, ensure_ascii=False, indent=2, allow_nan=False))

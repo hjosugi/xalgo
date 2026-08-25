@@ -10,10 +10,19 @@ const samples = {
 const actionNames = {
   favorite: "いいね", reply: "返信", retweet: "リポスト", quote: "引用", dwell: "滞在",
   report: "報告", negative_feedback: "興味なし", vqv: "動画視聴", follow_author: "フォロー",
+  photo_expand: "画像展開", video_open: "動画を開く", click: "クリック",
+  open_link: "リンクを開く", profile_click: "プロフィール表示",
+  share: "共有", share_via_dm: "DM共有", share_via_copy_link: "リンクコピー",
+  quoted_click: "引用クリック", quoted_vqv: "引用動画視聴",
+  cont_dwell_time: "滞在時間", cont_click_dwell_time: "クリック後滞在",
+  cont_active_secs_5m_residual_norm: "5分内アクティブ時間",
+  post_unexplored: "新規性", not_interested: "興味なし", block_author: "ブロック",
+  mute_author: "ミュート", not_dwelled: "即離脱",
 };
 const barColors = ["#ff6747", "#9680ff", "#59cfdb", "#c7ff5e", "#f3bb54"];
 const presetNotes = {
-  repo_demo: "公開リポジトリに実在する唯一の2026年版デモ重みです。",
+  upstream_2026_08: "2026年8月に公開されたHome Mixerの既定値です。実験設定で上書きされる場合があります。",
+  repo_demo: "廃止済み2026年5月版デモを再現する履歴プリセットです。",
   legacy_2023: "2023年版で公開されていたHeavy Ranker重みとの比較用です。",
   full_template: "全アクションを含む感度分析用テンプレートです。",
 };
@@ -37,9 +46,10 @@ function setSample(name) {
 function buildPresetOptions() {
   const select = $("#preset-select");
   const labels = {
-    repo_demo: "repo_demo — 2026公開デモ",
+    upstream_2026_08: "upstream_2026_08 — 公開既定値",
+    repo_demo: "repo_demo — 旧2026デモ",
     legacy_2023: "legacy_2023 — 2023比較",
-    full_template: "full_template — 全22アクション",
+    full_template: "full_template — 全26アクション",
   };
   select.innerHTML = Object.keys(config.presets)
     .map((key) => `<option value="${key}">${labels[key] || key}</option>`).join("");
@@ -103,7 +113,11 @@ function buildFormula(data) {
     if (p !== undefined) return `${p.toFixed(5)} × ${Number(data.weights[action]).toFixed(2)}`;
     return `${action}: ${contribution.toFixed(5)}`;
   });
-  return `${parts.join(" + ")} = ${data.result.score.toFixed(5)}`;
+  const subtotal = Object.values(data.result.breakdown).reduce((sum, value) => sum + value, 0);
+  const adjustment = Math.abs(subtotal - data.result.score) > 1e-12
+    ? ` + offset ${(data.result.score - subtotal).toFixed(5)}`
+    : "";
+  return `${parts.join(" + ")}${adjustment} = ${data.result.score.toFixed(5)}`;
 }
 
 function renderResult(data) {
@@ -150,7 +164,10 @@ async function calculate(event) {
   try {
     const input = readForm();
     const post = source === "url" ? await fetchPublicPost($("#post-url").value) : input.post;
-    const result = scorePost(post, input.preset, input.weights, input.probabilities);
+    const settings = config.preset_settings?.[input.preset] || {};
+    const result = scorePost(
+      post, input.preset, input.weights, input.probabilities, settings,
+    );
     renderResult({ result, weights: input.weights });
   } catch (err) {
     error.textContent = err.message;
@@ -172,8 +189,11 @@ function updateDiversity() {
   if (!config) return;
   const item = Number($("#position-slider").value);
   const position = item - 1;
-  const decay = Number(config.author_diversity.decay || 0.9);
-  const floor = Number(config.author_diversity.floor || 0.2);
+  const preset = $("#preset-select").value || config.default_preset;
+  const diversity = config.preset_settings?.[preset]?.author_diversity
+    || config.author_diversity;
+  const decay = Number(diversity.decay);
+  const floor = Number(diversity.floor);
   const multiplier = (1 - floor) * (decay ** position) + floor;
   $("#position-output").textContent = `${item}件目`;
   $("#diversity-formula").innerHTML = `(1 − ${floor}) × ${decay}<sup>${position}</sup> + ${floor} = <b>${multiplier.toFixed(3)}</b>`;
@@ -204,7 +224,11 @@ async function init() {
     $("#calculate-label").textContent = source === "url" ? "投稿を取得して計算する" : "この数字で計算する";
   }));
   $("#sample-select").addEventListener("change", (event) => setSample(event.target.value));
-  $("#preset-select").addEventListener("change", () => { buildWeightFields(); scheduleCalculate(); });
+  $("#preset-select").addEventListener("change", () => {
+    buildWeightFields();
+    updateDiversity();
+    scheduleCalculate();
+  });
   $("#score-form").addEventListener("submit", calculate);
   $("#manual-inputs").addEventListener("input", scheduleCalculate);
   $("#advanced-panel").addEventListener("input", scheduleCalculate);

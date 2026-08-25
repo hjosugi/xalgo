@@ -1,7 +1,7 @@
 """xalgo CLI.
 
 Usage:
-  python -m xalgo.cli score <post-url> [--preset repo_demo] [--json]
+  python -m xalgo.cli score <post-url> [--preset upstream_2026_08] [--json]
                                        [--dwell-p 0.3] [--vqv-p 0.1]
                                        [--vqv-min-duration-ms 10000]
                                        [--weight vqv=1.0]
@@ -17,7 +17,12 @@ import sys
 from pathlib import Path
 
 from .fetch import fetch_post
-from .score import author_diversity_multiplier, load_weights, score_post
+from .score import (
+    author_diversity_multiplier,
+    load_weights,
+    preset_settings,
+    score_post,
+)
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -25,6 +30,7 @@ ROOT = Path(__file__).resolve().parent.parent
 def cmd_score(args: argparse.Namespace) -> int:
     post = fetch_post(args.url)
     preset_name, weights, cfg = load_weights(ROOT / "weights.json", args.preset)
+    settings = preset_settings(cfg, preset_name)
     weights = dict(weights)
     for override in args.weight:
         try:
@@ -55,13 +61,22 @@ def cmd_score(args: argparse.Namespace) -> int:
                 "VQV probability ignored because no video was detected"
             )
 
+    vqv_threshold = args.vqv_min_duration_ms
+    vqv_threshold_source = "hypothetical"
+    if vqv_threshold is None and args.vqv_p is not None:
+        configured_threshold = settings.get("vqv_min_duration_ms")
+        if configured_threshold is not None:
+            vqv_threshold = int(configured_threshold)
+            vqv_threshold_source = "upstream_default"
+
     result = score_post(
         post,
         weights,
         preset_name,
         extra_p,
-        negative_scores_offset=cfg.get("negative_scores_offset", 0.0),
-        vqv_min_duration_ms=args.vqv_min_duration_ms,
+        negative_scores_offset=float(settings["negative_scores_offset"]),
+        vqv_min_duration_ms=vqv_threshold,
+        vqv_threshold_source=vqv_threshold_source,
     )
 
     if args.json:
@@ -90,7 +105,7 @@ def cmd_score(args: argparse.Namespace) -> int:
         print(f"  {k:<22} {p_str:<18} contrib={v:+.6f}")
     print(f"\n  SCORE = {result.score:.6f}")
 
-    ad = cfg.get("author_diversity", {})
+    ad = settings.get("author_diversity", {})
     m1 = author_diversity_multiplier(1, ad.get("decay", 0.9), ad.get("floor", 0.2))
     print(f"  (author diversity example: 2nd post by same author x{m1:.3f})")
     for w in result.warnings:
@@ -123,8 +138,8 @@ def main() -> int:
         type=int,
         default=None,
         help=(
-            "hypothetical unpublished MIN_VIDEO_DURATION_MS; VQV applies only "
-            "when the fetched duration is strictly greater"
+            "override MIN_VIDEO_DURATION_MS; the current upstream preset defaults "
+            "to the published 10000 ms and VQV applies only when duration is greater"
         ),
     )
     sc.add_argument(

@@ -1,11 +1,22 @@
+import io
+import json
 import unittest
+from contextlib import redirect_stdout
 
-from scripts.analyze_negative_signals import analyze_sensitivity
+from scripts.analyze_negative_signals import analyze_sensitivity, main
 from xalgo.fetch import PostData
 from xalgo.score import normalization_sums, offset_score, score_post
 
 
 class NegativeSignalTests(unittest.TestCase):
+    def test_cli_defaults_to_public_preset_and_its_offset(self):
+        output = io.StringIO()
+        with redirect_stdout(output):
+            self.assertEqual(main(["--json", "--probabilities", "0"]), 0)
+        report = json.loads(output.getvalue())
+        self.assertEqual(report["preset"], "upstream_2026_08")
+        self.assertEqual(report["negative_scores_offset"], 0.001)
+
     def test_offset_matches_upstream_branches(self):
         weights = {"favorite": 1.0, "not_interested": -1.0}
         self.assertEqual(normalization_sums(weights), (1.0, 1.0, 2.0))

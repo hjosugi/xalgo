@@ -24,6 +24,30 @@ test("browser raw mode uses log1p", () => {
   assert.ok(Math.abs(result.score - (2 * Math.log1p(9) + Math.log1p(3))) < 1e-12);
 });
 
+test("browser applies the current upstream negative score offset", () => {
+  const result = scorePost(
+    { views: 100, likes: 10 },
+    "upstream_2026_08",
+    { favorite: 0.5, report: -234 },
+    {},
+    { negative_scores_offset: 0.001 },
+  );
+  assert.ok(Math.abs(result.score - 0.051) < 1e-12);
+});
+
+test("browser normalizes a negative current score before applying the offset", () => {
+  const weights = { favorite: 0.5, report: -234 };
+  const result = scorePost(
+    { views: 100, likes: 0 },
+    "upstream_2026_08",
+    weights,
+    { report: 0.01 },
+    { negative_scores_offset: 0.001 },
+  );
+  const expected = ((-2.34 + 234) / 234.5) * 0.001;
+  assert.ok(Math.abs(result.score - expected) < 1e-12);
+});
+
 test("browser probabilities are validated", () => {
   assert.throws(
     () => scorePost({ views: 10, likes: 1 }, "test", { favorite: 1, dwell: 0.2 }, { dwell: 1.1 }),

@@ -11,8 +11,17 @@
     retweet: "retweets",
     quote: "quotes",
   };
+  const positiveNormalizationActions = [
+    "favorite", "reply", "retweet", "photo_expand", "video_open", "click",
+    "open_link", "profile_click", "vqv", "share", "share_via_dm",
+    "share_via_copy_link", "dwell", "quote", "quoted_click", "quoted_vqv",
+    "follow_author", "post_unexplored",
+  ];
+  const negativeNormalizationActions = [
+    "not_interested", "block_author", "mute_author", "report", "not_dwelled",
+  ];
 
-  function scorePost(post, preset, weights, extraProbabilities = {}) {
+  function scorePost(post, preset, weights, extraProbabilities = {}, settings = {}) {
     const warnings = [...(post.warnings || [])];
     const breakdown = {};
     const pHat = {};
@@ -65,13 +74,37 @@
       });
     }
 
+    let score = Object.values(breakdown).reduce((sum, value) => sum + value, 0);
+    if (mode === "rate") {
+      const offset = Number(settings.negative_scores_offset || 0);
+      const positiveSum = positiveNormalizationActions.reduce(
+        (sum, action) => sum + Number(weights[action] || 0), 0,
+      );
+      const negativeSum = -negativeNormalizationActions.reduce(
+        (sum, action) => sum + Number(weights[action] || 0), 0,
+      );
+      const totalSum = positiveSum + negativeSum;
+      if (totalSum === 0) {
+        score = Math.max(score, 0);
+      } else if (score < 0) {
+        score = ((score + negativeSum) / totalSum) * offset;
+      } else {
+        score += offset;
+      }
+    }
+    if (preset === "upstream_2026_08") {
+      warnings.push(
+        "公開されたHome Mixer既定値です。実リクエストでは実験設定により上書きされ得ます。",
+      );
+    }
+
     return {
       preset,
       mode,
       breakdown,
       p_hat: pHat,
       warnings,
-      score: Object.values(breakdown).reduce((sum, value) => sum + value, 0),
+      score,
     };
   }
 

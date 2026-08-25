@@ -20,7 +20,12 @@ from pathlib import Path
 from typing import Any
 
 from .fetch import PostData, fetch_post
-from .score import author_diversity_multiplier, load_weights, score_post
+from .score import (
+    author_diversity_multiplier,
+    load_weights,
+    preset_settings,
+    score_post,
+)
 
 ROOT = Path(__file__).resolve().parent.parent
 WEB_ROOT = ROOT / "web"
@@ -68,8 +73,9 @@ def _post_from_manual(data: dict[str, Any]) -> PostData:
 def build_score_response(payload: dict[str, Any]) -> dict[str, Any]:
     """Validate a browser request and return the same result as the CLI."""
     preset_name, preset_weights, cfg = load_weights(
-        WEIGHTS_PATH, str(payload.get("preset") or "repo_demo")
+        WEIGHTS_PATH, str(payload.get("preset") or "upstream_2026_08")
     )
+    settings = preset_settings(cfg, preset_name)
     weights = dict(preset_weights)
 
     overrides = payload.get("weights") or {}
@@ -103,8 +109,21 @@ def build_score_response(payload: dict[str, Any]) -> dict[str, Any]:
         if value not in (None, "")
     }
 
-    result = score_post(post, weights, preset_name, extra_p)
-    ad = cfg.get("author_diversity", {})
+    vqv_threshold = settings.get("vqv_min_duration_ms")
+    result = score_post(
+        post,
+        weights,
+        preset_name,
+        extra_p,
+        negative_scores_offset=float(settings["negative_scores_offset"]),
+        vqv_min_duration_ms=(
+            int(vqv_threshold)
+            if vqv_threshold is not None and "vqv" in extra_p
+            else None
+        ),
+        vqv_threshold_source="upstream_default",
+    )
+    ad = settings.get("author_diversity", {})
     position = int(_finite_number(payload.get("author_position", 1), "author_position"))
     multiplier = author_diversity_multiplier(
         position,
@@ -149,6 +168,7 @@ class XalgoHandler(SimpleHTTPRequestHandler):
                 {
                     "default_preset": cfg["default_preset"],
                     "presets": cfg["presets"],
+                    "preset_settings": cfg.get("preset_settings", {}),
                     "author_diversity": cfg.get("author_diversity", {}),
                 },
             )

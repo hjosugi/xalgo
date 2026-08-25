@@ -1,5 +1,33 @@
 # Changelog
 
+## 0.2.0 — 2026-08-25
+
+### Added
+
+- A source-based August 2026 contract audit for all 26 public Home Mixer
+  action defaults, ranking settings, scoring constants, Phoenix model profiles,
+  and action-space dimensions.
+- The `upstream_2026_08` default preset with public VQV, negative-score offset,
+  author-diversity, and OON defaults shared by Python and browser scoring.
+- An issue-to-code research receipt for upstream changes reported in #14–#20
+  and their impact on analysis issues #1, #6, #9, #10, and #11.
+
+### Changed
+
+- Upstream tracking now covers the current Phoenix, Home Mixer parameter,
+  SimClusters, visibility, and Grox policy trees and suppresses import/comment
+  noise in issue summaries.
+- The May 2026 Phoenix demo is retained as the explicitly historical
+  `repo_demo` preset; it is no longer treated as the current contract.
+- The reviewed tracking corpus grows from 25 to 33 May/August cases.
+
+### Fixed
+
+- Rust structure extraction no longer mistakes function parameters for struct
+  fields.
+- URL, API, and browser scoring now apply preset-specific offsets and diversity
+  settings consistently.
+
 ## 0.1.4 — 2026-07-31
 
 ### Added

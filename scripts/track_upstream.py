@@ -35,12 +35,14 @@ CORPUS_FILE = ROOT / "state" / "upstream_tracking_corpus.json"
 
 # A path match is enough to flag a change.  The regular expression below is
 # only used to extract a compact set of especially interesting patch lines.
-ALGORITHM_PATHS = (
+RANKING_PATHS = (
     "README.md",
     "candidate-pipeline/",
     "home-mixer/candidate_hydrators/",
     "home-mixer/candidate_pipeline/",
     "home-mixer/filters/",
+    "home-mixer/models/",
+    "home-mixer/params/",
     "home-mixer/query_hydrators/",
     "home-mixer/scorers/",
     "home-mixer/selectors/",
@@ -51,15 +53,31 @@ ALGORITHM_PATHS = (
     "grox/plans/plan_initial_banger.py",
     "grox/plans/plan_reply_ranking.py",
     "grox/tasks/task_rank_replies.py",
-    "phoenix/grok.py",
     "phoenix/README.md",
     "phoenix/artifacts/oss-phoenix-artifacts.zip",
+    "phoenix/crates/common/xai-recsys/",
+    "phoenix/crates/serving/xai-recsys-proto/",
+    "phoenix/reference/",
+    "phoenix/xrex/configs/",
+    "phoenix/xrex/data/recsys/",
+    "phoenix/xrex/inference/",
+    "phoenix/xrex/models/",
     "phoenix/recsys_model.py",
     "phoenix/recsys_retrieval_model.py",
     "phoenix/run_pipeline.py",
     "phoenix/run_ranker.py",
     "phoenix/run_retrieval.py",
     "phoenix/runners.py",
+    "simclusters/",
+)
+POLICY_PATHS = (
+    "abuse-enforcement-service/",
+    "adult-content/",
+    "botmaker-rules/",
+    "botmaker/",
+    "media-model-proxy/",
+    "scarecrow/",
+    "visibility-filtering/",
 )
 GROX_POLICY_TERMS = (
     "post_safety",
@@ -92,7 +110,9 @@ ACTION_NAMES = {
     "reply",
     "retweet",
     "photo_expand",
+    "video_open",
     "click",
+    "open_link",
     "profile_click",
     "vqv",
     "share",
@@ -104,7 +124,9 @@ ACTION_NAMES = {
     "quoted_vqv",
     "cont_dwell_time",
     "cont_click_dwell_time",
+    "cont_active_secs_5m_residual_norm",
     "follow_author",
+    "post_unexplored",
     "not_interested",
     "block_author",
     "mute_author",
@@ -139,6 +161,8 @@ def _read_text(path: Path) -> str | None:
 
 
 def _classify_path(path: str) -> str:
+    if any(path == prefix or path.startswith(prefix) for prefix in POLICY_PATHS):
+        return "policy"
     if path.startswith("grox/") and any(term in path for term in GROX_POLICY_TERMS):
         return "policy"
     if _is_algorithm_path(path):
@@ -155,17 +179,29 @@ def _subsystem(path: str) -> str:
         return "home-mixer"
     if path.startswith("candidate-pipeline/"):
         return "candidate-pipeline"
+    if path.startswith("visibility-filtering/"):
+        return "visibility-filtering"
+    if path.startswith("simclusters/"):
+        return "simclusters"
     return "repository"
 
 
 def _is_algorithm_path(path: str) -> bool:
-    return any(path == prefix or path.startswith(prefix) for prefix in ALGORITHM_PATHS)
+    return any(path == prefix or path.startswith(prefix) for prefix in RANKING_PATHS)
 
 
-def _interesting_lines(patch: str, limit: int = 40) -> list[str]:
+def _interesting_lines(patch: str, path: str = "", limit: int = 24) -> list[str]:
     lines = []
+    code_file = path.endswith((".py", ".rs"))
     for line in patch.splitlines():
         if not line.startswith(("+", "-")) or line.startswith(("+++", "---")):
+            continue
+        stripped = line[1:].strip()
+        if code_file and re.match(
+            r"^(?:use\s|from\s|import\s|pub\s+mod\s|mod\s)", stripped
+        ):
+            continue
+        if code_file and stripped.startswith(("//", "#")):
             continue
         if SIGNAL_RE.search(line):
             lines.append(line)
@@ -238,25 +274,32 @@ def _rust_structure(source: str) -> dict[str, set[str]]:
         "actions": set(),
         "formulas": set(),
     }
+    struct_depth = 0
     for line in source.splitlines():
-        constant = RUST_CONST_RE.match(line)
+        code = line.split("//", 1)[0]
+        constant = RUST_CONST_RE.match(code)
         if constant and STRUCTURAL_NAME_RE.search(constant.group(1)):
             result["assignments"].add(
                 f"{constant.group(1)}={_normalize_expression(constant.group(2))}"
             )
-        function = RUST_FUNCTION_RE.match(line)
+        function = RUST_FUNCTION_RE.match(code)
         if function and STRUCTURAL_NAME_RE.search(function.group(1)):
             result["functions"].add(function.group(1))
-        field = RUST_FIELD_RE.match(line)
-        if field and STRUCTURAL_NAME_RE.search(field.group(1)):
+        starts_struct = bool(re.match(r"^\s*(?:pub\s+)?struct\s+\w+", code))
+        if starts_struct:
+            struct_depth += code.count("{") - code.count("}")
+        field = RUST_FIELD_RE.match(code)
+        if struct_depth > 0 and field and STRUCTURAL_NAME_RE.search(field.group(1)):
             result["fields"].add(field.group(1))
-        for token in re.findall(r"[A-Za-z_][A-Za-z0-9_]*", line):
+        for token in re.findall(r"[A-Za-z_][A-Za-z0-9_]*", code):
             if token.lower() in ACTION_NAMES:
                 result["actions"].add(token.lower())
-        if STRUCTURAL_NAME_RE.search(line) and any(
-            operator in line for operator in ("+", "-", "*", "/")
+        if STRUCTURAL_NAME_RE.search(code) and any(
+            operator in code.replace("->", "") for operator in ("+", "-", "*", "/")
         ):
-            result["formulas"].add(_normalize_expression(line))
+            result["formulas"].add(_normalize_expression(code))
+        if struct_depth > 0 and not starts_struct:
+            struct_depth += code.count("{") - code.count("}")
     return result
 
 
@@ -314,7 +357,7 @@ def _analyze_files(files: Iterable[dict]) -> list[dict]:
                 "status": changed.get("status", "modified"),
                 "category": category,
                 "subsystem": _subsystem(path),
-                "signal_lines": _interesting_lines(changed.get("patch", "")),
+                "signal_lines": _interesting_lines(changed.get("patch", ""), path=path),
                 "structural_changes": _structured_patch_changes(
                     path, changed.get("patch", "")
                 ),

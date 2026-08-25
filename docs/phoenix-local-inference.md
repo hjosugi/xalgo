@@ -1,5 +1,10 @@
 # Phoenix mini ローカル推論 receipt
 
+> [!NOTE]
+> これは廃止済み2026年5月demo artifactの再現receiptです。現行の2026年8月source世代に
+> checkpointを移植した結果ではありません。現行契約は
+> [`upstream-2026-08.md`](upstream-2026-08.md)を参照してください。
+
 2026-07-30、公式 `xai-org/x-algorithm` の固定commitとGit LFS artifactを使い、
 retrievalからrankingまでの公開pipelineをローカルCPUで完走した。これは本番For Youの
 再現ではなく、配布されたmini modelと合成example historyに対する実行結果である。

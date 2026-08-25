@@ -1,7 +1,36 @@
 {
-  "_comment": "重みプリセット。本番の重みは xai_feature_switches で動的注入され非公開。'repo_demo' は phoenix/run_pipeline.py のラベル上のデモ値だが、同ファイルのserver action indexとrunners.pyのmodel output順には既知の不整合があるため正解値ではない。'legacy_2023' は twitter/the-algorithm-mlが2023-04-05時点として公開した旧Heavy Ranker重みで、2026 Phoenixには適用できない。'full_template' はhome-mixer/scorers/ranking_scorer.rsの22信号を網羅した感度分析用テンプレ。",
-  "default_preset": "repo_demo",
+  "schema_version": 2,
+  "_comment": "重みプリセット。upstream_2026_08 は xai-org/x-algorithm の Home Mixer に公開された feature-switch default。実リクエストでは実験設定により上書きされ得る。また xalgo は閲覧者別 Phoenix 予測の代わりに公開 count/views を使うため、本番順位の再現ではない。repo_demo は廃止済み May 2026 demo の履歴再現、legacy_2023 は旧 Heavy Ranker 比較、full_template は感度分析用。",
+  "default_preset": "upstream_2026_08",
   "presets": {
+    "upstream_2026_08": {
+      "favorite": 0.5,
+      "reply": 5.0,
+      "retweet": 1.0,
+      "photo_expand": 0.05,
+      "video_open": 0.05,
+      "click": 0.4,
+      "open_link": 0.2,
+      "profile_click": 0.0,
+      "vqv": 0.05,
+      "share": 2.0,
+      "share_via_dm": 5.0,
+      "share_via_copy_link": 20.0,
+      "dwell": 0.0,
+      "quote": 5.0,
+      "quoted_click": 0.05,
+      "quoted_vqv": 0.0,
+      "cont_dwell_time": 0.004,
+      "cont_click_dwell_time": 0.0,
+      "cont_active_secs_5m_residual_norm": 0.0,
+      "follow_author": 4.0,
+      "post_unexplored": 0.02,
+      "not_interested": -43.2,
+      "block_author": -31.2,
+      "mute_author": -58.8,
+      "report": -234.0,
+      "not_dwelled": -0.02
+    },
     "repo_demo": {
       "favorite": 1.0,
       "reply": 0.5,
@@ -20,23 +49,27 @@
       "report": -369.0
     },
     "full_template": {
-      "favorite": 1.0,
-      "reply": 0.5,
-      "retweet": 0.3,
+      "favorite": 0.0,
+      "reply": 0.0,
+      "retweet": 0.0,
       "photo_expand": 0.0,
+      "video_open": 0.0,
       "click": 0.0,
+      "open_link": 0.0,
       "profile_click": 0.0,
       "vqv": 0.0,
       "share": 0.0,
       "share_via_dm": 0.0,
       "share_via_copy_link": 0.0,
-      "dwell": 0.2,
+      "dwell": 0.0,
       "quote": 0.0,
       "quoted_click": 0.0,
       "quoted_vqv": 0.0,
       "cont_dwell_time": 0.0,
       "cont_click_dwell_time": 0.0,
+      "cont_active_secs_5m_residual_norm": 0.0,
       "follow_author": 0.0,
+      "post_unexplored": 0.0,
       "not_interested": 0.0,
       "block_author": 0.0,
       "mute_author": 0.0,
@@ -44,7 +77,53 @@
       "not_dwelled": 0.0
     }
   },
+  "preset_settings": {
+    "upstream_2026_08": {
+      "source_ref": "d011592a1c8c4bfb23781ff15577a68dc08bdde1",
+      "introduced_ref": "47c1bcdadfe4911568fd6db4f8838b194325beab",
+      "negative_scores_offset": 0.001,
+      "vqv_min_duration_ms": 10000,
+      "author_diversity": {
+        "enabled": true,
+        "decay": 0.5,
+        "floor": 0.25
+      },
+      "oon_weight_factor": 0.75,
+      "topic_oon_weight_factor": 0.5
+    },
+    "repo_demo": {
+      "source_ref": "0bfc2795d308f90032544322747caacd535f75ae",
+      "negative_scores_offset": 0.0,
+      "author_diversity": {
+        "decay": 0.9,
+        "floor": 0.2,
+        "hypothetical": true
+      },
+      "oon_weight_factor": 1.0
+    },
+    "legacy_2023": {
+      "source_ref": "b85210863f7a94efded0ef5c5ccf4ff42767876c",
+      "negative_scores_offset": 0.0,
+      "author_diversity": {
+        "decay": 0.9,
+        "floor": 0.2,
+        "hypothetical": true
+      },
+      "oon_weight_factor": 1.0
+    },
+    "full_template": {
+      "negative_scores_offset": 0.0,
+      "author_diversity": {
+        "decay": 0.5,
+        "floor": 0.25
+      },
+      "oon_weight_factor": 1.0
+    }
+  },
   "negative_scores_offset": 0.0,
-  "author_diversity": { "decay": 0.9, "floor": 0.2, "_comment": "実値は非公開。式: (1-floor)*decay^position+floor" },
-  "oon_weight_factor": 1.0
+  "author_diversity": {
+    "decay": 0.5,
+    "floor": 0.25
+  },
+  "oon_weight_factor": 0.75
 }

@@ -47,10 +47,10 @@
             <div class="formula-head"><span>SCORING MODEL</span><span class="live-dot">LIVE</span></div>
             <div class="formula-main"><i>score</i> = <span>Σ</span> w<sub>i</sub> × P(a<sub>i</sub>)</div>
             <div class="formula-line"></div>
-            <div class="signal-row"><span class="signal-icon coral">♥</span><b>いいね</b><div><i style="--w:82%"></i></div><strong>× 1.0</strong></div>
-            <div class="signal-row"><span class="signal-icon violet">↩</span><b>返信</b><div><i style="--w:58%"></i></div><strong>× 0.5</strong></div>
-            <div class="signal-row"><span class="signal-icon cyan">↻</span><b>リポスト</b><div><i style="--w:34%"></i></div><strong>× 0.3</strong></div>
-            <div class="formula-total"><span>CROWD-AVERAGE SCORE</span><strong>0.0418</strong></div>
+            <div class="signal-row"><span class="signal-icon coral">♥</span><b>いいね</b><div><i style="--w:82%"></i></div><strong>× 0.5</strong></div>
+            <div class="signal-row"><span class="signal-icon violet">↩</span><b>返信</b><div><i style="--w:58%"></i></div><strong>× 5.0</strong></div>
+            <div class="signal-row"><span class="signal-icon cyan">↻</span><b>リポスト</b><div><i style="--w:34%"></i></div><strong>× 1.0</strong></div>
+            <div class="formula-total"><span>CROWD-AVERAGE SCORE</span><strong>0.0414</strong></div>
           </div>
           <div class="float-chip chip-a"><span>👁</span><b>views</b><small>分母になる</small></div>
           <div class="float-chip chip-b"><span>⚡</span><b>P(action)</b><small>行動の予測確率</small></div>
@@ -119,9 +119,9 @@
 
               <div class="preset-row">
                 <label for="preset-select">重みプリセット</label>
-                <select id="preset-select"><option value="repo_demo">repo_demo — 2026公開デモ</option></select>
+                <select id="preset-select"><option value="upstream_2026_08">upstream_2026_08 — 公開既定値</option></select>
               </div>
-              <p class="preset-note" id="preset-note">公開リポジトリに実在する唯一の2026年版デモ重みです。</p>
+              <p class="preset-note" id="preset-note">2026年8月に公開されたHome Mixerの既定値です。実験設定で上書きされる場合があります。</p>
 
               <div class="advanced-toggle">
                 <button type="button" id="advanced-button" aria-expanded="false"><span>＋</span> 仮定する確率・重みを調整</button>
@@ -212,11 +212,11 @@
             <p>基礎スコアが高くても、同じ著者の2件目、3件目には減衰係数が掛かります。スライダーで連投時の変化を確認できます。</p>
             <label for="position-slider"><span>同じ著者の何件目？</span><output id="position-output">2件目</output></label>
             <input id="position-slider" type="range" min="1" max="6" value="2" step="1" />
-            <div class="diversity-formula"><span>multiplier</span><code id="diversity-formula">(1 − 0.2) × 0.9¹ + 0.2 = <b>0.920</b></code></div>
+            <div class="diversity-formula"><span>multiplier</span><code id="diversity-formula">(1 − 0.25) × 0.5¹ + 0.25 = <b>0.625</b></code></div>
           </div>
           <div class="feed-stack" id="feed-stack">
             <div class="feed-card featured"><span class="avatar">A</span><div><b>@same_author</b><i>最初の投稿 · score × 1.000</i><p></p><p class="short"></p></div><strong>1</strong></div>
-            <div class="feed-card"><span class="avatar">A</span><div><b>@same_author</b><i id="feed-multiplier">2件目 · score × 0.920</i><p></p><p class="short"></p></div><strong id="feed-rank">2</strong></div>
+            <div class="feed-card"><span class="avatar">A</span><div><b>@same_author</b><i id="feed-multiplier">2件目 · score × 0.625</i><p></p><p class="short"></p></div><strong id="feed-rank">2</strong></div>
             <div class="feed-card muted"><span class="avatar alt">B</span><div><b>@another_author</b><i>別の著者 · 減衰なし</i><p></p><p class="short"></p></div><strong>↑</strong></div>
           </div>
         </div>
@@ -229,7 +229,7 @@
         </div>
         <div class="limits-grid">
           <article class="can"><div class="limit-head"><span>✓</span><h3>このラボでわかる</h3><small>CAN EXPLAIN</small></div><ul><li>公開スコア式の構造</li><li>各エンゲージメント率の寄与</li><li>重みを変えたときの感度</li><li>著者多様性の減衰イメージ</li><li>2026年版の処理フロー</li></ul></article>
-          <article class="cannot"><div class="limit-head"><span>×</span><h3>このラボではわからない</h3><small>CANNOT REPRODUCE</small></div><ul><li>実際の「おすすめ」順位</li><li>本番で使われる非公開の重み</li><li>あなた個人のPhoenix予測</li><li>非公開の閲覧・負シグナル</li><li>候補集合と正規化処理の全容</li></ul></article>
+          <article class="cannot"><div class="limit-head"><span>×</span><h3>このラボではわからない</h3><small>CANNOT REPRODUCE</small></div><ul><li>実際の「おすすめ」順位</li><li>live requestで上書きされた重み</li><li>あなた個人のPhoenix予測</li><li>非公開の閲覧・負シグナル</li><li>候補集合と正規化処理の全容</li></ul></article>
         </div>
         <div class="source-note"><span>OPEN SOURCE, CLEAR BOUNDARIES</span><p>このページは <a href="https://github.com/xai-org/x-algorithm" target="_blank" rel="noreferrer">xai-org/x-algorithm</a> の公開コードを学習目的で読み解き、公開カウントで一部を近似します。X Corp. / xAIの公式ツールではありません。</p></div>
       </section>

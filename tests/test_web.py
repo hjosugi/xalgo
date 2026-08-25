@@ -4,6 +4,17 @@ from xalgo.web import build_score_response
 
 
 class WebScoreTests(unittest.TestCase):
+    def test_default_request_uses_public_august_contract(self):
+        response = build_score_response(
+            {
+                "source": "manual",
+                "post": {"views": 100, "likes": 10, "replies": 0, "retweets": 0},
+            }
+        )
+        self.assertEqual(response["result"]["preset"], "upstream_2026_08")
+        self.assertAlmostEqual(response["result"]["score"], 0.051)
+        self.assertAlmostEqual(response["author_diversity"]["multiplier"], 0.625)
+
     def test_manual_request_uses_shared_scoring_logic(self):
         response = build_score_response(
             {

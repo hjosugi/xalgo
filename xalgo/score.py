@@ -43,7 +43,9 @@ POSITIVE_NORMALIZATION_ACTIONS = (
     "reply",
     "retweet",
     "photo_expand",
+    "video_open",
     "click",
+    "open_link",
     "profile_click",
     "vqv",
     "share",
@@ -54,6 +56,7 @@ POSITIVE_NORMALIZATION_ACTIONS = (
     "quoted_click",
     "quoted_vqv",
     "follow_author",
+    "post_unexplored",
 )
 NEGATIVE_NORMALIZATION_ACTIONS = (
     "not_interested",
@@ -76,10 +79,21 @@ class ScoreResult:
 
 def load_weights(path: Path, preset: Optional[str] = None):
     cfg = json.loads(path.read_text(encoding="utf-8"))
-    name = preset or cfg.get("default_preset", "repo_demo")
+    name = preset or cfg.get("default_preset", "upstream_2026_08")
     if name not in cfg["presets"]:
         raise KeyError(f"Unknown preset '{name}'. Available: {list(cfg['presets'])}")
     return name, cfg["presets"][name], cfg
+
+
+def preset_settings(cfg: dict, preset_name: str) -> dict:
+    """Resolve per-preset scoring settings with schema-v1 compatible fallbacks."""
+    settings = dict(cfg.get("preset_settings", {}).get(preset_name, {}))
+    settings.setdefault(
+        "negative_scores_offset", cfg.get("negative_scores_offset", 0.0)
+    )
+    settings.setdefault("author_diversity", cfg.get("author_diversity", {}))
+    settings.setdefault("oon_weight_factor", cfg.get("oon_weight_factor", 1.0))
+    return settings
 
 
 def _rate(count: Optional[int], views: int) -> Optional[float]:
@@ -132,9 +146,9 @@ def vqv_weight_eligibility(
 ) -> float:
     """Mirror the upstream strict VQV duration gate for a threshold hypothesis.
 
-    The production value of ``MIN_VIDEO_DURATION_MS`` is unpublished.  Callers
-    must therefore supply an explicit hypothetical threshold rather than
-    treating this helper as a production-configuration lookup.
+    The August 2026 source release publishes a 10,000 ms default, but live
+    feature switches may override it.  Callers therefore pass the threshold
+    explicitly so historical and hypothetical contracts remain reproducible.
     """
     if min_video_duration_ms < 0:
         raise ValueError("min_video_duration_ms must be non-negative")
@@ -154,6 +168,7 @@ def score_post(
     extra_p: Optional[Dict[str, float]] = None,
     negative_scores_offset: Optional[float] = None,
     vqv_min_duration_ms: Optional[int] = None,
+    vqv_threshold_source: str = "hypothetical",
 ) -> ScoreResult:
     """extra_p lets the caller inject probabilities that public data lacks,
     e.g. --dwell-p 0.3 for P(dwell).
@@ -177,8 +192,7 @@ def score_post(
     if "vqv" in extra_p:
         if vqv_min_duration_ms is None:
             warnings.append(
-                "VQV probability injected without a duration gate; production "
-                "MIN_VIDEO_DURATION_MS is unpublished"
+                "VQV probability injected without a configured duration gate"
             )
         elif (
             vqv_weight_eligibility(post.video_duration_ms, vqv_min_duration_ms, 1.0)
@@ -198,11 +212,17 @@ def score_post(
                     f"hypothetical {vqv_min_duration_ms} ms threshold"
                 )
         else:
-            warnings.append(
-                "VQV eligibility uses hypothetical "
-                f"MIN_VIDEO_DURATION_MS={vqv_min_duration_ms}; the production "
-                "value is unpublished"
-            )
+            if vqv_threshold_source == "upstream_default":
+                warnings.append(
+                    "VQV eligibility uses the public upstream default "
+                    f"MIN_VIDEO_DURATION_MS={vqv_min_duration_ms}; live feature "
+                    "switches may override it"
+                )
+            else:
+                warnings.append(
+                    "VQV eligibility uses hypothetical "
+                    f"MIN_VIDEO_DURATION_MS={vqv_min_duration_ms}"
+                )
 
     if post.views and post.views > 0:
         mode = "rate"
@@ -245,10 +265,17 @@ def score_post(
             breakdown[wkey] = w * math.log1p(cnt)
         score = sum(breakdown.values())
 
-    if preset_name == "repo_demo":
+    if preset_name == "upstream_2026_08":
         warnings.append(
-            "repo_demo is a sensitivity preset, not a verified Phoenix score: "
-            "upstream run_pipeline.py indices conflict with runners.py output order"
+            "upstream_2026_08 contains public Home Mixer defaults, not a live "
+            "request configuration; count/views still substitutes for personalized "
+            "Phoenix predictions"
+        )
+    elif preset_name == "repo_demo":
+        warnings.append(
+            "repo_demo preserves the superseded May 2026 demo for comparison; "
+            "it is not a verified Phoenix score, and its run_pipeline.py indices "
+            "conflicted with runners.py output order"
         )
     elif preset_name == "legacy_2023":
         warnings.append(

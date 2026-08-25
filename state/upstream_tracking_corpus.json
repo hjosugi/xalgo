@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "source_repository": "xai-org/x-algorithm",
-  "reviewed_at": "2026-07-29",
-  "method": "Representative files from the three public main commits were manually classified by their direct effect on recommendation ranking, Grox safety/spam policy, or neither.",
+  "reviewed_at": "2026-08-25",
+  "method": "Representative files from the May and August 2026 public source generations were manually classified by their direct effect on recommendation ranking, safety/spam policy, or neither.",
   "cases": [
     {
       "id": "ranking-weighted-scorer",
@@ -178,6 +178,62 @@
       "path": "CODE_OF_CONDUCT.md",
       "expected_category": "unrelated",
       "rationale": "Community policy, not recommendation policy."
+    },
+    {
+      "id": "ranking-public-weight-defaults",
+      "source_commit": "47c1bcdadf",
+      "path": "home-mixer/params/param.rs",
+      "expected_category": "ranking",
+      "rationale": "Publishes default action weights and ranking gates."
+    },
+    {
+      "id": "ranking-source-phoenix-model",
+      "source_commit": "47c1bcdadf",
+      "path": "phoenix/xrex/models/recsys_model.py",
+      "expected_category": "ranking",
+      "rationale": "Defines the replacement source Phoenix ranking model."
+    },
+    {
+      "id": "ranking-source-phoenix-config",
+      "source_commit": "47c1bcdadf",
+      "path": "phoenix/xrex/configs/xrecsys.py",
+      "expected_category": "ranking",
+      "rationale": "Defines production and nano Phoenix architecture profiles."
+    },
+    {
+      "id": "ranking-simclusters-source",
+      "source_commit": "47c1bcdadf",
+      "path": "simclusters/ann/src/main.rs",
+      "expected_category": "ranking",
+      "rationale": "Retrieves out-of-network candidates by cluster similarity."
+    },
+    {
+      "id": "policy-visibility-filtering",
+      "source_commit": "47c1bcdadf",
+      "path": "visibility-filtering/src/lib.rs",
+      "expected_category": "policy",
+      "rationale": "Determines whether a candidate is shown, dropped, or interstitialed."
+    },
+    {
+      "id": "policy-botmaker-rule",
+      "source_commit": "47c1bcdadf",
+      "path": "botmaker-rules/scarecrow/bot/GroxTweetProcessor.bot",
+      "expected_category": "policy",
+      "rationale": "Applies a labeling rule that can feed visibility decisions."
+    },
+    {
+      "id": "policy-adult-content-model",
+      "source_commit": "47c1bcdadf",
+      "path": "adult-content/calibration.py",
+      "expected_category": "policy",
+      "rationale": "Calibrates an adult-content policy model."
+    },
+    {
+      "id": "policy-reply-spam-flow",
+      "source_commit": "d011592a1c",
+      "path": "grox/flows/reply_spam/task_filter.py",
+      "expected_category": "policy",
+      "rationale": "Applies the Grox reply-spam eligibility threshold."
     }
   ]
 }

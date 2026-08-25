@@ -1,14 +1,16 @@
 # xalgo — X「おすすめ」スコア推定・上流追跡ツール
 
-Version 0.1.4
+Version 0.2.0
 
 [xai-org/x-algorithm](https://github.com/xai-org/x-algorithm) の
-2026-05-15版（commit `0bfc2795d3`）を読み解き、投稿URLから公開カウントだけで
-近似スコアを計算します。X APIのキー、Xログイン、Cookieは不要です。
+2026-08-24版（commit `d011592a1c`）で公開されたHome Mixer既定値とPhoenix sourceを
+追跡し、投稿URLから公開カウントだけで近似スコアを計算します。X APIのキー、Xログイン、
+Cookieは不要です。5月版Phoenix demoの監査・実行receiptも履歴資料として保持します。
 
 > [!IMPORTANT]
 > 実際の「おすすめ」順位や内部スコアを再現するものではありません。
-> 本番の重みと閲覧者別Phoenix予測は非公開です。表示するのは
+> Home Mixerの公開値はfeature switchの**既定値**であり、live requestでは実験設定などで
+> 上書きされ得ます。閲覧者別Phoenix予測も取得できません。表示するのは
 > `公開エンゲージメント数 ÷ views` を確率の代用にした研究用の近似値です。
 
 ## セットアップ
@@ -60,14 +62,15 @@ X公式embed CDN（syndication）。X APIは使いませんが、各公開サー
 
 | preset | 内容 |
 |---|---|
-| `repo_demo` | リポジトリ内に実在する唯一の公開数値 (run_pipeline.py) |
+| `upstream_2026_08` | Home Mixerに公開された26 actionのfeature-switch既定値（既定preset） |
+| `repo_demo` | 廃止済み2026年5月Phoenix demoの履歴再現 |
 | `legacy_2023` | 2023年 twitter/the-algorithm の Heavy Ranker 重み (比較用) |
-| `full_template` | 全22アクション網羅の編集用テンプレ |
+| `full_template` | 全actionを編集する感度分析用テンプレ |
 
-本番重みはfeature switch注入で非公開です。逆推定の計画は
-[`issues/001-weight-estimation.md`](issues/001-weight-estimation.md) を参照してください。
+公開既定値とlive requestのoverrideは区別してください。全値・出典・Issue取り込み結果は
+[`docs/upstream-2026-08.md`](docs/upstream-2026-08.md) を参照してください。
 
-### 4. 公開モデル契約を約68KBで監査
+### 4. 公開source契約を監査
 
 ```bash
 python scripts/audit_model_contract.py
@@ -75,13 +78,11 @@ python scripts/audit_model_contract.py --ref main --json
 python scripts/audit_model_contract.py --ref main --fail-on-drift
 ```
 
-約2.9GBのPhoenix artifactを丸ごと落とさず、Git LFSのRange requestで内部configだけを
-読みます。READMEとmodel実体、デモのaction indexと出力head順を比較できます。現在の
-pinned releaseでは、root READMEの`256-dim/2-layer`に対しartifactは
-`128-dim/4-layer`、デモのaction indexも`runners.py`の出力順と一致しません。
-既知状態は[`state/model_contract_baseline.json`](state/model_contract_baseline.json)に固定し、
-`--fail-on-drift`は既知不整合では失敗せず、LFS OID・model寸法・README・action順の
-新しい変更だけをexit 1で通知します。
+現行sourceから26 actionの重み、VQV・author diversity・OON設定、scoring定数、
+ranking/retrievalの4 model profile、action-space寸法を抽出します。既知状態は
+[`state/model_contract_baseline.json`](state/model_contract_baseline.json)に固定し、
+`--fail-on-drift`は構造差分を検出するとexit 1を返します。5月版のLFS artifact契約は
+固定commitを`--ref`へ渡し、`--no-baseline`を併用すると引き続き監査できます。
 
 約3GBのartifactを実際に取得したfull inferenceでは、84,564候補からretrieval 200件、
 ranking 200件を完走し、19列の確率分布を決定的に再生成できました。再現patch、receipt、
@@ -101,7 +102,8 @@ python scripts/track_upstream.py --evaluate-corpus --json
 関係する変更とGroxのspam/PTOS policy変更を区別してIssueを自動起票します。
 上流は現在PR一覧REST APIを404にしていますが、その場合もcommit監視は継続します。
 PR APIが公開された時点からファイル単位のPR検査とmerge commitの重複抑止が有効になります。
-25件の人手分類コーパスでpath判定のprecision/recallを回帰検証できます。
+May/August両世代を含む33件の人手分類コーパスでpath判定のprecision/recallを
+回帰検証できます。
 
 ### 6. 分析 issue の一括登録
 
@@ -162,9 +164,9 @@ python scripts/analyze_negative_signals.py --preset full_template \
 ```
 
 上流`ranking_scorer.rs`のpositive/negative/total sumと`offset_score()`を再現し、
-5種類の負シグナル確率をsweepします。本番の重みとoffsetは非公開なので、
-`--unit-negative-weights`は無次元の仮定にすぎません。指定しない場合は
-`weights.json`を使い、負重みがすべて0なら明示的なoverrideを要求します。
+5種類の負シグナル確率をsweepします。既定presetでは公開defaultの負重みとoffsetを使い、
+`--unit-negative-weights`では比較用の無次元仮定へ切り替えます。live overrideと
+viewer別確率は観測できません。
 
 ### 11. 動画 VQV 閾値の感度分析
 
@@ -186,8 +188,9 @@ sweepします。繰り返しsnapshot CSVを渡すと、動画長で分けたvie
 同じcohortのbackend監査receiptを2個以上渡すと、FxTwitterの公開動画長・view countを
 検証済みreceiptから直接抽出できます。`--strata`には`post_id,author_group,topic_group`
 だけの補助CSVを渡し、匿名group内のeligible / ineligible差も確認できます。
-本番閾値・VQV重みは非公開で、公開view増加は露出後の観測値なので、差があっても本番閾値や
-因果効果を特定したことにはなりません。詳細は
+公開defaultは10,000 msのstrict gateとVQV weight 0.05です。ただしlive overrideは
+観測できず、公開view増加は露出後の観測値なので、差があっても因果効果を特定したことには
+なりません。詳細は
 [`docs/sensitivity-analysis.md`](docs/sensitivity-analysis.md)を参照してください。
 
 ### 12. 取得バックエンドの監査
@@ -219,6 +222,7 @@ nix develop --command task ci
 
 ## ドキュメント
 
+- [`docs/upstream-2026-08.md`](docs/upstream-2026-08.md) — 2026年8月source・公開既定値・Issue取り込み
 - [`docs/algorithm-deep-dive.md`](docs/algorithm-deep-dive.md) — アルゴリズム徹底解説
 - [`docs/model-ai-ml-deep-dive.md`](docs/model-ai-ml-deep-dive.md) — AI/ML・Transformer・推薦モデル解説
 - [`docs/external-analysis-review.md`](docs/external-analysis-review.md) — 外部記事・GitHub repo・論文の比較検証

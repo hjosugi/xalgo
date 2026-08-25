@@ -1,7 +1,7 @@
 # Author Diversity・VQV・負シグナル感度分析
 
-公開コードに式はありますが、係数は`xai_feature_switches`から注入されるため
-本番値は公開されていません。ここで扱う結果は、指定した仮定に対する再現可能な
+現行公開コードにはfeature-switch defaultがありますが、live requestでは実験設定などで
+上書きされ得ます。ここで扱う結果は、公開defaultまたは指定した仮定に対する再現可能な
 what-if分析です。実際のFor You順位や投稿戦略の因果効果ではありません。
 
 ## Author Diversity
@@ -36,16 +36,17 @@ python scripts/simulate_author_diversity.py \
 
 ## VQV duration gate
 
-固定commit `0bfc2795d3`の`home-mixer/scorers/weighted_scorer.rs`は、VQV予測へ
-`VQV_WEIGHT`を掛ける前に次の条件を適用します。
+現行commit `d011592a1c`のHome Mixerは、VQV予測へweightを掛ける前に次の条件を
+適用します。
 
 ```text
 eligible = video_duration_ms > MIN_VIDEO_DURATION_MS
 vqv contribution = eligible ? VQV_WEIGHT * P(VQV) : 0
 ```
 
-比較は`>=`ではなく厳密な`>`です。`MIN_VIDEO_DURATION_MS`、`VQV_WEIGHT`、
-viewer別`P(VQV)`は公開されていません。URLスコアでは、これらを仮説値として明示できます。
+比較は`>=`ではなく厳密な`>`です。公開defaultは10,000 ms / 0.05です。ただしlive
+overrideとviewer別`P(VQV)`は観測できません。URLスコアではdefaultまたは仮説値を
+明示できます。
 FxTwitterの`duration`は秒単位なので取得時にmsへ変換します。他のfallback backendでは
 動画長を取得できない場合があり、その場合は閾値を満たしたと仮定せずVQVを0扱いします。
 
@@ -119,7 +120,7 @@ FxTwitterで全時点の動画長とview countを取得できた19動画を比�
 - 20秒閾値は−39.4、30秒閾値は−19.9、60秒閾値は−30.7 views/hour
 
 この短い観測では新しい投稿だけが伸びており、動画長より投稿時期の交絡が支配的である。
-各群も最大19本と小さいため、負の差をVQVの効果や本番閾値とは解釈しない。投稿30日を
+各群も最大19本と小さいため、負の差をVQVの効果やlive threshold overrideとは解釈しない。投稿30日を
 境界に層別しても群間差が極端で、時間交絡を除去できる標本ではない。
 
 公開レスポンスから著者名・本文を保存せず、19件へ不透明なauthor groupと粗いtopic
@@ -165,9 +166,10 @@ python scripts/analyze_negative_signals.py \
 ## 解釈上の限界
 
 - Phoenix確率はviewer、履歴、候補集合ごとに変わり、公開countからは直接得られない。
-- author decay、floor、VQV閾値・重み、負重み、offsetの本番値は非公開。
+- author decay、floor、VQV閾値・重み、負重み、offsetには公開defaultがあるが、
+  live requestのoverrideは観測できない。
 - 公開view増加は露出後の観測値であり、動画長以外のauthor、topic、投稿時刻、
-  candidate selection、exposureが交絡する。閾値前後の群差は本番閾値や因果効果を特定しない。
+  candidate selection、exposureが交絡する。閾値前後の群差はlive overrideや因果効果を特定しない。
 - `normalize_score()`の実装は公開スナップショットにないため、この段階は再現しない。
 - responseを分けても同じ候補集合・同じ予測値になるという保証はない。
 - 感度分析は相関や因果効果の推定ではなく、式の挙動を確認するためのもの。

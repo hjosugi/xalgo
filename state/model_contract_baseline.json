@@ -1,105 +1,149 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "upstream_repository": "xai-org/x-algorithm",
-  "source_ref": "0bfc2795d308f90032544322747caacd535f75ae",
-  "recorded_at": "2026-07-22",
+  "source_ref": "d011592a1c8c4bfb23781ff15577a68dc08bdde1",
+  "recorded_at": "2026-08-25",
   "contract": {
-    "readme_claims": {
-      "root_readme": {
-        "emb_size": 256,
-        "num_layers": 2
+    "generation": "source_2026_08",
+    "ranking_weights": {
+      "favorite": 0.5,
+      "reply": 5.0,
+      "retweet": 1.0,
+      "photo_expand": 0.05,
+      "video_open": 0.05,
+      "click": 0.4,
+      "open_link": 0.2,
+      "profile_click": 0.0,
+      "vqv": 0.05,
+      "share": 2.0,
+      "share_via_dm": 5.0,
+      "share_via_copy_link": 20.0,
+      "dwell": 0.0,
+      "quote": 5.0,
+      "quoted_click": 0.05,
+      "quoted_vqv": 0.0,
+      "cont_dwell_time": 0.004,
+      "cont_click_dwell_time": 0.0,
+      "cont_active_secs_5m_residual_norm": 0.0,
+      "follow_author": 4.0,
+      "post_unexplored": 0.02,
+      "not_interested": -43.2,
+      "block_author": -31.2,
+      "mute_author": -58.8,
+      "report": -234.0,
+      "not_dwelled": -0.02
+    },
+    "ranking_settings": {
+      "author_diversity_enabled": true,
+      "author_diversity_decay": 0.5,
+      "author_diversity_floor": 0.25,
+      "oon_weight_factor": 0.75,
+      "topic_oon_weight_factor": 0.5,
+      "min_video_duration_ms": 10000,
+      "quoted_vqv_duration_check": false,
+      "bidirectional_follow_reply_weight_boost": 15.0,
+      "bidirectional_follow_dwell_weight_boost": 0.0,
+      "multiplicative_post_unexplored": false,
+      "multiplicative_post_unexplored_alpha": 0.0,
+      "post_unexplored_in_network_only": true
+    },
+    "scoring_constants": {
+      "negative_scores_offset": 0.001,
+      "max_post_age_seconds": 172800,
+      "top_k_candidates": 50
+    },
+    "scoring_contract": {
+      "positive_normalization_actions": [
+        "favorite",
+        "reply",
+        "retweet",
+        "photo_expand",
+        "video_open",
+        "click",
+        "open_link",
+        "profile_click",
+        "vqv",
+        "share",
+        "share_via_dm",
+        "share_via_copy_link",
+        "dwell",
+        "quote",
+        "quoted_click",
+        "quoted_vqv",
+        "follow_author",
+        "post_unexplored"
+      ],
+      "negative_normalization_actions": [
+        "not_interested",
+        "block_author",
+        "mute_author",
+        "report",
+        "not_dwelled"
+      ],
+      "multiplicative_post_unexplored_excluded_from_positive_sum": true,
+      "zero_total_clamps_nonnegative": true,
+      "negative_branch_is_strict": true,
+      "negative_branch_normalizes": true,
+      "nonnegative_branch_adds_offset": true
+    },
+    "model_profiles": {
+      "xrecsys_seqpack": {
+        "history_seq_len": 1022,
+        "candidate_seq_len": 64,
+        "num_layers": 8,
+        "emb_size": 2560,
+        "emb_table_width": 1024,
+        "query_heads": 20,
+        "kv_heads": 4,
+        "use_seqpack": true
       },
-      "phoenix_readme": {
-        "emb_size": 128,
-        "num_layers": 4
+      "home_direct_packed_nano": {
+        "history_seq_len": 1022,
+        "candidate_seq_len": 64,
+        "num_layers": 4,
+        "emb_size": 512,
+        "emb_table_width": 128,
+        "query_heads": 4,
+        "kv_heads": 2,
+        "sid_num_levels": 6,
+        "sid_codebook_size": 256,
+        "use_seqpack": true
+      },
+      "xrecsys_two_tower": {
+        "history_seq_len": 1023,
+        "candidate_seq_len": 64,
+        "num_layers": 8,
+        "emb_size": 1024,
+        "emb_table_width": 1024,
+        "query_heads": 16,
+        "kv_heads": 4,
+        "sid_num_levels": 6,
+        "sid_codebook_size": 256,
+        "use_seqpack": true
+      },
+      "xrecsys_two_tower_nano": {
+        "history_seq_len": 1022,
+        "candidate_seq_len": 64,
+        "num_layers": 4,
+        "emb_size": 512,
+        "emb_table_width": 512,
+        "query_heads": 4,
+        "kv_heads": 2,
+        "sid_num_levels": 6,
+        "sid_codebook_size": 256,
+        "max_posts": 65536
       }
     },
-    "artifact_architecture": {
-      "emb_size": 128,
-      "num_layers": 4,
-      "num_heads": 4,
-      "key_size": 32,
-      "history_seq_len": 127,
-      "candidate_seq_len": 64,
-      "num_actions": 19
+    "action_space": {
+      "defined_discrete_actions": 60,
+      "padded_output_vocab_size": 64,
+      "continuous_action_slots": 8
     },
-    "retrieval_ranker_configs_match": true,
-    "readme_matches_artifact": {
-      "root_readme": false,
-      "phoenix_readme": true
-    },
-    "action_contract": {
-      "actions": [
-        "favorite_score",
-        "reply_score",
-        "repost_score",
-        "photo_expand_score",
-        "click_score",
-        "profile_click_score",
-        "vqv_score",
-        "share_score",
-        "share_via_dm_score",
-        "share_via_copy_link_score",
-        "dwell_score",
-        "quote_score",
-        "quoted_click_score",
-        "follow_author_score",
-        "not_interested_score",
-        "block_author_score",
-        "mute_author_score",
-        "report_score",
-        "dwell_time"
-      ],
-      "pipeline_index_mappings": [
-        {
-          "constant": "IDX_FAV",
-          "index": 1,
-          "expected_head": "favorite_score",
-          "actual_head_at_index": "reply_score",
-          "matches": false
-        },
-        {
-          "constant": "IDX_REPLY",
-          "index": 4,
-          "expected_head": "reply_score",
-          "actual_head_at_index": "click_score",
-          "matches": false
-        },
-        {
-          "constant": "IDX_QUOTE",
-          "index": 5,
-          "expected_head": "quote_score",
-          "actual_head_at_index": "profile_click_score",
-          "matches": false
-        },
-        {
-          "constant": "IDX_RT",
-          "index": 6,
-          "expected_head": "repost_score",
-          "actual_head_at_index": "vqv_score",
-          "matches": false
-        },
-        {
-          "constant": "IDX_DWELL",
-          "index": 11,
-          "expected_head": "dwell_score",
-          "actual_head_at_index": "quote_score",
-          "matches": false
-        },
-        {
-          "constant": "IDX_VQV",
-          "index": 13,
-          "expected_head": "vqv_score",
-          "actual_head_at_index": "follow_author_score",
-          "matches": false
-        }
-      ]
-    },
-    "artifact_identity": {
-      "lfs_oid": "fbc6017d00588754e22e0c7eb2f786a008a74d309c03c8085fa2fad418a83dac",
-      "archive_size_bytes": 2903518802,
-      "zip_entry_count": 11
-    },
-    "example_history_items": 3
+    "legacy_demo_contract": {
+      "status": "superseded",
+      "artifact_path_present": false,
+      "run_pipeline_present": false,
+      "runners_action_list_present": false
+    }
   }
 }

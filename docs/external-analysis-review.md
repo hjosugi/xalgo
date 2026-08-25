@@ -1,5 +1,10 @@
 # 外部分析・GitHub実装・研究論文レビュー
 
+> [!NOTE]
+> artifact比較は2026年5月demo世代を対象にします。2026年8月に公開された現行sourceと
+> Home Mixer defaultの一次資料監査は[`upstream-2026-08.md`](upstream-2026-08.md)を
+> 参照してください。
+
 ## 読み方
 
 このレビューは、情報源を次の優先順位で扱う。

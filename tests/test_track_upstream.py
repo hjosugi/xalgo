@@ -38,6 +38,18 @@ class TrackUpstreamTests(unittest.TestCase):
             track_upstream._classify_path("grox/data_loaders/kafka_loader.py"),
             "unrelated",
         )
+        self.assertEqual(
+            track_upstream._classify_path("home-mixer/params/param.rs"),
+            "ranking",
+        )
+        self.assertEqual(
+            track_upstream._classify_path("phoenix/xrex/models/recsys_model.py"),
+            "ranking",
+        )
+        self.assertEqual(
+            track_upstream._classify_path("visibility-filtering/src/lib.rs"),
+            "policy",
+        )
 
     @patch.object(track_upstream, "_get")
     def test_merged_pr_files_are_inspected(self, get):
@@ -77,7 +89,7 @@ class TrackUpstreamTests(unittest.TestCase):
         result = track_upstream.evaluate_corpus(
             ROOT / "state" / "upstream_tracking_corpus.json"
         )
-        self.assertEqual(result["cases"], 25)
+        self.assertEqual(result["cases"], 33)
         self.assertEqual(result["precision"], 1.0)
         self.assertEqual(result["recall"], 1.0)
         self.assertEqual(result["category_accuracy"], 1.0)
@@ -129,6 +141,21 @@ fn compute_score() -> f64 { FAVORITE_WEIGHT + REPLY_WEIGHT }
         self.assertIn("assignments", changes)
         self.assertIn("reply", changes["actions"]["added"])
         self.assertTrue(changes["formulas"]["added"])
+
+    def test_rust_function_arguments_are_not_reported_as_struct_fields(self):
+        source = """
+fn filter(
+    candidates: &[PostCandidate],
+) -> Vec<Result<PostCandidate, String>> {
+    candidates.to_vec()
+}
+"""
+        structure = track_upstream.extract_source_structure("filter.rs", source)
+        self.assertEqual(structure["fields"], set())
+        self.assertNotIn(
+            ") -> Vec<Result<PostCandidate, String>> {",
+            structure["formulas"],
+        )
 
     def test_merge_commit_is_not_reported_twice_as_pr(self):
         sha = "a" * 40
