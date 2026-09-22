@@ -1,5 +1,32 @@
 # Changelog
 
+## 0.3.0 — 2026-09-22
+
+### Added
+
+- The `upstream_2026_09` default preset from the 2026-09-18 Home Mixer source:
+  VQV weight 0.0, dwell weight 0.05 and video-open weight 0.07, with the other
+  23 public defaults unchanged. `upstream_2026_08` stays available for the
+  August values.
+- An issue-to-code research receipt for upstream changes reported in #21–#36
+  (`docs/upstream-2026-09.md`), covering weight perturbation,
+  `MultiplierPreOffset`, the move of the normalization sums into
+  `recompute_sums`, the removal of the dwell-regret value model gate, and the
+  cold-start default changes.
+
+### Changed
+
+- The model-contract audit reads the September scorer (sums assigned in
+  `recompute_sums`), records `multiplier_pre_offset`,
+  `weight_perturbation_sigma` and `cdwell_on_impr` as optional settings, and
+  adds the sign-based term split rule (unchanged since August, previously
+  unrecorded) and perturbation support to the scoring contract. The baseline
+  is re-recorded at `8b25829717`.
+- The VQV threshold analysis reports the current published VQV weight (0.0)
+  alongside the August value it still uses as the sweep hypothesis.
+- The feed-weight estimator compares against the weights file's default preset
+  and names it in its report.
+
 ## 0.2.1 — 2026-08-26
 
 ### Added
