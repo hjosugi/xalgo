@@ -364,9 +364,10 @@ def _normalized_coefficients(
 
 def _public_coefficients(
     feature_names: tuple[str, ...], weights_path: Path
-) -> list[float]:
-    _, weights, _ = load_weights(weights_path, "upstream_2026_08")
-    return [
+) -> tuple[str, list[float]]:
+    """The weights file's default preset: the newest public Home Mixer defaults."""
+    preset, weights, _ = load_weights(weights_path)
+    return preset, [
         float(weights.get(name.removeprefix(FEATURE_PREFIX), 0.0))
         for name in feature_names
     ]
@@ -395,7 +396,7 @@ def build_report(
     coefficients, training_optimizer = fit_pairwise_logistic(
         pairs, epochs=epochs, learning_rate=learning_rate, l2=l2
     )
-    public = _public_coefficients(train.feature_names, weights_path)
+    public_preset, public = _public_coefficients(train.feature_names, weights_path)
     evaluation_dataset = test or train
     return {
         "schema_version": 1,
@@ -428,6 +429,7 @@ def build_report(
         "estimated_l1_normalized": _normalized_coefficients(
             train.feature_names, coefficients
         ),
+        "public_default_preset": public_preset,
         "public_default_coefficients": dict(zip(train.feature_names, public)),
         "public_default_l1_normalized": _normalized_coefficients(
             train.feature_names, public

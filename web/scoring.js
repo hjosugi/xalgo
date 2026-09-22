@@ -92,7 +92,7 @@
         score += offset;
       }
     }
-    if (preset === "upstream_2026_08") {
+    if (preset.startsWith("upstream_")) {
       warnings.push(
         "公開されたHome Mixer既定値です。実リクエストでは実験設定により上書きされ得ます。",
       );

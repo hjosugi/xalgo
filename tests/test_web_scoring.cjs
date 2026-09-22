@@ -27,7 +27,7 @@ test("browser raw mode uses log1p", () => {
 test("browser applies the current upstream negative score offset", () => {
   const result = scorePost(
     { views: 100, likes: 10 },
-    "upstream_2026_08",
+    "upstream_2026_09",
     { favorite: 0.5, report: -234 },
     {},
     { negative_scores_offset: 0.001 },

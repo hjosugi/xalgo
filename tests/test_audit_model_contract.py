@@ -123,6 +123,68 @@ if w.total_sum == 0.0 {
             ["not_interested", "report"],
         )
         self.assertTrue(contract["negative_branch_normalizes"])
+        self.assertEqual(contract["term_split"], "by_action_class")
+        self.assertFalse(contract["weight_perturbation_supported"])
+
+    def test_parses_september_scoring_contract(self):
+        # Since 2026-09-18 the sums live in ``recompute_sums`` (the negative
+        # one assigned to ``self``) and weights can be perturbed.  The
+        # sign-based term split predates that and is recorded as well.
+        source = """
+fn recompute_sums(&mut self) {
+    let positive_sum = self.favorite
+        + self.reply
+        + if self.enable_multiplicative_post_unexplored {
+            0.0
+        } else {
+            self.post_unexplored
+        };
+    self.negative_sum = -(self.not_interested + self.report);
+    self.total_sum = positive_sum + self.negative_sum;
+}
+pub(crate) fn perturbed(mut self, query: &ScoredPostsQuery) -> Self {
+    self
+}
+for t in terms {
+    if t >= 0.0 {
+        pos += t;
+    } else {
+        neg -= t;
+    }
+}
+if w.total_sum == 0.0 {
+    combined_score.max(0.0)
+} else if combined_score < 0.0 {
+    (combined_score + w.negative_sum) / w.total_sum * NEGATIVE_SCORES_OFFSET
+} else {
+    combined_score + NEGATIVE_SCORES_OFFSET
+}
+"""
+        contract = audit.parse_scoring_contract(source)
+        self.assertEqual(
+            contract["positive_normalization_actions"],
+            ["favorite", "reply", "post_unexplored"],
+        )
+        self.assertEqual(
+            contract["negative_normalization_actions"],
+            ["not_interested", "report"],
+        )
+        self.assertTrue(
+            contract["multiplicative_post_unexplored_excluded_from_positive_sum"]
+        )
+        self.assertEqual(contract["term_split"], "by_sign")
+        self.assertTrue(contract["weight_perturbation_supported"])
+
+    def test_optional_settings_default_to_none_on_older_refs(self):
+        source = """
+param!(FavoriteWeight, f64, "favorite", 0.5);
+"""
+        defaults = audit.parse_param_defaults(source)
+        self.assertIsNone(defaults.get("MultiplierPreOffset"))
+        self.assertEqual(
+            set(audit.OPTIONAL_SETTING_PARAMS.values()),
+            {"multiplier_pre_offset", "weight_perturbation_sigma", "cdwell_on_impr"},
+        )
 
 
 if __name__ == "__main__":

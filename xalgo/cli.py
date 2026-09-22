@@ -1,7 +1,7 @@
 """xalgo CLI.
 
 Usage:
-  python -m xalgo.cli score <post-url> [--preset upstream_2026_08] [--json]
+  python -m xalgo.cli score <post-url> [--preset upstream_2026_09] [--json]
                                        [--dwell-p 0.3] [--vqv-p 0.1]
                                        [--vqv-min-duration-ms 10000]
                                        [--weight vqv=1.0]

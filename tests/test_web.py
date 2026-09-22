@@ -11,7 +11,7 @@ class WebScoreTests(unittest.TestCase):
                 "post": {"views": 100, "likes": 10, "replies": 0, "retweets": 0},
             }
         )
-        self.assertEqual(response["result"]["preset"], "upstream_2026_08")
+        self.assertEqual(response["result"]["preset"], "upstream_2026_09")
         self.assertAlmostEqual(response["result"]["score"], 0.051)
         self.assertAlmostEqual(response["author_diversity"]["multiplier"], 0.625)
 

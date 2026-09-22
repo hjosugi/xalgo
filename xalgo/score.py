@@ -79,7 +79,7 @@ class ScoreResult:
 
 def load_weights(path: Path, preset: Optional[str] = None):
     cfg = json.loads(path.read_text(encoding="utf-8"))
-    name = preset or cfg.get("default_preset", "upstream_2026_08")
+    name = preset or cfg.get("default_preset", "upstream_2026_09")
     if name not in cfg["presets"]:
         raise KeyError(f"Unknown preset '{name}'. Available: {list(cfg['presets'])}")
     return name, cfg["presets"][name], cfg
@@ -265,9 +265,9 @@ def score_post(
             breakdown[wkey] = w * math.log1p(cnt)
         score = sum(breakdown.values())
 
-    if preset_name == "upstream_2026_08":
+    if preset_name.startswith("upstream_"):
         warnings.append(
-            "upstream_2026_08 contains public Home Mixer defaults, not a live "
+            f"{preset_name} contains public Home Mixer defaults, not a live "
             "request configuration; count/views still substitutes for personalized "
             "Phoenix predictions"
         )

@@ -89,6 +89,13 @@ SETTING_PARAMS = {
     "MultiplicativePostUnexploredAlpha": "multiplicative_post_unexplored_alpha",
     "PostUnexploredWeightInNetworkOnly": "post_unexplored_in_network_only",
 }
+# Settings first published in September 2026.  They are optional so the
+# August baseline and older refs still audit; a missing param records ``None``.
+OPTIONAL_SETTING_PARAMS = {
+    "MultiplierPreOffset": "multiplier_pre_offset",
+    "WeightPerturbationSigma": "weight_perturbation_sigma",
+    "EnableCdwellOnImpr": "cdwell_on_impr",
+}
 MODEL_FIELDS = (
     "history_seq_len",
     "candidate_seq_len",
@@ -552,7 +559,12 @@ def parse_scoring_contract(source: str) -> dict[str, object]:
     actions = set(WEIGHT_PARAMS.values())
 
     def operands(name: str) -> list[str]:
-        match = re.search(rf"let {re.escape(name)}\s*=\s*(.*?);", source, re.DOTALL)
+        # August source bound both sums with ``let``; since September the
+        # negative sum is assigned to ``self.negative_sum`` in
+        # ``recompute_sums`` so that weight perturbation can refresh it.
+        match = re.search(
+            rf"(?:let |self\.){re.escape(name)}\s*=\s*(.*?);", source, re.DOTALL
+        )
         if not match:
             raise AuditError(f"could not parse scoring expression {name}")
         found: list[str] = []
@@ -588,7 +600,20 @@ def parse_scoring_contract(source: str) -> dict[str, object]:
         "multiplicative_post_unexplored_excluded_from_positive_sum": (
             "ifenable_multiplicative_post_unexplored{0.0}else{post_unexplored}"
             in compact
+            or "ifself.enable_multiplicative_post_unexplored{0.0}else{self.post_unexplored}"
+            in compact
         ),
+        # The source generation splits each candidate's weighted terms by
+        # sign (``if t >= 0.0 { pos += t } else { neg -= t }``), not by action
+        # class.  With the published weights the two agree, but a perturbed or
+        # overridden weight that flips sign would move an action between the
+        # branches, so the split rule is part of the contract.
+        "term_split": (
+            "by_sign"
+            if "ift>=0.0{pos+=t;}else{neg-=t;}" in compact
+            else "by_action_class"
+        ),
+        "weight_perturbation_supported": "fnperturbed(" in compact,
         **{name: True for name in required_offset_fragments},
     }
 
@@ -624,7 +649,11 @@ def build_source_report(
             action: defaults[param] for param, action in WEIGHT_PARAMS.items()
         },
         "ranking_settings": {
-            setting: defaults[param] for param, setting in SETTING_PARAMS.items()
+            **{setting: defaults[param] for param, setting in SETTING_PARAMS.items()},
+            **{
+                setting: defaults.get(param)
+                for param, setting in OPTIONAL_SETTING_PARAMS.items()
+            },
         },
         "scoring_constants": {
             "negative_scores_offset": parse_rust_constant(

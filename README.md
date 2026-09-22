@@ -1,9 +1,9 @@
 # xalgo — X「おすすめ」スコア推定・上流追跡ツール
 
-Version 0.2.1
+Version 0.3.0
 
 [xai-org/x-algorithm](https://github.com/xai-org/x-algorithm) の
-2026-08-24版（commit `d011592a1c`）で公開されたHome Mixer既定値とPhoenix sourceを
+2026-09-18版（commit `8b25829717`）で公開されたHome Mixer既定値とPhoenix sourceを
 追跡し、投稿URLから公開カウントだけで近似スコアを計算します。X APIのキー、Xログイン、
 Cookieは不要です。5月版Phoenix demoの監査・実行receiptも履歴資料として保持します。
 
@@ -62,13 +62,15 @@ X公式embed CDN（syndication）。X APIは使いませんが、各公開サー
 
 | preset | 内容 |
 |---|---|
-| `upstream_2026_08` | Home Mixerに公開された26 actionのfeature-switch既定値（既定preset） |
+| `upstream_2026_09` | Home Mixerに公開された26 actionのfeature-switch既定値、2026-09-18版（既定preset） |
+| `upstream_2026_08` | 2026-08-24版の公開既定値。VQV 0.05 / dwell 0.0 / video_open 0.05 が9月版と異なる |
 | `repo_demo` | 廃止済み2026年5月Phoenix demoの履歴再現 |
 | `legacy_2023` | 2023年 twitter/the-algorithm の Heavy Ranker 重み (比較用) |
 | `full_template` | 全actionを編集する感度分析用テンプレ |
 
 公開既定値とlive requestのoverrideは区別してください。全値・出典・Issue取り込み結果は
-[`docs/upstream-2026-08.md`](docs/upstream-2026-08.md) を参照してください。
+[`docs/upstream-2026-09.md`](docs/upstream-2026-09.md)（9月版）と
+[`docs/upstream-2026-08.md`](docs/upstream-2026-08.md)（8月版）を参照してください。
 
 ### 4. 公開source契約を監査
 
@@ -235,6 +237,7 @@ nix develop --command task ci
 
 ## ドキュメント
 
+- [`docs/upstream-2026-09.md`](docs/upstream-2026-09.md) — 2026年9月の公開既定値変更・scoring契約の構造変化・Issue #21–#36取り込み
 - [`docs/upstream-2026-08.md`](docs/upstream-2026-08.md) — 2026年8月source・公開既定値・Issue取り込み
 - [`docs/algorithm-deep-dive.md`](docs/algorithm-deep-dive.md) — アルゴリズム徹底解説
 - [`docs/model-ai-ml-deep-dive.md`](docs/model-ai-ml-deep-dive.md) — AI/ML・Transformer・推薦モデル解説

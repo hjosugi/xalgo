@@ -14,13 +14,17 @@ from xalgo.score import (
 
 
 class ScoreTests(unittest.TestCase):
-    def test_public_august_defaults_are_the_default_preset(self):
+    def test_public_september_defaults_are_the_default_preset(self):
         weights_path = Path(__file__).resolve().parents[1] / "weights.json"
         name, weights, cfg = load_weights(weights_path)
         settings = preset_settings(cfg, name)
-        self.assertEqual(name, "upstream_2026_08")
+        self.assertEqual(name, "upstream_2026_09")
         self.assertEqual(weights["reply"], 5.0)
         self.assertEqual(weights["report"], -234.0)
+        # The three defaults that moved between the August and September source.
+        self.assertEqual(weights["vqv"], 0.0)
+        self.assertEqual(weights["dwell"], 0.05)
+        self.assertEqual(weights["video_open"], 0.07)
         self.assertEqual(settings["vqv_min_duration_ms"], 10_000)
         self.assertEqual(settings["negative_scores_offset"], 0.001)
         self.assertEqual(
@@ -127,15 +131,28 @@ class ScoreTests(unittest.TestCase):
 
     def test_public_preset_is_labeled_as_defaults_not_live_configuration(self):
         post = PostData(status_id="1", likes=10, views=100)
-        result = score_post(
-            post,
-            {"favorite": 0.5},
-            "upstream_2026_08",
-            negative_scores_offset=0.001,
-        )
-        self.assertAlmostEqual(result.score, 0.051)
-        self.assertTrue(
-            any("live request configuration" in item for item in result.warnings)
+        for preset in ("upstream_2026_09", "upstream_2026_08"):
+            result = score_post(
+                post,
+                {"favorite": 0.5},
+                preset,
+                negative_scores_offset=0.001,
+            )
+            self.assertAlmostEqual(result.score, 0.051)
+            self.assertTrue(
+                any("live request configuration" in item for item in result.warnings)
+            )
+
+    def test_august_preset_is_retained_with_its_own_defaults(self):
+        weights_path = Path(__file__).resolve().parents[1] / "weights.json"
+        name, weights, cfg = load_weights(weights_path, "upstream_2026_08")
+        self.assertEqual(name, "upstream_2026_08")
+        self.assertEqual(weights["vqv"], 0.05)
+        self.assertEqual(weights["dwell"], 0.0)
+        self.assertEqual(weights["video_open"], 0.05)
+        self.assertEqual(
+            preset_settings(cfg, name)["source_ref"],
+            "d011592a1c8c4bfb23781ff15577a68dc08bdde1",
         )
 
 

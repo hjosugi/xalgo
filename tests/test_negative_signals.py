@@ -14,7 +14,7 @@ class NegativeSignalTests(unittest.TestCase):
         with redirect_stdout(output):
             self.assertEqual(main(["--json", "--probabilities", "0"]), 0)
         report = json.loads(output.getvalue())
-        self.assertEqual(report["preset"], "upstream_2026_08")
+        self.assertEqual(report["preset"], "upstream_2026_09")
         self.assertEqual(report["negative_scores_offset"], 0.001)
 
     def test_offset_matches_upstream_branches(self):
