@@ -5,6 +5,11 @@
 （2026-09-18）。前回基準は [`d011592a1c`](upstream-2026-08.md)（2026-08-24）で、
 その間に main へ 20 commit が入り、追跡 workflow は Issue #21–#36 として起票した。
 
+その後の 9/22・9/23 の 2 commit（Issue #37・#38）は
+[追補](#追補-issue-3738-の取り込み)で扱い、監査 baseline は
+[`1b3fec20bc`](https://github.com/xai-org/x-algorithm/commit/1b3fec20bc3fd9879bc3e9f3d9c42753cdc3fede)
+（2026-09-23）へ進めた。公開 scoring 既定値はこの 2 commit でも変わっていない。
+
 ## 結論
 
 Home Mixer の公開 scoring 既定値 26 項目のうち **3 項目が変わった**。いずれも
@@ -124,17 +129,73 @@ candidate pipeline、visibility-filtering、Grox policy、Phoenix 学習側の�
 - [#11](https://github.com/hjosugi/xalgo/issues/11): 実 cohort の author-disjoint
   viewer-feed 評価は今回も未実施。引き続き外部データが必要で、open のまま。
 
+## 追補: Issue #37–#38 の取り込み
+
+基準 `8b25829717` の後に main へ入った 2 commit を読んだ。どちらも公開 scoring 既定値
+26 項目、negative score offset、VQV duration gate、author diversity、OON / topic OON、
+Phoenix の 4 model profile、action-space 寸法を**動かしていない**。
+`scripts/audit_model_contract.py --ref 1b3fec20bc` の旧 baseline との差分 6 件は、
+すべて今回監査に加えた記録項目（下記）で、既存項目の値の差分は 0 件だった。
+
+| Issue | upstream commit | 主な内容 | xalgo での扱い |
+|---|---|---|---|
+| [#37](https://github.com/hjosugi/xalgo/issues/37) | [`3aa0fa336c`](https://github.com/xai-org/x-algorithm/commit/3aa0fa336c4a20e4149b6151629b6050897bb8a5)（9/22） | `NEW_USER_OON_WEIGHT_FACTOR` 定数を `NewUserOonWeightFactor` param へ昇格（既定 0.00001 のまま）、SimClusters ANN の候補年齢上限 48h を `SimclustersMaxCandidateAgeHours` param 化、retrieval 候補の Kafka side effect、`PhoenixMoeColdStartMaxResults`（0）追加、cold start が lift 先 rank と MoE author policy による 0 化を候補に記録、VM ranker へ value-model 入力（既定 off）、dedup filter が重複候補の retrieval source を統合、Phoenix の bloom / topic serving filter を model runner へ統合、visibility `treatment.rs`、Grox reply-spam の simple scorer が full scorer へ委譲 | new-user OON 係数と年齢閾値、`NEW_USER_MIN_FOLLOWING` を監査項目に追加（定数時代の ref も同じ値で読む）。preset に記録 |
+| [#38](https://github.com/hjosugi/xalgo/issues/38) | [`1b3fec20bc`](https://github.com/xai-org/x-algorithm/commit/1b3fec20bc3fd9879bc3e9f3d9c42753cdc3fede)（9/23） | `unoffset_score` を追加し `MultiplierPreOffset` 分岐の net を `pos - neg` から `unoffset_score(weighted)` へ変更、`CachedPostsReuseWeightedScore`（既定 `false`）、MoE retrieval 既定の入れ替え（cluster `Experiment3Memy04` → `Experiment2Memy04`、`PhoenixMOEMaxResults` 200 → 0、`PhoenixMoeColdStartMaxResults` 0 → 200）、VM ranker の debias payload（既定 off）、Grox PTOS key-frames filter、visibility conversation-control hydrator | `pre_offset_net` と `unoffset_inverts_offset` を scoring 契約へ、`cached_posts_reuse_weighted_score` を optional setting へ追加。`xalgo.score.unoffset_score` を追加。baseline を `1b3fec20bc` で再記録 |
+
+### scoring への影響
+
+- **new-user OON 係数**（`3aa0fa336c`）。`effective_oon_weight` は、topic 指定があれば
+  `TopicOonWeightFactor`、viewer のアカウント作成から `NewUserAgeThresholdSecs` 未満で
+  follow 数が `NEW_USER_MIN_FOLLOWING`（5）以上なら `NewUserOonWeightFactor`、それ以外は
+  `OonWeightFactor` を返す。係数が param になったので実験で上書きできるようになったが、
+  値は 8 月から 0.00001 のままで、年齢閾値の既定は 0 秒なので新規 viewer 分岐は既定では
+  発火しない。定数だった ref でも監査は `config.rs` から同じ値を読むので、昇格そのものは
+  drift として出ない。
+- **pre-offset 分岐の net**（`1b3fec20bc`）。`total_sum` が 0 でなければ `unoffset_score` は
+  `offset_score` の厳密な逆関数である。負の net `[-negative_sum, 0)` は `[0, OFFSET)` へ、
+  非負の net は `[OFFSET, ∞)` へ写るので、`OFFSET` との比較で分岐すれば元の net に戻る。
+  `total_sum` が 0 の場合は offset 側が負値を 0 に丸めるため net も 0 になるが、従来の
+  `pos - neg` 経路でも負の net には乗数を掛けずに `offset_score` が 0 に丸めるので、最終
+  score は同じになる。したがって既定（`MultiplierPreOffset=false`、
+  `CachedPostsReuseWeightedScore=false`）では score は変わらない。変わり得るのは cache
+  済み weighted score を再利用する場合で、cache 時と現在で重み（perturbation や override）
+  が違うと、現在の sum による逆変換は cache 時の net と一致しない。
+- **候補取得**。MoE retrieval は既定で通常枠 0、cold-start 枠 200 になり、MoE source は
+  新規 author の候補取得に振り向けられた。SimClusters ANN の 48 時間上限は値を変えずに
+  param 化された。どちらも候補集合を変えるが、xalgo が計算する単一 post の score には入らない。
+- cold start の lift 先 rank、MoE author policy による 0 化、統合された retrieval source は
+  いずれも記録のための変更で、score 値は変えない（VM ranker への入力として送られる）。
+
+### xalgo 側の変更（#37・#38）
+
+- [`scripts/audit_model_contract.py`](../scripts/audit_model_contract.py):
+  `new_user_age_threshold_secs` と `cached_posts_reuse_weighted_score` を optional setting に、
+  `new_user_oon_weight_factor` を「param 優先、無ければ `config.rs` 定数」の昇格 setting に、
+  `new_user_min_following` を scoring 定数に加えた。scoring 契約には pre-offset 分岐の net の
+  出所（`pre_offset_net`: `weighted_parts` / `unoffset_weighted_score`）と、`unoffset_score` が
+  `offset_score` の逆関数の形をしているか（`unoffset_inverts_offset`）を記録する。
+  8 月・9 月前半の ref も引き続き監査できる。
+- [`state/model_contract_baseline.json`](../state/model_contract_baseline.json):
+  `1b3fec20bc` で再記録（2026-09-24）。
+- [`weights.json`](../weights.json): `upstream_2026_09` の `source_ref` を `1b3fec20bc` に進め、
+  8 月・9 月 preset に `new_user_oon_weight_factor` / `new_user_age_threshold_secs` を記録。
+  26 重みは変更なし。
+- [`xalgo/score.py`](../xalgo/score.py): upstream と同じ `unoffset_score` を追加し、公開既定
+  重みで `offset_score` との往復が一致することを test で固定した。既定 preset の重み・
+  OON 設定・`source_ref` が監査 baseline と一致することも test で確認する。
+
 ## 再現
 
 ```bash
 nix develop
-python scripts/audit_model_contract.py --ref 8b25829717a4f104dd04403ee7d0253c5fedb1b7
+python scripts/audit_model_contract.py --ref 1b3fec20bc3fd9879bc3e9f3d9c42753cdc3fede
 python scripts/audit_model_contract.py --ref main --json --fail-on-drift
 python -m xalgo.cli score <URL> --preset upstream_2026_09 --json
 python -m xalgo.cli score <URL> --preset upstream_2026_08 --json
 python scripts/analyze_vqv_threshold.py --thresholds-ms 0,5000,10000,30000
 ```
 
+9 月前半の契約は `--ref 8b25829717a4f104dd04403ee7d0253c5fedb1b7 --no-baseline` で、
 8 月契約は `--ref d011592a1c8c4bfb23781ff15577a68dc08bdde1 --no-baseline` で、
 5 月版契約は `--ref 0bfc2795d308f90032544322747caacd535f75ae --no-baseline` で
 引き続き監査できる。

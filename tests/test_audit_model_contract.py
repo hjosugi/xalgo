@@ -4,6 +4,16 @@ import unittest
 
 from scripts import audit_model_contract as audit
 
+OFFSET_SOURCE = """
+if w.total_sum == 0.0 {
+    combined_score.max(0.0)
+} else if combined_score < 0.0 {
+    (combined_score + w.negative_sum) / w.total_sum * NEGATIVE_SCORES_OFFSET
+} else {
+    combined_score + NEGATIVE_SCORES_OFFSET
+}
+"""
+
 
 class AuditModelContractTests(unittest.TestCase):
     def test_reads_selected_member_from_zip_ranges(self):
@@ -183,8 +193,106 @@ param!(FavoriteWeight, f64, "favorite", 0.5);
         self.assertIsNone(defaults.get("MultiplierPreOffset"))
         self.assertEqual(
             set(audit.OPTIONAL_SETTING_PARAMS.values()),
-            {"multiplier_pre_offset", "weight_perturbation_sigma", "cdwell_on_impr"},
+            {
+                "multiplier_pre_offset",
+                "weight_perturbation_sigma",
+                "cdwell_on_impr",
+                "new_user_age_threshold_secs",
+                "cached_posts_reuse_weighted_score",
+            },
         )
+
+    def test_promoted_setting_prefers_param_over_legacy_constant(self):
+        # 3aa0fa336c moved NEW_USER_OON_WEIGHT_FACTOR from config.rs into a
+        # feature-switch param with the same 0.00001 default.
+        constants = "pub const NEW_USER_OON_WEIGHT_FACTOR: f64 = 0.00001;"
+        self.assertEqual(
+            audit.promoted_settings({}, constants),
+            {"new_user_oon_weight_factor": 0.00001},
+        )
+        defaults = audit.parse_param_defaults(
+            "param!(\n    NewUserOonWeightFactor,\n    f64,\n"
+            '    "rust_home_mixer_new_user_oon_weight_factor",\n    0.5\n);'
+        )
+        self.assertEqual(
+            audit.promoted_settings(defaults, constants),
+            {"new_user_oon_weight_factor": 0.5},
+        )
+        self.assertEqual(
+            audit.promoted_settings({}, "pub const OTHER: f64 = 1.0;"),
+            {"new_user_oon_weight_factor": None},
+        )
+
+    def test_optional_constant_is_none_when_absent(self):
+        self.assertIsNone(
+            audit.parse_optional_rust_constant(
+                "pub const OTHER: usize = 1;", "NEW_USER_MIN_FOLLOWING", "usize"
+            )
+        )
+        self.assertEqual(
+            audit.parse_optional_rust_constant(
+                "pub const NEW_USER_MIN_FOLLOWING: usize = 5;",
+                "NEW_USER_MIN_FOLLOWING",
+                "usize",
+            ),
+            5,
+        )
+
+    def test_records_pre_offset_net_from_weighted_parts(self):
+        source = (
+            OFFSET_SOURCE
+            + """
+let positive_sum = favorite;
+let negative_sum = -(report);
+if query.params.get(MultiplierPreOffset) {
+    let net = pos - neg;
+}
+"""
+        )
+        contract = audit.parse_scoring_contract(source)
+        self.assertEqual(contract["pre_offset_net"], "weighted_parts")
+        self.assertIsNone(contract["unoffset_inverts_offset"])
+
+    def test_records_pre_offset_net_from_unoffset_weighted_score(self):
+        # Since 1b3fec20bc the pre-offset branch inverts the offset of the
+        # (possibly cached) weighted score instead of keeping (pos, neg).
+        source = (
+            OFFSET_SOURCE
+            + """
+let positive_sum = favorite;
+let negative_sum = -(report);
+pub(crate) fn unoffset_score(weighted_score: f64, w: &ScoringWeights) -> f64 {
+    if w.total_sum == 0.0 {
+        weighted_score
+    } else if weighted_score < NEGATIVE_SCORES_OFFSET {
+        weighted_score / NEGATIVE_SCORES_OFFSET * w.total_sum - w.negative_sum
+    } else {
+        weighted_score - NEGATIVE_SCORES_OFFSET
+    }
+}
+if query.params.get(MultiplierPreOffset) {
+    let net = Self::unoffset_score(weighted, &weights);
+}
+"""
+        )
+        contract = audit.parse_scoring_contract(source)
+        self.assertEqual(contract["pre_offset_net"], "unoffset_weighted_score")
+        self.assertTrue(contract["unoffset_inverts_offset"])
+
+    def test_flags_unoffset_that_does_not_invert_offset(self):
+        source = (
+            OFFSET_SOURCE
+            + """
+let positive_sum = favorite;
+let negative_sum = -(report);
+pub(crate) fn unoffset_score(weighted_score: f64, w: &ScoringWeights) -> f64 {
+    weighted_score
+}
+"""
+        )
+        contract = audit.parse_scoring_contract(source)
+        self.assertIsNone(contract["pre_offset_net"])
+        self.assertFalse(contract["unoffset_inverts_offset"])
 
 
 if __name__ == "__main__":

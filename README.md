@@ -62,7 +62,7 @@ X公式embed CDN（syndication）。X APIは使いませんが、各公開サー
 
 | preset | 内容 |
 |---|---|
-| `upstream_2026_09` | Home Mixerに公開された26 actionのfeature-switch既定値、2026-09-18版（既定preset） |
+| `upstream_2026_09` | Home Mixerに公開された26 actionのfeature-switch既定値、2026-09-18版。9/23の`1b3fec20bc`まで不変（既定preset） |
 | `upstream_2026_08` | 2026-08-24版の公開既定値。VQV 0.05 / dwell 0.0 / video_open 0.05 が9月版と異なる |
 | `repo_demo` | 廃止済み2026年5月Phoenix demoの履歴再現 |
 | `legacy_2023` | 2023年 twitter/the-algorithm の Heavy Ranker 重み (比較用) |
@@ -80,7 +80,7 @@ python scripts/audit_model_contract.py --ref main --json
 python scripts/audit_model_contract.py --ref main --fail-on-drift
 ```
 
-現行sourceから26 actionの重み、VQV・author diversity・OON設定、scoring定数、
+現行sourceから26 actionの重み、VQV・author diversity・OON・新規viewer OON設定、scoring定数、
 ranking/retrievalの4 model profile、action-space寸法を抽出します。既知状態は
 [`state/model_contract_baseline.json`](state/model_contract_baseline.json)に固定し、
 `--fail-on-drift`は構造差分を検出するとexit 1を返します。5月版のLFS artifact契約は
@@ -237,7 +237,7 @@ nix develop --command task ci
 
 ## ドキュメント
 
-- [`docs/upstream-2026-09.md`](docs/upstream-2026-09.md) — 2026年9月の公開既定値変更・scoring契約の構造変化・Issue #21–#36取り込み
+- [`docs/upstream-2026-09.md`](docs/upstream-2026-09.md) — 2026年9月の公開既定値変更・scoring契約の構造変化・Issue #21–#38取り込み
 - [`docs/upstream-2026-08.md`](docs/upstream-2026-08.md) — 2026年8月source・公開既定値・Issue取り込み
 - [`docs/algorithm-deep-dive.md`](docs/algorithm-deep-dive.md) — アルゴリズム徹底解説
 - [`docs/model-ai-ml-deep-dive.md`](docs/model-ai-ml-deep-dive.md) — AI/ML・Transformer・推薦モデル解説

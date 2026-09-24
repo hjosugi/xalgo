@@ -1,8 +1,8 @@
 {
   "schema_version": 2,
   "upstream_repository": "xai-org/x-algorithm",
-  "source_ref": "8b25829717a4f104dd04403ee7d0253c5fedb1b7",
-  "recorded_at": "2026-09-22",
+  "source_ref": "1b3fec20bc3fd9879bc3e9f3d9c42753cdc3fede",
+  "recorded_at": "2026-09-24",
   "contract": {
     "generation": "source_2026_08",
     "ranking_weights": {
@@ -48,12 +48,16 @@
       "post_unexplored_in_network_only": true,
       "multiplier_pre_offset": false,
       "weight_perturbation_sigma": 0.0,
-      "cdwell_on_impr": false
+      "cdwell_on_impr": false,
+      "new_user_age_threshold_secs": 0,
+      "cached_posts_reuse_weighted_score": false,
+      "new_user_oon_weight_factor": 1e-05
     },
     "scoring_constants": {
       "negative_scores_offset": 0.001,
       "max_post_age_seconds": 172800,
-      "top_k_candidates": 50
+      "top_k_candidates": 50,
+      "new_user_min_following": 5
     },
     "scoring_contract": {
       "positive_normalization_actions": [
@@ -86,6 +90,8 @@
       "multiplicative_post_unexplored_excluded_from_positive_sum": true,
       "term_split": "by_sign",
       "weight_perturbation_supported": true,
+      "pre_offset_net": "unoffset_weighted_score",
+      "unoffset_inverts_offset": true,
       "zero_total_clamps_nonnegative": true,
       "negative_branch_is_strict": true,
       "negative_branch_normalizes": true,

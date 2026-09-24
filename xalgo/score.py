@@ -139,6 +139,34 @@ def offset_score(
     return combined_score + negative_scores_offset
 
 
+def unoffset_score(
+    weighted_score: float,
+    weights: Dict[str, float],
+    negative_scores_offset: float,
+) -> float:
+    """Recover the net score from an offset weighted score.
+
+    Mirrors ``RankingScorer::unoffset_score`` (upstream ``1b3fec20bc``), which
+    the ``MultiplierPreOffset`` branch uses instead of the candidate's
+    ``pos - neg`` parts so a cached weighted score can be reused.  With a
+    positive offset and a non-zero ``total_sum`` it inverts ``offset_score``.
+    Upstream skips the inversion when ``total_sum`` is zero; ``offset_score``
+    clamps that case to non-negative, so the round trip is exact only for
+    non-negative scores there.
+    """
+    if not math.isfinite(weighted_score):
+        raise ValueError("weighted_score must be finite")
+    if not math.isfinite(negative_scores_offset) or negative_scores_offset <= 0.0:
+        raise ValueError("negative_scores_offset must be positive and finite")
+
+    _, negative_sum, total_sum = normalization_sums(weights)
+    if total_sum == 0.0:
+        return weighted_score
+    if weighted_score < negative_scores_offset:
+        return weighted_score / negative_scores_offset * total_sum - negative_sum
+    return weighted_score - negative_scores_offset
+
+
 def vqv_weight_eligibility(
     video_duration_ms: Optional[int],
     min_video_duration_ms: int,

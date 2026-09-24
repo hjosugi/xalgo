@@ -89,12 +89,26 @@ SETTING_PARAMS = {
     "MultiplicativePostUnexploredAlpha": "multiplicative_post_unexplored_alpha",
     "PostUnexploredWeightInNetworkOnly": "post_unexplored_in_network_only",
 }
-# Settings first published in September 2026.  They are optional so the
-# August baseline and older refs still audit; a missing param records ``None``.
+# Settings that are not published by every source ref.  They are optional so
+# the August baseline and older refs still audit; a missing param records
+# ``None``.  ``NewUserAgeThresholdSecs`` predates September but was not
+# recorded until the new-user OON factor became a param (2026-09-22).
 OPTIONAL_SETTING_PARAMS = {
     "MultiplierPreOffset": "multiplier_pre_offset",
     "WeightPerturbationSigma": "weight_perturbation_sigma",
     "EnableCdwellOnImpr": "cdwell_on_impr",
+    "NewUserAgeThresholdSecs": "new_user_age_threshold_secs",
+    "CachedPostsReuseWeightedScore": "cached_posts_reuse_weighted_score",
+}
+# Settings that began as ``config.rs`` constants and were later promoted to
+# feature-switch params.  The param wins; older refs fall back to the constant,
+# so a promotion that keeps the value is not reported as contract drift.
+PROMOTED_SETTING_PARAMS = {
+    "NewUserOonWeightFactor": (
+        "new_user_oon_weight_factor",
+        "NEW_USER_OON_WEIGHT_FACTOR",
+        "f64",
+    ),
 }
 MODEL_FIELDS = (
     "history_seq_len",
@@ -193,6 +207,29 @@ def parse_rust_constant(source: str, name: str, type_name: str) -> object:
     if not match:
         raise AuditError(f"could not parse Rust constant {name}")
     return _parse_primitive(type_name, match.group(1))
+
+
+def parse_optional_rust_constant(
+    source: str, name: str, type_name: str
+) -> object | None:
+    """Parse a constant that only some source refs define."""
+    if not re.search(rf"pub const {re.escape(name)}:", source):
+        return None
+    return parse_rust_constant(source, name, type_name)
+
+
+def promoted_settings(
+    defaults: dict[str, object], constants_source: str
+) -> dict[str, object]:
+    """Resolve settings that moved from ``config.rs`` constants to params."""
+    return {
+        setting: (
+            defaults[param]
+            if param in defaults
+            else parse_optional_rust_constant(constants_source, constant, type_name)
+        )
+        for param, (setting, constant, type_name) in PROMOTED_SETTING_PARAMS.items()
+    }
 
 
 def _scalar_ast_value(node: ast.AST) -> object | None:
@@ -594,6 +631,31 @@ def parse_scoring_contract(source: str) -> dict[str, object]:
     if missing:
         raise AuditError(f"could not verify scoring branches: {', '.join(missing)}")
 
+    # Since 2026-09-23 (``1b3fec20bc``) the ``MultiplierPreOffset`` branch no
+    # longer keeps each candidate's ``(pos, neg)`` parts; it recovers the net
+    # score from the offset weighted score with ``unoffset_score`` so that a
+    # cached weighted score can be reused.  Record which form the branch uses
+    # and whether ``unoffset_score`` is the exact inverse of ``offset_score``.
+    unoffset_fragments = (
+        "ifw.total_sum==0.0{weighted_score}",
+        "elseifweighted_score<NEGATIVE_SCORES_OFFSET{"
+        "weighted_score/NEGATIVE_SCORES_OFFSET*w.total_sum-w.negative_sum}",
+        "else{weighted_score-NEGATIVE_SCORES_OFFSET}",
+    )
+    unoffset_inverts_offset = (
+        all(fragment in compact for fragment in unoffset_fragments)
+        if "fnunoffset_score(" in compact
+        else None
+    )
+    if "query.params.get(MultiplierPreOffset)" not in compact:
+        pre_offset_net = None
+    elif "letnet=Self::unoffset_score(weighted,&weights);" in compact:
+        pre_offset_net = "unoffset_weighted_score"
+    elif "letnet=pos-neg;" in compact:
+        pre_offset_net = "weighted_parts"
+    else:
+        pre_offset_net = "unrecognized"
+
     return {
         "positive_normalization_actions": operands("positive_sum"),
         "negative_normalization_actions": operands("negative_sum"),
@@ -614,6 +676,8 @@ def parse_scoring_contract(source: str) -> dict[str, object]:
             else "by_action_class"
         ),
         "weight_perturbation_supported": "fnperturbed(" in compact,
+        "pre_offset_net": pre_offset_net,
+        "unoffset_inverts_offset": unoffset_inverts_offset,
         **{name: True for name in required_offset_fragments},
     }
 
@@ -654,6 +718,7 @@ def build_source_report(
                 setting: defaults.get(param)
                 for param, setting in OPTIONAL_SETTING_PARAMS.items()
             },
+            **promoted_settings(defaults, sources["constants"]),
         },
         "scoring_constants": {
             "negative_scores_offset": parse_rust_constant(
@@ -664,6 +729,9 @@ def build_source_report(
             ),
             "top_k_candidates": parse_rust_constant(
                 sources["constants"], "TOP_K_CANDIDATES_TO_SELECT", "usize"
+            ),
+            "new_user_min_following": parse_optional_rust_constant(
+                sources["constants"], "NEW_USER_MIN_FOLLOWING", "usize"
             ),
         },
         "scoring_contract": parse_scoring_contract(sources["ranking_scorer"]),
