@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.3.1 — 2026-09-24
+
+### Added
+
+- `xalgo.score.unoffset_score`, the upstream inverse of `offset_score` that
+  the `MultiplierPreOffset` branch uses since `1b3fec20bc` (2026-09-23); tests
+  pin the exact round trip under the public weights.
+- An addendum to `docs/upstream-2026-09.md` for #37 and #38: the new-user OON
+  factor moved from a `config.rs` constant to a param without changing its
+  0.00001 default, the pre-offset branch now recovers its net score from the
+  (optionally cached) weighted score, and the MoE retrieval budget moved to
+  cold-start candidates. No public scoring default changed.
+
+### Changed
+
+- The model-contract audit records the new-user OON factor (param first,
+  constant for older refs), its age threshold, `NEW_USER_MIN_FOLLOWING`,
+  `cached_posts_reuse_weighted_score`, and the source of the pre-offset net
+  score. The baseline is re-recorded at `1b3fec20bc`.
+- `upstream_2026_09` now cites `1b3fec20bc` as its verified source and records
+  the new-user OON settings; its 26 weights are unchanged. A test keeps the
+  default preset equal to the recorded baseline.
+
 ## 0.3.0 — 2026-09-22
 
 ### Added

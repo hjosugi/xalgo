@@ -1,6 +1,6 @@
 # xalgo — X「おすすめ」スコア推定・上流追跡ツール
 
-Version 0.3.0
+Version 0.3.1
 
 [xai-org/x-algorithm](https://github.com/xai-org/x-algorithm) の
 2026-09-18版（commit `8b25829717`）で公開されたHome Mixer既定値とPhoenix sourceを
