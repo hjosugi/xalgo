@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.4.1 — 2026-10-03
+
+### Changed
+
+- Rebuilt the browser page as a compact notebook for people deciding what to
+  post: what actions score, worked examples of high-scoring posts, the tactics
+  that follow, an inline calculator, and links to the upstream code behind the
+  calculation. Removed the marketing-style sections, the disclaimers and the
+  feature list, and added a favicon.
+- The URL field now shows a post through the official oEmbed endpoint and keeps
+  the counts manual; the FxTwitter / VxTwitter scrapers are removed.
+- `web/app.js` is refactored around clear helpers with optional elements
+  guarded, and the README lab description matches the new page.
+
 ## 0.4.0 — 2026-10-03
 
 ### Added
