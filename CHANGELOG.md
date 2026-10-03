@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.5.1 — 2026-10-03
+
+### Changed
+
+- Moved the search box into a sticky top bar and kept the sidebar for
+  navigation, so search is always visible.
+- Tidied the calculator spacing: the count fields are a five-column grid with
+  labels above inputs, and the form, advanced panel and buttons have
+  consistent padding.
+- Each example breakdown now links its weight rows to the exact
+  `vm-ranker/params.rs` lines and its sum/offset rows to
+  `xai-value-model/scoring.rs`, with a shared sources table at the top.
+- Pico CSS variables are overridden at `:root:not([data-theme="dark"])` so the
+  red primary colour actually applies.
+
 ## 0.5.0 — 2026-10-03
 
 ### Added
