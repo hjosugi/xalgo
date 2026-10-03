@@ -1,5 +1,33 @@
 # Changelog
 
+## 0.4.0 — 2026-10-03
+
+### Added
+
+- The `upstream_2026_10` default preset from the 2026-09-29 value model
+  (`a707cc27ba`, verified through `76843a5eea`): click weight 0.3,
+  cont_click_dwell_time weight 0.4 and not_interested weight -47.52, with the
+  other 23 public defaults unchanged. `upstream_2026_09` stays available for
+  the September values.
+- An issue-to-code research receipt for upstream changes reported in #39–#45
+  (`docs/upstream-2026-10.md`), covering the extraction of the value model into
+  the `xai-value-model` crate and `vm-ranker/params.rs`, the three changed
+  weight defaults, and the removal of the `cdwell_on_impr`,
+  `cached_posts_reuse_weighted_score`, `multiplicative_post_unexplored` and
+  `post_unexplored_in_network_only` settings.
+
+### Changed
+
+- The model-contract audit supports the October generation (`source_2026_10`):
+  it reads weights and settings from `vm-ranker/params.rs`, the offset and
+  normalization contract from `xai-value-model/scoring.rs` and
+  `xai-value-model/weights.rs`, and the local Home Mixer fallback flags from
+  `home-mixer/scorers/value_model.rs`. The August/September Home Mixer layout
+  keeps auditing unchanged. The baseline is re-recorded at `76843a5eea`.
+- Upstream tracking now watches the `vm-ranker/` and `xai-value-model/`
+  directories, where scoring moved on 2026-09-24, and the reviewed corpus grows
+  from 33 to 37 cases.
+
 ## 0.3.1 — 2026-09-24
 
 ### Added
