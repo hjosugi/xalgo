@@ -72,8 +72,9 @@ def _post_from_manual(data: dict[str, Any]) -> PostData:
 
 def build_score_response(payload: dict[str, Any]) -> dict[str, Any]:
     """Validate a browser request and return the same result as the CLI."""
+    requested_preset = payload.get("preset")
     preset_name, preset_weights, cfg = load_weights(
-        WEIGHTS_PATH, str(payload.get("preset") or "upstream_2026_09")
+        WEIGHTS_PATH, str(requested_preset) if requested_preset else None
     )
     settings = preset_settings(cfg, preset_name)
     weights = dict(preset_weights)

@@ -69,6 +69,8 @@ RANKING_PATHS = (
     "phoenix/run_retrieval.py",
     "phoenix/runners.py",
     "simclusters/",
+    "vm-ranker/",
+    "xai-value-model/",
 )
 POLICY_PATHS = (
     "abuse-enforcement-service/",
@@ -183,6 +185,10 @@ def _subsystem(path: str) -> str:
         return "visibility-filtering"
     if path.startswith("simclusters/"):
         return "simclusters"
+    if path.startswith("vm-ranker/"):
+        return "vm-ranker"
+    if path.startswith("xai-value-model/"):
+        return "xai-value-model"
     return "repository"
 
 

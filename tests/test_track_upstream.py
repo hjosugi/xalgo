@@ -89,7 +89,7 @@ class TrackUpstreamTests(unittest.TestCase):
         result = track_upstream.evaluate_corpus(
             ROOT / "state" / "upstream_tracking_corpus.json"
         )
-        self.assertEqual(result["cases"], 33)
+        self.assertEqual(result["cases"], 37)
         self.assertEqual(result["precision"], 1.0)
         self.assertEqual(result["recall"], 1.0)
         self.assertEqual(result["category_accuracy"], 1.0)

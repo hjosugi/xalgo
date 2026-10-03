@@ -17,13 +17,17 @@ from xalgo.score import (
 
 
 class ScoreTests(unittest.TestCase):
-    def test_public_september_defaults_are_the_default_preset(self):
+    def test_public_october_defaults_are_the_default_preset(self):
         weights_path = Path(__file__).resolve().parents[1] / "weights.json"
         name, weights, cfg = load_weights(weights_path)
         settings = preset_settings(cfg, name)
-        self.assertEqual(name, "upstream_2026_09")
+        self.assertEqual(name, "upstream_2026_10")
         self.assertEqual(weights["reply"], 5.0)
         self.assertEqual(weights["report"], -234.0)
+        # The three weights that moved from the September value model.
+        self.assertEqual(weights["click"], 0.3)
+        self.assertEqual(weights["cont_click_dwell_time"], 0.4)
+        self.assertEqual(weights["not_interested"], -47.52)
         # The three defaults that moved between the August and September source.
         self.assertEqual(weights["vqv"], 0.0)
         self.assertEqual(weights["dwell"], 0.05)
@@ -195,7 +199,7 @@ class ScoreTests(unittest.TestCase):
 
     def test_public_preset_is_labeled_as_defaults_not_live_configuration(self):
         post = PostData(status_id="1", likes=10, views=100)
-        for preset in ("upstream_2026_09", "upstream_2026_08"):
+        for preset in ("upstream_2026_10", "upstream_2026_09", "upstream_2026_08"):
             result = score_post(
                 post,
                 {"favorite": 0.5},
@@ -206,6 +210,18 @@ class ScoreTests(unittest.TestCase):
             self.assertTrue(
                 any("live request configuration" in item for item in result.warnings)
             )
+
+    def test_september_preset_is_retained_with_its_own_defaults(self):
+        weights_path = Path(__file__).resolve().parents[1] / "weights.json"
+        name, weights, cfg = load_weights(weights_path, "upstream_2026_09")
+        self.assertEqual(name, "upstream_2026_09")
+        self.assertEqual(weights["click"], 0.4)
+        self.assertEqual(weights["cont_click_dwell_time"], 0.0)
+        self.assertEqual(weights["not_interested"], -43.2)
+        self.assertEqual(
+            preset_settings(cfg, name)["source_ref"],
+            "1b3fec20bc3fd9879bc3e9f3d9c42753cdc3fede",
+        )
 
     def test_august_preset_is_retained_with_its_own_defaults(self):
         weights_path = Path(__file__).resolve().parents[1] / "weights.json"

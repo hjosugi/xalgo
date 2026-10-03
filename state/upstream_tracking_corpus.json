@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "source_repository": "xai-org/x-algorithm",
-  "reviewed_at": "2026-08-25",
+  "reviewed_at": "2026-10-03",
   "method": "Representative files from the May and August 2026 public source generations were manually classified by their direct effect on recommendation ranking, safety/spam policy, or neither.",
   "cases": [
     {
@@ -234,6 +234,34 @@
       "path": "grox/flows/reply_spam/task_filter.py",
       "expected_category": "policy",
       "rationale": "Applies the Grox reply-spam eligibility threshold."
+    },
+    {
+      "id": "ranking-value-model-scoring",
+      "source_commit": "44d37ebf87",
+      "path": "xai-value-model/scoring.rs",
+      "expected_category": "ranking",
+      "rationale": "Holds offset_score/unoffset_score and the weighted-sum arithmetic after the 2026-09-24 value-model extraction."
+    },
+    {
+      "id": "ranking-value-model-weights",
+      "source_commit": "44d37ebf87",
+      "path": "xai-value-model/weights.rs",
+      "expected_category": "ranking",
+      "rationale": "Defines ValueModelWeights, the normalization sums and weight perturbation."
+    },
+    {
+      "id": "ranking-vm-ranker-params",
+      "source_commit": "44d37ebf87",
+      "path": "vm-ranker/params.rs",
+      "expected_category": "ranking",
+      "rationale": "Publishes the value-model weight defaults and scoring settings consumed by the VM ranker."
+    },
+    {
+      "id": "ranking-vm-ranker-value-model",
+      "source_commit": "44d37ebf87",
+      "path": "vm-ranker/scoring/value_model.rs",
+      "expected_category": "ranking",
+      "rationale": "Assembles ValueModelWeights from params and applies author diversity / OON / perturbation."
     }
   ]
 }

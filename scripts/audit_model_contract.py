@@ -1,10 +1,16 @@
 #!/usr/bin/env python3
-"""Audit both generations of the public Phoenix model contract.
+"""Audit every generation of the public Phoenix model contract.
 
 The May 2026 demo generation is inspected through its README claims, selected
 members of the Git LFS artifact, and ``run_pipeline.py`` action indices.  The
 August 2026 source generation removed those files, so it is inspected through
 the checked-in Phoenix configs and Home Mixer scoring defaults instead.
+
+On 2026-09-24 (``44d37ebf87``) the value model moved out of
+``home-mixer/scorers/ranking_scorer.rs`` into the ``xai-value-model`` crate and
+the VM ranker's ``vm-ranker/params.rs``.  That October generation is inspected
+through those files, while the August/September Home Mixer layout keeps
+auditing unchanged.
 
 Legacy ZIP inspection still reads only the central directory and selected
 small JSON members with HTTP Range requests.  This uses GitHub/Git LFS, not
@@ -47,6 +53,21 @@ SOURCE_PATHS = {
     "ranking_config": "phoenix/xrex/configs/xrecsys.py",
     "retrieval_config": "phoenix/xrex/configs/xrecsys_two_tower.py",
 }
+# Since 2026-09-24 (``44d37ebf87``) the Home Mixer scorer is a thin adapter over
+# the ``xai-value-model`` crate, and the VM ranker owns the weight params.
+VALUE_MODEL_SOURCE_PATHS = {
+    "vm_params": "vm-ranker/params.rs",
+    "vm_scoring": "xai-value-model/scoring.rs",
+    "vm_weights": "xai-value-model/weights.rs",
+    "local_value_model": "home-mixer/scorers/value_model.rs",
+    "constants": "home-mixer/params/config.rs",
+    "ranking_config": "phoenix/xrex/configs/xrecsys.py",
+    "retrieval_config": "phoenix/xrex/configs/xrecsys_two_tower.py",
+}
+# The October value-model release no longer publishes a
+# ``ContActiveSecs5mResidualNormWeight`` param; ``home-mixer/scorers/value_model.rs``
+# pins the applied weight to 0.0, so the contract records that effective value.
+VALUE_MODEL_ZERO_WEIGHT_PARAMS = {"ContActiveSecs5mResidualNormWeight": 0.0}
 WEIGHT_PARAMS = {
     "FavoriteWeight": "favorite",
     "ReplyWeight": "reply",
@@ -682,6 +703,89 @@ def parse_scoring_contract(source: str) -> dict[str, object]:
     }
 
 
+def parse_value_model_scoring_contract(
+    scoring_source: str, weights_source: str
+) -> dict[str, object]:
+    """Extract the contract from the ``xai-value-model`` crate (2026-10+).
+
+    The arithmetic moved to ``xai-value-model/scoring.rs`` and the
+    normalization sums to ``xai-value-model/weights.rs``.  ``offset_score`` now
+    calls ``total_sum()``/``negative_sum()`` methods, and the pre-offset branch
+    still recovers the net score with ``unoffset_score``.
+    """
+
+    actions = set(WEIGHT_PARAMS.values())
+
+    def sum_actions(function: str) -> list[str]:
+        match = re.search(
+            rf"fn {re.escape(function)}\(.*?\) -> f64 \{{(.*?)\}}",
+            weights_source,
+            re.DOTALL,
+        )
+        if not match:
+            raise AuditError(f"could not parse value-model sum {function}")
+        found: list[str] = []
+        for token in re.findall(r"\b[a-z][a-z0-9_]*\b", match.group(1)):
+            if token in actions and token not in found:
+                found.append(token)
+        return found
+
+    compact_scoring = re.sub(r"\s+", "", scoring_source)
+    compact_weights = re.sub(r"\s+", "", weights_source)
+    required_offset_fragments = {
+        "zero_total_clamps_nonnegative": ("iftotal_sum==0.0{combined_score.max(0.0)}"),
+        "negative_branch_is_strict": "elseifcombined_score<0.0",
+        "negative_branch_normalizes": (
+            "(combined_score+w.negative_sum())/total_sum*NEGATIVE_SCORES_OFFSET"
+        ),
+        "nonnegative_branch_adds_offset": (
+            "else{combined_score+NEGATIVE_SCORES_OFFSET}"
+        ),
+    }
+    missing = [
+        name
+        for name, fragment in required_offset_fragments.items()
+        if fragment not in compact_scoring
+    ]
+    if missing:
+        raise AuditError(
+            f"could not verify value-model scoring branches: {', '.join(missing)}"
+        )
+
+    unoffset_fragments = (
+        "iftotal_sum==0.0{weighted_score}",
+        "elseifweighted_score<NEGATIVE_SCORES_OFFSET{"
+        "weighted_score/NEGATIVE_SCORES_OFFSET*total_sum-w.negative_sum()}",
+        "else{weighted_score-NEGATIVE_SCORES_OFFSET}",
+    )
+    unoffset_inverts_offset = (
+        all(fragment in compact_scoring for fragment in unoffset_fragments)
+        if "fnunoffset_score(" in compact_scoring
+        else None
+    )
+    if "ifweights.multiplier_pre_offset{" not in compact_scoring:
+        pre_offset_net = None
+    elif "unoffset_score(weighted,weights)" in compact_scoring:
+        pre_offset_net = "unoffset_weighted_score"
+    else:
+        pre_offset_net = "unrecognized"
+
+    return {
+        "positive_normalization_actions": sum_actions("positive_sum"),
+        "negative_normalization_actions": sum_actions("negative_sum"),
+        "multiplicative_post_unexplored_excluded_from_positive_sum": False,
+        "term_split": (
+            "by_sign"
+            if "ift>=0.0{pos+=t;}else{neg-=t;}" in compact_scoring
+            else "by_action_class"
+        ),
+        "weight_perturbation_supported": "fnperturbed(" in compact_weights,
+        "pre_offset_net": pre_offset_net,
+        "unoffset_inverts_offset": unoffset_inverts_offset,
+        **{name: True for name in required_offset_fragments},
+    }
+
+
 def build_source_report(
     session: requests.Session,
     ref: str,
@@ -760,6 +864,110 @@ def build_source_report(
     }
 
 
+def build_value_model_report(
+    session: requests.Session,
+    ref: str,
+    sources: dict[str, str],
+) -> dict[str, object]:
+    """Audit the 2026-10+ value-model generation (VM ranker + xai-value-model)."""
+    del session
+    defaults = parse_param_defaults(sources["vm_params"])
+
+    ranking_weights: dict[str, object] = {}
+    for param, action in WEIGHT_PARAMS.items():
+        if param in defaults:
+            ranking_weights[action] = defaults[param]
+        elif param in VALUE_MODEL_ZERO_WEIGHT_PARAMS:
+            ranking_weights[action] = VALUE_MODEL_ZERO_WEIGHT_PARAMS[param]
+        else:
+            raise AuditError(f"missing value-model weight default: {param}")
+
+    ranking_settings: dict[str, object] = {
+        setting: defaults.get(param) for param, setting in SETTING_PARAMS.items()
+    }
+    ranking_settings.update(
+        {
+            setting: defaults.get(param)
+            for param, setting in OPTIONAL_SETTING_PARAMS.items()
+        }
+    )
+    ranking_settings.update(promoted_settings(defaults, sources["constants"]))
+    # ``compute_weighted_score`` now applies ``post_unexplored`` only when the
+    # candidate is in-network, so the removed param is effectively hardcoded on.
+    ranking_settings["post_unexplored_in_network_only"] = True
+    ranking_settings["enable_oon_rescore_for_in_network_replies_retweets"] = (
+        defaults.get("EnableOonRescoreForInNetworkRepliesRetweets")
+    )
+
+    action_type_count = _parse_python_int(
+        sources["ranking_config"], "ACTION_TYPE_MAP_LEN"
+    )
+    output_alignment = _parse_python_int(sources["ranking_config"], "OUTPUT_VOCAB_K")
+    continuous_action_count = _parse_python_int(
+        sources["ranking_config"], "CONTINUOUS_ACTION_TYPE_MAP_LEN"
+    )
+    output_vocab_size = (
+        (action_type_count + output_alignment - 1) // output_alignment
+    ) * output_alignment
+
+    local_compact = re.sub(r"\s+", "", sources["local_value_model"])
+    local_value_model = {
+        "author_diversity": "enable_author_diversity:false" not in local_compact,
+        "oon_rescore_in_network_replies_retweets": (
+            "oon_rescore_in_network_replies_retweets:false" not in local_compact
+        ),
+        "multiplier_pre_offset": "multiplier_pre_offset:false" not in local_compact,
+    }
+
+    return {
+        "repository": REPO,
+        "ref": ref,
+        "generation": "source_2026_10",
+        "ranking_weights": ranking_weights,
+        "ranking_settings": ranking_settings,
+        "scoring_constants": {
+            "negative_scores_offset": parse_rust_constant(
+                sources["constants"], "NEGATIVE_SCORES_OFFSET", "f64"
+            ),
+            "max_post_age_seconds": parse_rust_constant(
+                sources["constants"], "MAX_POST_AGE", "u64"
+            ),
+            "top_k_candidates": parse_rust_constant(
+                sources["constants"], "TOP_K_CANDIDATES_TO_SELECT", "usize"
+            ),
+            "new_user_min_following": parse_optional_rust_constant(
+                sources["constants"], "NEW_USER_MIN_FOLLOWING", "usize"
+            ),
+        },
+        "scoring_contract": parse_value_model_scoring_contract(
+            sources["vm_scoring"], sources["vm_weights"]
+        ),
+        "local_value_model": local_value_model,
+        "model_profiles": {
+            **parse_model_profiles(
+                sources["ranking_config"],
+                ("xrecsys_seqpack", "home_direct_packed_nano"),
+            ),
+            **parse_model_profiles(
+                sources["retrieval_config"],
+                ("xrecsys_two_tower", "xrecsys_two_tower_nano"),
+            ),
+        },
+        "action_space": {
+            "defined_discrete_actions": action_type_count,
+            "padded_output_vocab_size": output_vocab_size,
+            "continuous_action_slots": continuous_action_count,
+        },
+        "legacy_demo_contract": {
+            "status": "superseded",
+            "artifact_path_present": False,
+            "run_pipeline_present": False,
+            "runners_action_list_present": False,
+        },
+        "source_files": list(VALUE_MODEL_SOURCE_PATHS.values()),
+    }
+
+
 def build_report(session: requests.Session, ref: str) -> dict[str, object]:
     root_readme = fetch_text(session, ref, "README.md")
     phoenix_readme = fetch_text(session, ref, "phoenix/README.md")
@@ -769,9 +977,17 @@ def build_report(session: requests.Session, ref: str) -> dict[str, object]:
             session, ref, root_readme=root_readme, phoenix_readme=phoenix_readme
         )
 
-    sources = {"params": params}
+    ranking_scorer = fetch_optional_text(session, ref, SOURCE_PATHS["ranking_scorer"])
+    if ranking_scorer is None:
+        sources = {
+            name: fetch_text(session, ref, path)
+            for name, path in VALUE_MODEL_SOURCE_PATHS.items()
+        }
+        return build_value_model_report(session, ref, sources)
+
+    sources = {"params": params, "ranking_scorer": ranking_scorer}
     for name, path in SOURCE_PATHS.items():
-        if name == "params":
+        if name in sources:
             continue
         sources[name] = fetch_text(session, ref, path)
     return build_source_report(session, ref, sources)
@@ -779,20 +995,20 @@ def build_report(session: requests.Session, ref: str) -> dict[str, object]:
 
 def contract_snapshot(report: dict[str, object]) -> dict[str, object]:
     """Return the stable, serving-relevant part of a live audit report."""
-    if report.get("generation") == "source_2026_08":
-        return {
-            key: report[key]
-            for key in (
-                "generation",
-                "ranking_weights",
-                "ranking_settings",
-                "scoring_constants",
-                "scoring_contract",
-                "model_profiles",
-                "action_space",
-                "legacy_demo_contract",
-            )
-        }
+    if str(report.get("generation", "")).startswith("source_"):
+        keys = (
+            "generation",
+            "ranking_weights",
+            "ranking_settings",
+            "scoring_constants",
+            "scoring_contract",
+            "model_profiles",
+            "action_space",
+            "legacy_demo_contract",
+        )
+        if "local_value_model" in report:
+            keys = (*keys, "local_value_model")
+        return {key: report[key] for key in keys}
     artifact = report["artifact"]
     return {
         "generation": report.get("generation", "legacy_demo_2026_05"),
@@ -881,13 +1097,18 @@ def compare_with_baseline(
 
 
 def render_text(report: dict[str, object]) -> str:
-    if report.get("generation") == "source_2026_08":
+    if str(report.get("generation", "")).startswith("source_"):
         profiles = report["model_profiles"]
         weights = report["ranking_weights"]
         settings = report["ranking_settings"]
+        generation_labels = {
+            "source_2026_08": "August 2026 source release",
+            "source_2026_10": "October 2026 value-model release",
+        }
         lines = [
             f"upstream: {report['repository']}@{report['ref']}",
-            "generation: August 2026 source release",
+            "generation: "
+            + generation_labels.get(str(report.get("generation")), "source release"),
             (
                 "ranking defaults: "
                 f"favorite={weights['favorite']}, reply={weights['reply']}, "
@@ -964,7 +1185,7 @@ def render_text(report: dict[str, object]) -> str:
 
 
 def has_mismatch(report: dict[str, object]) -> bool:
-    if report.get("generation") == "source_2026_08":
+    if str(report.get("generation", "")).startswith("source_"):
         return False
     return not all(report["readme_matches_artifact"].values()) or not all(
         item["matches"] for item in report["action_contract"]["pipeline_index_mappings"]

@@ -1,6 +1,6 @@
 """Score a post with the upstream weighted-sum formula.
 
-Upstream (home-mixer/scorers/ranking_scorer.rs):
+Upstream (xai-value-model/scoring.rs since 2026-09-24):
     combined = sum( weight_i * P(action_i) )
     score    = offset(combined)
 
@@ -79,7 +79,7 @@ class ScoreResult:
 
 def load_weights(path: Path, preset: Optional[str] = None):
     cfg = json.loads(path.read_text(encoding="utf-8"))
-    name = preset or cfg.get("default_preset", "upstream_2026_09")
+    name = preset or cfg.get("default_preset", "upstream_2026_10")
     if name not in cfg["presets"]:
         raise KeyError(f"Unknown preset '{name}'. Available: {list(cfg['presets'])}")
     return name, cfg["presets"][name], cfg

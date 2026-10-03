@@ -294,6 +294,75 @@ pub(crate) fn unoffset_score(weighted_score: f64, w: &ScoringWeights) -> f64 {
         self.assertIsNone(contract["pre_offset_net"])
         self.assertFalse(contract["unoffset_inverts_offset"])
 
+    def test_parses_value_model_scoring_contract(self):
+        scoring = """
+pub fn offset_score(combined_score: f64, w: &ValueModelWeights) -> f64 {
+    let total_sum = w.total_sum();
+    if total_sum == 0.0 {
+        combined_score.max(0.0)
+    } else if combined_score < 0.0 {
+        (combined_score + w.negative_sum()) / total_sum * NEGATIVE_SCORES_OFFSET
+    } else {
+        combined_score + NEGATIVE_SCORES_OFFSET
+    }
+}
+pub fn unoffset_score(weighted_score: f64, w: &ValueModelWeights) -> f64 {
+    let total_sum = w.total_sum();
+    if total_sum == 0.0 {
+        weighted_score
+    } else if weighted_score < NEGATIVE_SCORES_OFFSET {
+        weighted_score / NEGATIVE_SCORES_OFFSET * total_sum - w.negative_sum()
+    } else {
+        weighted_score - NEGATIVE_SCORES_OFFSET
+    }
+}
+if weights.multiplier_pre_offset {
+    let net = unoffset_score(weighted, weights);
+}
+"""
+        weights = """
+impl ValueModelWeights {
+    fn positive_sum(&self) -> f64 {
+        self.favorite + self.reply + self.post_unexplored
+    }
+    pub fn negative_sum(&self) -> f64 {
+        -(self.not_interested + self.report)
+    }
+}
+pub fn perturbed(mut self, sigma: f64) -> Self {
+    self
+}
+"""
+        contract = audit.parse_value_model_scoring_contract(scoring, weights)
+        self.assertEqual(
+            contract["positive_normalization_actions"],
+            ["favorite", "reply", "post_unexplored"],
+        )
+        self.assertEqual(
+            contract["negative_normalization_actions"],
+            ["not_interested", "report"],
+        )
+        self.assertEqual(contract["pre_offset_net"], "unoffset_weighted_score")
+        self.assertTrue(contract["unoffset_inverts_offset"])
+        self.assertTrue(contract["weight_perturbation_supported"])
+        self.assertEqual(contract["term_split"], "by_action_class")
+
+    def test_contract_snapshot_includes_value_model_generation(self):
+        report = {
+            "generation": "source_2026_10",
+            "ranking_weights": {},
+            "ranking_settings": {},
+            "scoring_constants": {},
+            "scoring_contract": {},
+            "local_value_model": {"author_diversity": False},
+            "model_profiles": {},
+            "action_space": {},
+            "legacy_demo_contract": {},
+        }
+        snapshot = audit.contract_snapshot(report)
+        self.assertEqual(snapshot["generation"], "source_2026_10")
+        self.assertIn("local_value_model", snapshot)
+
 
 if __name__ == "__main__":
     unittest.main()

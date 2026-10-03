@@ -62,14 +62,16 @@ X公式embed CDN（syndication）。X APIは使いませんが、各公開サー
 
 | preset | 内容 |
 |---|---|
-| `upstream_2026_09` | Home Mixerに公開された26 actionのfeature-switch既定値、2026-09-18版。9/23の`1b3fec20bc`まで不変（既定preset） |
+| `upstream_2026_10` | value modelに公開された26 actionのfeature-switch既定値、2026-09-29版。10/2の`76843a5eea`まで不変（既定preset） |
+| `upstream_2026_09` | 2026-09-18版の公開既定値。9/23の`1b3fec20bc`まで不変。click 0.4 / cont_click_dwell_time 0.0 / not_interested -43.2 が10月版と異なる |
 | `upstream_2026_08` | 2026-08-24版の公開既定値。VQV 0.05 / dwell 0.0 / video_open 0.05 が9月版と異なる |
 | `repo_demo` | 廃止済み2026年5月Phoenix demoの履歴再現 |
 | `legacy_2023` | 2023年 twitter/the-algorithm の Heavy Ranker 重み (比較用) |
 | `full_template` | 全actionを編集する感度分析用テンプレ |
 
 公開既定値とlive requestのoverrideは区別してください。全値・出典・Issue取り込み結果は
-[`docs/upstream-2026-09.md`](docs/upstream-2026-09.md)（9月版）と
+[`docs/upstream-2026-10.md`](docs/upstream-2026-10.md)（10月版）と
+[`docs/upstream-2026-09.md`](docs/upstream-2026-09.md)（9月版）、
 [`docs/upstream-2026-08.md`](docs/upstream-2026-08.md)（8月版）を参照してください。
 
 ### 4. 公開source契約を監査

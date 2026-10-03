@@ -21,6 +21,7 @@ const actionNames = {
 };
 const barColors = ["#ff6747", "#9680ff", "#59cfdb", "#c7ff5e", "#f3bb54"];
 const presetNotes = {
+  upstream_2026_10: "2026年10月2日時点で公開されたvalue modelの既定値です。9月版とはclick・cont_click_dwell_time・not_interestedの重みが異なります。",
   upstream_2026_09: "2026年9月18日時点で公開されたHome Mixerの既定値です。実験設定で上書きされる場合があります。",
   upstream_2026_08: "2026年8月24日時点の公開既定値です。9月版とはVQV・dwell・video_openの重みが異なります。",
   repo_demo: "廃止済み2026年5月版デモを再現する履歴プリセットです。",
@@ -47,7 +48,8 @@ function setSample(name) {
 function buildPresetOptions() {
   const select = $("#preset-select");
   const labels = {
-    upstream_2026_09: "upstream_2026_09 — 公開既定値",
+    upstream_2026_10: "upstream_2026_10 — 公開既定値",
+    upstream_2026_09: "upstream_2026_09 — 2026年9月版",
     upstream_2026_08: "upstream_2026_08 — 2026年8月版",
     repo_demo: "repo_demo — 旧2026デモ",
     legacy_2023: "legacy_2023 — 2023比較",

@@ -1,8 +1,36 @@
 {
   "schema_version": 2,
-  "_comment": "重みプリセット。upstream_2026_09 は xai-org/x-algorithm の Home Mixer に公開された feature-switch default（2026-09-18 版で確定し、2026-09-23 の 1b3fec20bc まで不変）。upstream_2026_08 は 2026-08-24 版の既定値で、VQV 0.05 / dwell 0.0 / video_open 0.05 が異なる。実リクエストでは実験設定により上書きされ得る。new_user_* は新規 viewer 向け OON 係数で、閾値 0 秒の既定では適用されない。また xalgo は閲覧者別 Phoenix 予測の代わりに公開 count/views を使うため、本番順位の再現ではない。repo_demo は廃止済み May 2026 demo の履歴再現、legacy_2023 は旧 Heavy Ranker 比較、full_template は感度分析用。",
-  "default_preset": "upstream_2026_09",
+  "_comment": "重みプリセット。upstream_2026_10 は xai-org/x-algorithm の value model に公開された feature-switch default（2026-09-29 の a707cc27ba で確定し、2026-10-02 の 76843a5eea まで不変）。click 0.3 / cont_click_dwell_time 0.4 / not_interested -47.52 が 9 月版と異なる。upstream_2026_09 は 2026-09-18 版（1b3fec20bc まで不変）で、upstream_2026_08 は 2026-08-24 版（VQV 0.05 / dwell 0.0 / video_open 0.05）。実リクエストでは実験設定により上書きされ得る。new_user_* は新規 viewer 向け OON 係数で、閾値 0 秒の既定では適用されない。また xalgo は閲覧者別 Phoenix 予測の代わりに公開 count/views を使うため、本番順位の再現ではない。repo_demo は廃止済み May 2026 demo の履歴再現、legacy_2023 は旧 Heavy Ranker 比較、full_template は感度分析用。",
+  "default_preset": "upstream_2026_10",
   "presets": {
+    "upstream_2026_10": {
+      "favorite": 0.5,
+      "reply": 5.0,
+      "retweet": 1.0,
+      "photo_expand": 0.05,
+      "video_open": 0.07,
+      "click": 0.3,
+      "open_link": 0.2,
+      "profile_click": 0.0,
+      "vqv": 0.0,
+      "share": 2.0,
+      "share_via_dm": 5.0,
+      "share_via_copy_link": 20.0,
+      "dwell": 0.05,
+      "quote": 5.0,
+      "quoted_click": 0.05,
+      "quoted_vqv": 0.0,
+      "cont_dwell_time": 0.004,
+      "cont_click_dwell_time": 0.4,
+      "cont_active_secs_5m_residual_norm": 0.0,
+      "follow_author": 4.0,
+      "post_unexplored": 0.02,
+      "not_interested": -47.52,
+      "block_author": -31.2,
+      "mute_author": -58.8,
+      "report": -234.0,
+      "not_dwelled": -0.02
+    },
     "upstream_2026_09": {
       "favorite": 0.5,
       "reply": 5.0,
@@ -106,6 +134,21 @@
     }
   },
   "preset_settings": {
+    "upstream_2026_10": {
+      "source_ref": "76843a5eea278ced444b21372d4e6d6909f5c35e",
+      "introduced_ref": "a707cc27ba36d3fa79450c9cffcc48a82d080b02",
+      "negative_scores_offset": 0.001,
+      "vqv_min_duration_ms": 10000,
+      "author_diversity": {
+        "enabled": true,
+        "decay": 0.5,
+        "floor": 0.25
+      },
+      "oon_weight_factor": 0.75,
+      "topic_oon_weight_factor": 0.5,
+      "new_user_oon_weight_factor": 0.00001,
+      "new_user_age_threshold_secs": 0
+    },
     "upstream_2026_09": {
       "source_ref": "1b3fec20bc3fd9879bc3e9f3d9c42753cdc3fede",
       "introduced_ref": "0d3cdd806c405f04db7030f720b48687aa304061",

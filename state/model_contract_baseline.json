@@ -1,17 +1,17 @@
 {
   "schema_version": 2,
   "upstream_repository": "xai-org/x-algorithm",
-  "source_ref": "1b3fec20bc3fd9879bc3e9f3d9c42753cdc3fede",
-  "recorded_at": "2026-09-24",
+  "source_ref": "76843a5eea278ced444b21372d4e6d6909f5c35e",
+  "recorded_at": "2026-10-03",
   "contract": {
-    "generation": "source_2026_08",
+    "generation": "source_2026_10",
     "ranking_weights": {
       "favorite": 0.5,
       "reply": 5.0,
       "retweet": 1.0,
       "photo_expand": 0.05,
       "video_open": 0.07,
-      "click": 0.4,
+      "click": 0.3,
       "open_link": 0.2,
       "profile_click": 0.0,
       "vqv": 0.0,
@@ -23,11 +23,11 @@
       "quoted_click": 0.05,
       "quoted_vqv": 0.0,
       "cont_dwell_time": 0.004,
-      "cont_click_dwell_time": 0.0,
+      "cont_click_dwell_time": 0.4,
       "cont_active_secs_5m_residual_norm": 0.0,
       "follow_author": 4.0,
       "post_unexplored": 0.02,
-      "not_interested": -43.2,
+      "not_interested": -47.52,
       "block_author": -31.2,
       "mute_author": -58.8,
       "report": -234.0,
@@ -43,15 +43,16 @@
       "quoted_vqv_duration_check": false,
       "bidirectional_follow_reply_weight_boost": 15.0,
       "bidirectional_follow_dwell_weight_boost": 0.0,
-      "multiplicative_post_unexplored": false,
-      "multiplicative_post_unexplored_alpha": 0.0,
+      "multiplicative_post_unexplored": null,
+      "multiplicative_post_unexplored_alpha": null,
       "post_unexplored_in_network_only": true,
       "multiplier_pre_offset": false,
       "weight_perturbation_sigma": 0.0,
-      "cdwell_on_impr": false,
+      "cdwell_on_impr": null,
       "new_user_age_threshold_secs": 0,
-      "cached_posts_reuse_weighted_score": false,
-      "new_user_oon_weight_factor": 1e-05
+      "cached_posts_reuse_weighted_score": null,
+      "new_user_oon_weight_factor": 1e-05,
+      "enable_oon_rescore_for_in_network_replies_retweets": true
     },
     "scoring_constants": {
       "negative_scores_offset": 0.001,
@@ -87,8 +88,8 @@
         "report",
         "not_dwelled"
       ],
-      "multiplicative_post_unexplored_excluded_from_positive_sum": true,
-      "term_split": "by_sign",
+      "multiplicative_post_unexplored_excluded_from_positive_sum": false,
+      "term_split": "by_action_class",
       "weight_perturbation_supported": true,
       "pre_offset_net": "unoffset_weighted_score",
       "unoffset_inverts_offset": true,
@@ -155,6 +156,11 @@
       "artifact_path_present": false,
       "run_pipeline_present": false,
       "runners_action_list_present": false
+    },
+    "local_value_model": {
+      "author_diversity": false,
+      "oon_rescore_in_network_replies_retweets": false,
+      "multiplier_pre_offset": false
     }
   }
 }
