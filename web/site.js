@@ -1,4 +1,4 @@
-/* xalgo — 共通のサイドバーと検索 */
+/* xalgo — 共通のトップバー・サイドバー・検索 */
 (() => {
   "use strict";
 
@@ -40,6 +40,16 @@
     return div.innerHTML;
   }
 
+  function topbarMarkup() {
+    return (
+      `<div class="topbar-inner">` +
+      `<a class="brand" href="./index.html">xalgo<small>Xアルゴリズム観測</small></a>` +
+      `<div class="search"><input id="search" type="search" placeholder="検索（例: offset / 0.625 / 返信）" autocomplete="off">` +
+      `<div id="search-results" hidden></div></div>` +
+      `</div>`
+    );
+  }
+
   function sidebarMarkup() {
     const nav = NAV.map(({ group, pages }) => {
       const links = pages
@@ -51,9 +61,6 @@
       return `<div class="nav-group"><span>${group}</span>${links}</div>`;
     }).join("");
     return (
-      `<a class="brand" href="./index.html">xalgo<small>Xアルゴリズム観測</small></a>` +
-      `<div class="search"><input id="search" type="search" placeholder="検索（例: offset）" autocomplete="off">` +
-      `<div id="search-results" hidden></div></div>` +
       `<nav>${nav}</nav>` +
       `<div class="side-foot">公開既定値<br>upstream_2026_10<br>commit 76843a5eea</div>`
     );
@@ -109,6 +116,12 @@
   }
 
   function mount() {
+    const topbar = document.createElement("div");
+    topbar.className = "topbar";
+    topbar.innerHTML = topbarMarkup();
+    const layout = document.querySelector(".layout");
+    if (layout) document.body.insertBefore(topbar, layout);
+
     const slot = document.getElementById("sidebar");
     if (slot) slot.innerHTML = sidebarMarkup();
     const input = document.getElementById("search");
