@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.5.0 — 2026-10-03
+
+### Added
+
+- A 17-page wiki at the learning site: background (which source and commits
+  were analyzed), method, pipeline, scoring, ranking (how scores order
+  candidates and where the chain breaks), weights, settings, examples,
+  posting, calculator, history, observation, competitors, limits, glossary
+  and sources. A sidebar, a client-side search built by
+  `scripts/build_site_index.py`, and lightweight bar/line charts.
+- `web/ranking.html` explains how a weight change reorders candidates, how the
+  effect depends on P, and why a score cannot be mapped to impressions.
+
+### Changed
+
+- The site loads Pico CSS (classless) as a base and keeps a small layer for the
+  paper/notebook look, so controls, tables and typography are consistent.
+  Boxed step markers were replaced with typographic markers.
+- The Pages workflow rebuilds `web/search-index.json` before deployment.
+
 ## 0.4.1 — 2026-10-03
 
 ### Changed
