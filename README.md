@@ -73,6 +73,7 @@ X公式embed CDN（syndication）。X APIは使いませんが、各公開サー
 [`docs/upstream-2026-10.md`](docs/upstream-2026-10.md)（10月版）と
 [`docs/upstream-2026-09.md`](docs/upstream-2026-09.md)（9月版）、
 [`docs/upstream-2026-08.md`](docs/upstream-2026-08.md)（8月版）を参照してください。
+計算の流れを1枚にまとめた講義ノートは [`docs/scoring-logic.md`](docs/scoring-logic.md) です。
 
 ### 4. 公開source契約を監査
 
