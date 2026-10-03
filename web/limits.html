@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="このサイトの数字で言えること・言えないこと" />
+    <title>限界と注意 — Xアルゴリズム観測</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside id="sidebar"></aside>
+      <main class="content">
+        <h1>限界と注意</h1>
+        <p class="lead">数字を正しく使うために、このサイトで言えること・言えないことを整理します。</p>
+
+        <h2>言えること</h2>
+        <ul>
+          <li>公開コードに書かれたスコア式と重みの構造。</li>
+          <li>行動ごとの重みの大小と、それが確率に掛かること。</li>
+          <li>同じ表示回数での投稿の型ごとの比較。</li>
+          <li>公開既定値がいつ・どう変わったか（commit 単位）。</li>
+        </ul>
+
+        <h2>言えないこと</h2>
+        <table>
+          <tr><th>項目</th><th>理由</th></tr>
+          <tr><td>実際の「おすすめ順位」</td><td>候補集合・閲覧者ごとの予測・非公開設定に依存するため</td></tr>
+          <tr><td>あなた個人のスコア</td><td>Phoenix の閲覧者別予測を再現できないため</td></tr>
+          <tr><td>本番で使われている重み</td><td>公開値は既定値で、実験設定で上書きされるため</td></tr>
+          <tr><td>フォロワー数・表示回数の直接効果</td><td>スコア式に直接は入らず、確率を通して間接的に効くため</td></tr>
+          <tr><td>将来の値</td><td>main はほぼ毎日更新されるため</td></tr>
+        </table>
+
+        <h2>公開カウントの代用が生むズレ</h2>
+        <div class="num-box">
+          Phoenix は「その閲覧者」の確率を予測します。このサイトは<b>公開カウント ÷ 表示回数</b>（全閲覧者の平均）で代用します。<br />
+          <span class="example-inline">P(返信)=0.016 は「平均して1.6%の閲覧者が返信した」であり、「あなたが返信する確率」ではありません。</span>
+        </div>
+        <ul>
+          <li>表示回数が小さい投稿は率が荒れる。</li>
+          <li>閲覧者の属性（フォロー関係・興味）を反映できない。</li>
+          <li>負の行動（報告・ミュートなど）は公開カウントが無く、0扱いになる。</li>
+        </ul>
+
+        <h2>スコアは順位そのものではない</h2>
+        <p>スコアは候補を並べるための材料です。実際の表示は、候補取得・除外・多様性・安全確認・広告挿入などを経て決まります（<a href="./pipeline.html">パイプライン</a>）。スコアが高くても、安全ルールで落ちることがあります。</p>
+
+        <h2>版の混同に注意</h2>
+        <p>2023年版（Heavy Ranker）と2026年版（xai-value-model）は別のシステムです。返信 75、報告 −369 などの数字は2023年版で、2026年版には存在しません（<a href="./competitors.html">競合・関連</a>）。</p>
+
+        <h2>出典とライセンス</h2>
+        <ul>
+          <li>一次情報は <a href="https://github.com/xai-org/x-algorithm" target="_blank" rel="noreferrer">xai-org/x-algorithm</a>（Apache License 2.0）。</li>
+          <li>このサイトは公開コードを読み解いた非公式の学習ノートです。</li>
+          <li>数値は基準 commit <code>76843a5eea</code> に基づきます。</li>
+        </ul>
+
+        <footer>出典: xai-org/x-algorithm の公開既定値（upstream_2026_10 / 76843a5eea）</footer>
+      </main>
+    </div>
+    <script src="./site.js" defer></script>
+    <script src="./charts.js" defer></script>
+  </body>
+</html>

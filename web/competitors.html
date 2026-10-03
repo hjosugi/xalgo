@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Xアルゴリズム解説の主要サイト・ツールと、このサイトの立ち位置" />
+    <title>競合・関連 — Xアルゴリズム観測</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside id="sidebar"></aside>
+      <main class="content">
+        <h1>競合・関連</h1>
+        <p class="lead">Xアルゴリズムを扱う主要なサイト・ツールを調べ、このサイトの違いを整理しました。</p>
+
+        <h2>主要な情報源・ツール</h2>
+        <table>
+          <tr><th>名前</th><th>種類</th><th>特徴</th><th>このサイトとの違い</th></tr>
+          <tr><td>OpenTweet（opentweet.io）</td><td>ブログ＋投稿管理</td><td>コード公開の解説とスケジューリング</td><td>実務寄り。基準 commit と監査の記録なし</td></tr>
+          <tr><td>Teract AI（teract.ai）</td><td>技術解説</td><td>3段階のランキング、1000+ signals の概説</td><td>概説中心。再現手順なし</td></tr>
+          <tr><td>Tweet Hunter（tweethunter.io）</td><td>分析＋TweepCred計算機</td><td>アカウント評価とアルゴリズム分析</td><td>2023年版の重みを混ぜた解説がある</td></tr>
+          <tr><td>Hootsuite</td><td>スコア計算機</td><td>エンゲージメント率の採点</td><td>アルゴリズムの重みとは別物の指標</td></tr>
+          <tr><td>Hypercho</td><td>採点ツール</td><td>下書きを0〜100点で採点</td><td>独自スコア。式・重みの根拠は非公開</td></tr>
+          <tr><td>terezatizkova.com</td><td>解説記事</td><td>ソースコードQ&amp;A形式</td><td>2023年 Heavy Ranker の重み（75・13.5など）が中心</td></tr>
+          <tr><td>Medium（@furkangozukara）</td><td>解説記事</td><td>特定 commit の深掘り</td><td>単発で更新されない</td></tr>
+          <tr><td>Qiita（f_uto ほか）</td><td>解説記事</td><td>2026年版の全体像と OK/NG 早見表</td><td>読み物。数値の再現・追跡なし</td></tr>
+          <tr><td>キャンつく（camtsuku）</td><td>攻略ガイド</td><td>マーケ視点の運用術</td><td>コード基準の数値ではない</td></tr>
+          <tr><td>attainmentlabs の skill</td><td>生成AIスキル</td><td>投稿を採点・最適化するプロンプト</td><td>参照 commit が2026年1月時点</td></tr>
+        </table>
+
+        <h2>よくある混同: 2023年版と2026年版</h2>
+        <p>検索上位の解説には、<b>2023年の Heavy Ranker</b> の重みと、<b>2026年の xai-value-model</b> の重みが混ざっているものがあります。別のシステムなので混ぜると誤解します。</p>
+        <table>
+          <tr><th>行動</th><th class="v">2023年版</th><th class="v">2026年版（このサイト）</th></tr>
+          <tr><td>返信</td><td class="v">13.5</td><td class="v">5.0</td></tr>
+          <tr><td>著者が返信に返信</td><td class="v">75.0</td><td class="v">—（別の仕組み）</td></tr>
+          <tr><td>引用</td><td class="v">（類似）</td><td class="v">5.0</td></tr>
+          <tr><td>リポスト</td><td class="v">1.0</td><td class="v">1.0</td></tr>
+          <tr><td>いいね</td><td class="v">0.5</td><td class="v">0.5</td></tr>
+          <tr><td>報告</td><td class="v">−369</td><td class="v">−234</td></tr>
+          <tr><td>ミュート／ブロック</td><td class="v">−74</td><td class="v">−58.8 / −31.2</td></tr>
+        </table>
+        <p class="memo">2026年版には「著者が返信に返信」という重みはありません。返信は行動確率として Phoenix が予測し、値モデルでは 5.0 の重みで扱われます。</p>
+
+        <h2>上流 README が否定している誤解</h2>
+        <div class="num-box">
+          <b>「報告1件 = いいね468件分」は誤り。</b><br />
+          <span class="example-inline">重みは<b>確率</b>に掛かるもので、生のカウントには掛かりません。報告の重み −234 は「あなたが報告する確率」に掛かります。報告確率はいいね確率より1000倍以上低いため、大きな重みが付いています。</span>
+        </div>
+        <p class="memo">この注意は上流の <a href="https://github.com/xai-org/x-algorithm/blob/main/README.md" target="_blank" rel="noreferrer">README</a> と <code>scoring.rs</code> のコメントに明記されています。</p>
+
+        <h2>このサイトの立ち位置</h2>
+        <table>
+          <tr><th>観点</th><th>このサイト</th><th>一般的な解説</th></tr>
+          <tr><td>基準</td><td>commit を固定（<code>76843a5eea</code>）</td><td>「最新」の一言で流れる</td></tr>
+          <tr><td>数値</td><td>全26重み＋設定を baseline と照合</td><td>抜粋・推定値</td></tr>
+          <tr><td>更新</td><td>日次で追跡し issue に記録</td><td>単発</td></tr>
+          <tr><td>再現</td><td>監査スクリプトと CLI を公開</td><td>なし</td></tr>
+          <tr><td>数字の説明</td><td>「その値が何を意味し、どう結果を変えるか」まで記載</td><td>一覧のみ</td></tr>
+        </table>
+
+        <h2>参考リンク</h2>
+        <ul>
+          <li><a href="https://github.com/xai-org/x-algorithm" target="_blank" rel="noreferrer">xai-org/x-algorithm</a>（一次情報）</li>
+          <li><a href="https://github.com/xai-org/x-algorithm/blob/main/README.md" target="_blank" rel="noreferrer">上流 README</a>（重みの誤解についての注記）</li>
+          <li><a href="https://github.com/twitter/the-algorithm" target="_blank" rel="noreferrer">twitter/the-algorithm</a>（2023年版・比較用）</li>
+        </ul>
+
+        <footer>出典: xai-org/x-algorithm の公開既定値（upstream_2026_10 / 76843a5eea）。競合情報は2026-10-03時点の公開情報。</footer>
+      </main>
+    </div>
+    <script src="./site.js" defer></script>
+    <script src="./charts.js" defer></script>
+  </body>
+</html>

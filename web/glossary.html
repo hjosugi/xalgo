@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="スコア計算に出てくる用語の一覧" />
+    <title>用語 — Xアルゴリズム観測</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside id="sidebar"></aside>
+      <main class="content">
+        <h1>用語</h1>
+        <p class="lead">スコア計算に出てくる用語を、意味と「数字でどう現れるか」で説明します。</p>
+
+        <dl>
+          <dt>P(行動)（行動確率）</dt>
+          <dd>その閲覧者がその行動をする確率。0〜1。例: 表示100回で返信2回なら 0.02。このサイトでは公開カウント÷表示回数で代用。</dd>
+
+          <dt>重み（weight）</dt>
+          <dd>行動確率に掛ける倍率。例: 返信 5.0、いいね 0.5。確率1.0あたりの寄与を表す。カウントには掛からない。</dd>
+
+          <dt>寄与（contribution）</dt>
+          <dd><code>重み × P(行動)</code> の値。例: 5.0 × 0.016 = 0.080。スコアの内訳の1行分。</dd>
+
+          <dt>combined（重み付き和）</dt>
+          <dd>全行動の寄与の合計。offset を通す前の値。</dd>
+
+          <dt>offset（オフセット）</dt>
+          <dd>負の combined を 0〜0.001 に圧縮する処理。正の combined には 0.001 を足す。<code>NEGATIVE_SCORES_OFFSET = 0.001</code>。</dd>
+
+          <dt>positive_sum / negative_sum / total_sum</dt>
+          <dd>offset の計算に使う重みの合計。10月は 43.24 / 371.54 / 414.78。</dd>
+
+          <dt>unoffset_score</dt>
+          <dd>offset の逆変換。offset 後の weighted score から元の combined に戻す。<code>MultiplierPreOffset</code> 分岐で使う。</dd>
+
+          <dt>author diversity（著者多様性）</dt>
+          <dd>同じ著者の2件目以降に掛かる減衰。<code>(1−floor)×decay^position + floor</code>。既定 decay 0.5 / floor 0.25 で、2件目は 0.625 倍。</dd>
+
+          <dt>position</dt>
+          <dd>同じ著者の何件目か（0始まり）。1件目は position 0 で倍率 1.0。</dd>
+
+          <dt>OON（out-of-network）</dt>
+          <dd>フォロー外の投稿。既定で 0.75 倍に割引。トピック経由は 0.5 倍、新規ユーザーは 0.00001 倍（閾値0秒の既定では発火しない）。</dd>
+
+          <dt>in-network</dt>
+          <dd>フォロー中などネットワーク内の投稿。OON の割引を受けない。新規性（post_unexplored）の加点も in-network のみ。</dd>
+
+          <dt>VQV（video quality view）</dt>
+          <dd>動画の視聴品質。10秒超のときだけ重みが適用される（duration gate）。既定重みは 0.0 なので現在は空振り。</dd>
+
+          <dt>cdwell（クリック後滞在）</dt>
+          <dd>クリックしてから滞在した時間。10月から重み 0.4 が直接適用される。</dd>
+
+          <dt>MultiplierPreOffset</dt>
+          <dd>多様性/OON を offset の前に掛けるか。既定 false（後で掛ける）。</dd>
+
+          <dt>weight perturbation（重みの揺らぎ）</dt>
+          <dd>viewer ごとに重みを <code>exp(±σ)</code> で揺らす仕組み。既定 σ=0.0 で無効。</dd>
+
+          <dt>cached weighted score</dt>
+          <dd>一度計算した weighted score を再利用する仕組み。9月は param で制御、10月は値があれば使う形に統合。</dd>
+
+          <dt>Phoenix</dt>
+          <dd>行動確率を予測するモデル。閲覧者の行動履歴と候補投稿を Transformer に入れて P(action) を出す。</dd>
+
+          <dt>Home Mixer</dt>
+          <dd>候補の取得・除外・スコア付けを行う本体パイプライン（Rust）。</dd>
+
+          <dt>value model / VM ranker</dt>
+          <dd>スコアの数式（xai-value-model crate）と、それを動かすランキングサービス（vm-ranker）。公開既定値は <code>vm-ranker/params.rs</code>。</dd>
+
+          <dt>action space</dt>
+          <dd>予測する行動の種類数。公開値は 60 discrete / 64 padded / 8 continuous。</dd>
+
+          <dt>model profile</dt>
+          <dd>Phoenix のモデル寸法。例: <code>xrecsys_seqpack</code> は emb 2560、8層、query heads 20。</dd>
+
+          <dt>hydration（ハイドレーション）</dt>
+          <dd>候補に著者属性・投稿属性・安全ラベルなどを付ける段。</dd>
+        </dl>
+
+        <footer>出典: xai-org/x-algorithm の公開既定値（upstream_2026_10 / 76843a5eea）</footer>
+      </main>
+    </div>
+    <script src="./site.js" defer></script>
+    <script src="./charts.js" defer></script>
+  </body>
+</html>

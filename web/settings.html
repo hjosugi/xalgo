@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="offset・VQVゲート・多様性・OON・perturbation など設定値の意味" />
+    <title>設定・ゲート — Xアルゴリズム観測</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside id="sidebar"></aside>
+      <main class="content">
+        <h1>設定・ゲート</h1>
+        <p class="lead">重み以外のつまみです。値・意味・「変わると何が起きるか」を並べます。</p>
+
+        <h2>offset と正規化</h2>
+        <table>
+          <tr><th>設定</th><th class="v">値</th><th>意味・変わるとどうなるか</th></tr>
+          <tr><td><code>NEGATIVE_SCORES_OFFSET</code></td><td class="v">0.001</td><td>正のスコアに足す下駄。負のスコアは 0〜この値に圧縮される。大きくすると負の投稿が相対的に上がる。</td></tr>
+          <tr><td><code>negative_sum</code></td><td class="v">371.54</td><td>負の重み5個の絶対値合計。圧縮の分子に使う。</td></tr>
+          <tr><td><code>total_sum</code></td><td class="v">414.78</td><td>正負の合計。圧縮の分母。</td></tr>
+        </table>
+
+        <h2>動画のゲート</h2>
+        <table>
+          <tr><th>設定</th><th class="v">値</th><th>意味・変わるとどうなるか</th></tr>
+          <tr><td><code>MinVideoDurationMs</code></td><td class="v">10,000</td><td>動画の VQV 重みを適用する最低長（10秒）。<b>超えたときだけ</b> VQV が加算される。既定の VQV 重みは 0.0 なので現在は空振り。</td></tr>
+          <tr><td><code>EnableQuotedVqvDurationCheck</code></td><td class="v">false</td><td>引用元動画にも同じ長さゲートを課すか。</td></tr>
+        </table>
+
+        <h2>多様性と OON</h2>
+        <table>
+          <tr><th>設定</th><th class="v">値</th><th>意味・変わるとどうなるか</th></tr>
+          <tr><td><code>EnableAuthorDiversity</code></td><td class="v">true</td><td>同じ著者の連投を減衰させるか。</td></tr>
+          <tr><td><code>AuthorDiversityDecay</code></td><td class="v">0.5</td><td>減衰の強さ。小さいほど2件目以降が急に下がる。倍率 = <code>(1−floor)×decay^position + floor</code>。</td></tr>
+          <tr><td><code>AuthorDiversityFloor</code></td><td class="v">0.25</td><td>減衰の下限。何件目でもこの倍率より下がらない。</td></tr>
+          <tr><td><code>OonWeightFactor</code></td><td class="v">0.75</td><td>ネットワーク外の投稿に掛ける倍率。0.75 なら25%割引。</td></tr>
+          <tr><td><code>TopicOonWeightFactor</code></td><td class="v">0.5</td><td>トピック指定の取得経由のときの倍率。</td></tr>
+          <tr><td><code>NewUserOonWeightFactor</code></td><td class="v">0.00001</td><td>新規ユーザー向け OON 倍率。ほぼ0だが、閾値0秒の既定では発火しない。</td></tr>
+          <tr><td><code>NewUserAgeThresholdSecs</code></td><td class="v">0</td><td>「新規」とみなすアカウント年齢。0 なので新規分岐は無効。</td></tr>
+          <tr><td><code>NEW_USER_MIN_FOLLOWING</code></td><td class="v">5</td><td>新規分岐を使うのに必要なフォロー数。</td></tr>
+        </table>
+
+        <h2>スコアの掛け方</h2>
+        <table>
+          <tr><th>設定</th><th class="v">値</th><th>意味・変わるとどうなるか</th></tr>
+          <tr><td><code>MultiplierPreOffset</code></td><td class="v">false</td><td>false: 多様性/OON を offset の<b>後</b>に掛ける（既定）。true: offset の前に掛ける。</td></tr>
+          <tr><td><code>WeightPerturbationSigma</code></td><td class="v">0.0</td><td>0 より大きいと viewer ごとに重みを <code>exp(±σ)</code> で揺らす。0 で無効。</td></tr>
+          <tr><td><code>EnableOonRescoreForInNetworkRepliesRetweets</code></td><td class="v">true</td><td>ネットワーク内の返信・リポストも OON 係数の対象にする。</td></tr>
+          <tr><td><code>PostUnexploredWeightInNetworkOnly</code></td><td class="v">true</td><td>新規性の加点を in-network のみに限る（10月から値モデル内に固定）。</td></tr>
+        </table>
+
+        <h2>候補と選択</h2>
+        <table>
+          <tr><th>設定</th><th class="v">値</th><th>意味</th></tr>
+          <tr><td><code>MAX_POST_AGE</code></td><td class="v">172,800 秒</td><td>候補に残る最大 age（48時間）。</td></tr>
+          <tr><td><code>TOP_K_CANDIDATES_TO_SELECT</code></td><td class="v">50</td><td>最終選択に残す候補数。</td></tr>
+          <tr><td><code>RESULT_SIZE</code></td><td class="v">35</td><td>1レスポンスの投稿数。</td></tr>
+        </table>
+
+        <h2>10月に撤去された設定</h2>
+        <table>
+          <tr><th>設定</th><th>9月の値</th><th>10月の扱い</th></tr>
+          <tr><td><code>EnableCdwellOnImpr</code></td><td>false</td><td>ゲート自体が消え、クリック後滞在の重み（0.4）が直接効く</td></tr>
+          <tr><td><code>CachedPostsReuseWeightedScore</code></td><td>false</td><td>キャッシュ済み weighted score があればそれを使う形に統合</td></tr>
+          <tr><td><code>EnableMultiplicativePostUnexplored</code></td><td>false</td><td>乗算分岐が消えた</td></tr>
+          <tr><td><code>ContActiveSecs5mResidualNormWeight</code></td><td>0.0</td><td>重みが消え、実効値 0.0 として記録</td></tr>
+        </table>
+
+        <footer>出典: xai-org/x-algorithm の公開既定値（upstream_2026_10 / 76843a5eea）</footer>
+      </main>
+    </div>
+    <script src="./site.js" defer></script>
+    <script src="./charts.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="計算の根拠となる上流コードと、このサイト側の実装" />
+    <title>根拠コード — Xアルゴリズム観測</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside id="sidebar"></aside>
+      <main class="content">
+        <h1>根拠コード</h1>
+        <p class="lead">すべての数字は次のコードに基づきます。リンクは基準 commit <code>76843a5eea</code> に固定しています。</p>
+
+        <h2>上流コード（xai-org/x-algorithm）</h2>
+        <table>
+          <tr><th>ファイル</th><th>内容</th><th>このサイトでの使い道</th></tr>
+          <tr>
+            <td><a href="https://github.com/xai-org/x-algorithm/blob/76843a5eea278ced444b21372d4e6d6909f5c35e/xai-value-model/scoring.rs" target="_blank" rel="noreferrer">xai-value-model/scoring.rs</a></td>
+            <td>重み付き和、offset_score、unoffset_score、多様性、OON</td>
+            <td><a href="./scoring.html">スコア計算</a>の式</td>
+          </tr>
+          <tr>
+            <td><a href="https://github.com/xai-org/x-algorithm/blob/76843a5eea278ced444b21372d4e6d6909f5c35e/xai-value-model/weights.rs" target="_blank" rel="noreferrer">xai-value-model/weights.rs</a></td>
+            <td>重みの構造体、positive_sum / negative_sum、perturbation</td>
+            <td>normalization と正規化の値</td>
+          </tr>
+          <tr>
+            <td><a href="https://github.com/xai-org/x-algorithm/blob/76843a5eea278ced444b21372d4e6d6909f5c35e/vm-ranker/params.rs" target="_blank" rel="noreferrer">vm-ranker/params.rs</a></td>
+            <td>公開既定値（26重みと設定）</td>
+            <td><a href="./weights.html">重み一覧</a>と<a href="./settings.html">設定</a></td>
+          </tr>
+          <tr>
+            <td><a href="https://github.com/xai-org/x-algorithm/blob/76843a5eea278ced444b21372d4e6d6909f5c35e/vm-ranker/scoring/value_model.rs" target="_blank" rel="noreferrer">vm-ranker/scoring/value_model.rs</a></td>
+            <td>params → ValueModelWeights、OON コンテキスト、perturbation 適用</td>
+            <td>多様性・OON の適用</td>
+          </tr>
+          <tr>
+            <td><a href="https://github.com/xai-org/x-algorithm/blob/76843a5eea278ced444b21372d4e6d6909f5c35e/home-mixer/scorers/value_model.rs" target="_blank" rel="noreferrer">home-mixer/scorers/value_model.rs</a></td>
+            <td>Home Mixer 側の adapter（ローカル fallback は多様性/OON 無効）</td>
+            <td>ローカル fallback の記録</td>
+          </tr>
+          <tr>
+            <td><a href="https://github.com/xai-org/x-algorithm/blob/76843a5eea278ced444b21372d4e6d6909f5c35e/home-mixer/params/config.rs" target="_blank" rel="noreferrer">home-mixer/params/config.rs</a></td>
+            <td>offset 0.001、48時間、top-k 50 などの定数</td>
+            <td><a href="./settings.html">設定・ゲート</a></td>
+          </tr>
+          <tr>
+            <td><a href="https://github.com/xai-org/x-algorithm/blob/76843a5eea278ced444b21372d4e6d6909f5c35e/phoenix/xrex/configs/xrecsys.py" target="_blank" rel="noreferrer">phoenix/xrex/configs/xrecsys.py</a></td>
+            <td>model profile と action space</td>
+            <td>モデル寸法（参考）</td>
+          </tr>
+        </table>
+
+        <h2>このサイト側の実装（hjosugi/xalgo）</h2>
+        <table>
+          <tr><th>ファイル</th><th>内容</th></tr>
+          <tr><td><code>scripts/audit_model_contract.py</code></td><td>上流の重み・設定・数式を取得して baseline と比較</td></tr>
+          <tr><td><code>scripts/track_upstream.py</code></td><td>日次の変更検出と issue 起票</td></tr>
+          <tr><td><code>state/model_contract_baseline.json</code></td><td><code>76843a5eea</code> の契約</td></tr>
+          <tr><td><code>weights.json</code></td><td>プリセットと設定</td></tr>
+          <tr><td><code>xalgo/score.py</code></td><td>offset / unoffset / normalization の実装</td></tr>
+          <tr><td><code>docs/upstream-2026-10.md</code></td><td>#39–#45 の取り込み receipt</td></tr>
+        </table>
+
+        <h2>再現</h2>
+        <pre><code>nix develop
+python scripts/audit_model_contract.py --ref 76843a5eea278ced444b21372d4e6d6909f5c35e
+python -m xalgo.cli score &lt;URL&gt; --preset upstream_2026_10 --json</code></pre>
+
+        <h2>ライセンス</h2>
+        <p>上流コードは Apache License 2.0（<a href="https://github.com/xai-org/x-algorithm/blob/main/LICENSE" target="_blank" rel="noreferrer">LICENSE</a>）。このサイトは公開コードを読み解いた非公式の学習ノートで、X Corp. / xAI とは関係ありません。</p>
+
+        <footer>出典: xai-org/x-algorithm の公開既定値（upstream_2026_10 / 76843a5eea）</footer>
+      </main>
+    </div>
+    <script src="./site.js" defer></script>
+    <script src="./charts.js" defer></script>
+  </body>
+</html>

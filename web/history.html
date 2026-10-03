@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="2026年8月・9月・10月の公開既定値の変化" />
+    <title>重みの変遷 — Xアルゴリズム観測</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside id="sidebar"></aside>
+      <main class="content">
+        <h1>重みの変遷</h1>
+        <p class="lead">公開既定値は 2026年8月・9月・10月の3世代で比較できます。変わったのは合計6項目です。</p>
+
+        <h2>8月 → 9月（2026-08-24 → 2026-09-18）</h2>
+        <table>
+          <tr><th>項目</th><th class="v">8月</th><th class="v">9月</th><th>意味</th></tr>
+          <tr><td>動画視聴（VQV）</td><td class="v">0.05</td><td class="v"><b>0.0</b></td><td>VQV がスコアに寄与しなくなった</td></tr>
+          <tr><td>滞在</td><td class="v">0.0</td><td class="v"><b>0.05</b></td><td>滞在が新たに効くようになった</td></tr>
+          <tr><td>動画を開く</td><td class="v">0.05</td><td class="v"><b>0.07</b></td><td>動画を開く価値が上がった</td></tr>
+        </table>
+        <p class="memo">VQV の duration gate（10秒）は残っていますが、重みが0なので既定では空振りです。</p>
+
+        <h2>9月 → 10月（2026-09-18 → 2026-09-29）</h2>
+        <table>
+          <tr><th>項目</th><th class="v">9月</th><th class="v">10月</th><th>意味</th></tr>
+          <tr><td>クリック</td><td class="v">0.4</td><td class="v"><b>0.3</b></td><td>クリック単体の価値が下がった</td></tr>
+          <tr><td>クリック後滞在</td><td class="v">0.0</td><td class="v"><b>0.4</b></td><td>クリック後の滞在が効くようになった</td></tr>
+          <tr><td>興味なし</td><td class="v">−43.2</td><td class="v"><b>−47.52</b></td><td>抑制が強まった</td></tr>
+        </table>
+        <div class="chart" data-chart="bars" data-values='[{"label":"クリック後滞在（10月）","value":0.4},{"label":"クリック（10月）","value":0.3},{"label":"クリック（9月）","value":0.4},{"label":"興味なし（10月）","value":-47.52},{"label":"興味なし（9月）","value":-43.2}]' data-opts='{"max":47.52}'></div>
+        <p class="chart-note">変わった値だけを抜き出した比較。クリック後滞在が0→0.4で新たに加わり、クリックが0.4→0.3へ下がりました。</p>
+
+        <h2>3世代まとめ（主要項目）</h2>
+        <table>
+          <tr><th>項目</th><th class="v">8月</th><th class="v">9月</th><th class="v">10月</th></tr>
+          <tr><td>いいね</td><td class="v">0.5</td><td class="v">0.5</td><td class="v">0.5</td></tr>
+          <tr><td>返信</td><td class="v">5.0</td><td class="v">5.0</td><td class="v">5.0</td></tr>
+          <tr><td>引用</td><td class="v">5.0</td><td class="v">5.0</td><td class="v">5.0</td></tr>
+          <tr><td>リポスト</td><td class="v">1.0</td><td class="v">1.0</td><td class="v">1.0</td></tr>
+          <tr><td>フォロー</td><td class="v">4.0</td><td class="v">4.0</td><td class="v">4.0</td></tr>
+          <tr><td>DM共有</td><td class="v">5.0</td><td class="v">5.0</td><td class="v">5.0</td></tr>
+          <tr><td>リンクコピー共有</td><td class="v">20.0</td><td class="v">20.0</td><td class="v">20.0</td></tr>
+          <tr><td>クリック</td><td class="v">0.4</td><td class="v">0.4</td><td class="v"><b>0.3</b></td></tr>
+          <tr><td>クリック後滞在</td><td class="v">0.0</td><td class="v">0.0</td><td class="v"><b>0.4</b></td></tr>
+          <tr><td>VQV</td><td class="v">0.05</td><td class="v"><b>0.0</b></td><td class="v">0.0</td></tr>
+          <tr><td>滞在</td><td class="v">0.0</td><td class="v"><b>0.05</b></td><td class="v">0.05</td></tr>
+          <tr><td>動画を開く</td><td class="v">0.05</td><td class="v"><b>0.07</b></td><td class="v">0.07</td></tr>
+          <tr><td>興味なし</td><td class="v">−43.2</td><td class="v">−43.2</td><td class="v"><b>−47.52</b></td></tr>
+          <tr><td>報告</td><td class="v">−234.0</td><td class="v">−234.0</td><td class="v">−234.0</td></tr>
+          <tr><td>ミュート</td><td class="v">−58.8</td><td class="v">−58.8</td><td class="v">−58.8</td></tr>
+          <tr><td>ブロック</td><td class="v">−31.2</td><td class="v">−31.2</td><td class="v">−31.2</td></tr>
+        </table>
+        <p class="memo">全26項目と9月・8月の値は <a href="./weights.html">重み一覧</a> にあります。</p>
+
+        <h2>構造の変化（2026-09-24）</h2>
+        <p>重みの値ではなく、置き場所が変わった日です。値モデルが <code>home-mixer/scorers/ranking_scorer.rs</code> から <code>xai-value-model</code> crate と <code>vm-ranker/params.rs</code> へ抽出されました。数式と既定値は同じで、読み先だけが変わりました（<a href="./observation.html">観測・調査</a>）。</p>
+
+        <h2>プリセットとの対応</h2>
+        <table>
+          <tr><th>プリセット</th><th>基準 commit</th><th>特徴</th></tr>
+          <tr><td><code>upstream_2026_10</code></td><td><code>76843a5eea</code></td><td>既定。10月の3変更を反映</td></tr>
+          <tr><td><code>upstream_2026_09</code></td><td><code>1b3fec20bc</code></td><td>VQV 0 / dwell 0.05 / video_open 0.07</td></tr>
+          <tr><td><code>upstream_2026_08</code></td><td><code>d011592a1c</code></td><td>VQV 0.05 / dwell 0.0 / video_open 0.05</td></tr>
+          <tr><td><code>repo_demo</code></td><td><code>0bfc2795d3</code></td><td>2026年5月の demo（履歴）</td></tr>
+          <tr><td><code>legacy_2023</code></td><td><code>b85210863f</code></td><td>2023年 Heavy Ranker（比較用・別物）</td></tr>
+        </table>
+
+        <footer>出典: xai-org/x-algorithm の公開既定値（upstream_2026_10 / 76843a5eea）</footer>
+      </main>
+    </div>
+    <script src="./site.js" defer></script>
+    <script src="./charts.js" defer></script>
+  </body>
+</html>

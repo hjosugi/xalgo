@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="上流リポジトリの追跡・契約監査・再現の手順" />
+    <title>調査方法 — Xアルゴリズム観測</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside id="sidebar"></aside>
+      <main class="content">
+        <h1>調査方法</h1>
+        <p class="lead">このサイトの数字は、上流リポジトリの追跡・契約監査・baseline 記録の3つで支えています。すべて再実行できます。</p>
+
+        <h2>1. 追跡（track_upstream）</h2>
+        <p>毎日 21:00 UTC に <code>scripts/track_upstream.py</code> が main の新しい commit を取得し、ランキングに関係するファイルが変わっていれば GitHub issue を起票します（<code>.github/workflows/track-upstream.yml</code>）。</p>
+        <ul>
+          <li>監視対象: <code>home-mixer/</code>、<code>vm-ranker/</code>、<code>xai-value-model/</code>、<code>phoenix/</code>、<code>candidate-pipeline/</code>、<code>simclusters/</code> など。</li>
+          <li>2026-09-24 の値モデル抽出で <code>vm-ranker/</code> と <code>xai-value-model/</code> へ実装が移ったため、この2つを監視対象に追加しました。</li>
+          <li>変更は「ranking（スコア）」「policy（ポリシー）」「unrelated」に分類し、回帰用の corpus（37ケース）で精度を検証しています。</li>
+        </ul>
+
+        <h2>2. 契約監査（audit_model_contract）</h2>
+        <p><code>scripts/audit_model_contract.py</code> が上流ファイルを GitHub の raw エンドポイントから取得し、重み・設定・数式を解析して、記録済みの baseline と比較します。</p>
+        <table>
+          <tr><th>世代</th><th>読み取るファイル</th><th>使う期間</th></tr>
+          <tr><td><code>source_2026_10</code></td><td><code>vm-ranker/params.rs</code>、<code>xai-value-model/scoring.rs</code>、<code>xai-value-model/weights.rs</code>、<code>home-mixer/scorers/value_model.rs</code></td><td>2026-09-24 以降</td></tr>
+          <tr><td><code>source_2026_08</code></td><td><code>home-mixer/params/param.rs</code>、<code>home-mixer/scorers/ranking_scorer.rs</code></td><td>2026-08-13 〜 2026-09-23</td></tr>
+        </table>
+        <ul>
+          <li>重み: <code>param!</code> マクロの既定値を解析（例: <code>ClickWeight … 0.3</code>）。</li>
+          <li>数式: <code>offset_score</code> の3分岐、<code>unoffset_score</code> の逆変換、normalization の対象 action を文字列で検証。</li>
+          <li>モデル: Phoenix の <code>MODEL_CFGS</code> から4 profile の寸法を抽出。</li>
+          <li>差分が0なら <code>UNCHANGED</code>、あれば <code>--fail-on-drift</code> が終了コード1を返します。</li>
+        </ul>
+
+        <h2>3. 記録（baseline と preset）</h2>
+        <table>
+          <tr><th>ファイル</th><th>内容</th></tr>
+          <tr><td><code>state/model_contract_baseline.json</code></td><td>基準 commit 時点の重み・設定・数式・model profile・action space</td></tr>
+          <tr><td><code>weights.json</code></td><td>プリセット（<code>upstream_2026_10</code> / <code>09</code> / <code>08</code> ほか）と設定</td></tr>
+          <tr><td><code>docs/upstream-2026-*.md</code></td><td>変更の取り込み receipt（issue 番号との対応表）</td></tr>
+          <tr><td><code>state/upstream_tracking_corpus.json</code></td><td>追跡の分類を検証する37ケース</td></tr>
+        </table>
+
+        <h2>再現</h2>
+        <pre><code>nix develop
+python scripts/audit_model_contract.py --ref 76843a5eea278ced444b21372d4e6d6909f5c35e
+python scripts/audit_model_contract.py --ref main --json --fail-on-drift
+python -m xalgo.cli score &lt;URL&gt; --preset upstream_2026_10 --json</code></pre>
+        <p class="memo">過去の契約も監査できます: 9月 <code>--ref 1b3fec20bc</code>、8月 <code>--ref d011592a1c</code>、5月demo <code>--ref 0bfc2795d3</code>（いずれも <code>--no-baseline</code>）。</p>
+
+        <h2>検証</h2>
+        <ul>
+          <li>Python ユニットテスト 93 件、ブラウザテスト 6 件。</li>
+          <li><code>ruff check</code> / <code>ruff format --check</code>。</li>
+          <li>監査結果は <a href="./observation.html">観測・調査</a> に記録しています。</li>
+        </ul>
+
+        <footer>出典: xai-org/x-algorithm の公開既定値（upstream_2026_10 / 76843a5eea）</footer>
+      </main>
+    </div>
+    <script src="./site.js" defer></script>
+    <script src="./charts.js" defer></script>
+  </body>
+</html>

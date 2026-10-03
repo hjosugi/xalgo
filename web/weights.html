@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="26個の重みの値と意味、9月・8月との比較" />
+    <title>重み一覧 — Xアルゴリズム観測</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside id="sidebar"></aside>
+      <main class="content">
+        <h1>重み一覧</h1>
+        <p class="lead">重みは「その行動の確率1.0あたり、スコアに何点入るか」を表す倍率です。値が大きい行動ほど、起こりやすさが同じでもスコアへの寄与が大きくなります。</p>
+
+        <h2>重みの意味（例）</h2>
+        <div class="num-box">
+          返信の重み 5.0、いいねの重み 0.5。<br />
+          <span class="example-inline">同じ P=0.02 でも、返信は <b>5.0 × 0.02 = 0.100</b>、いいねは <b>0.5 × 0.02 = 0.010</b>。返信はいいねの <b>10倍</b>効く。</span>
+        </div>
+        <p class="memo">重要な注意: 重みは<b>確率</b>に掛かります。カウントに掛けると「報告1件 = いいね468件分」のような誤解になります（上流 README も否定）。</p>
+
+        <h2>正の重み（2026-10 既定値）</h2>
+        <div class="chart" data-chart="bars" data-values='[{"label":"リンクコピー共有","value":20.0},{"label":"返信","value":5.0},{"label":"引用","value":5.0},{"label":"DM共有","value":5.0},{"label":"フォロー","value":4.0},{"label":"共有","value":2.0},{"label":"リポスト","value":1.0},{"label":"いいね","value":0.5},{"label":"クリック後滞在","value":0.4},{"label":"クリック","value":0.3}]' data-opts='{"max":20}'></div>
+        <p class="chart-note">主要な正の重み。リンクコピー共有（20）は稀な行動のため大きく、次に返信・引用・DM共有（5）が続きます。</p>
+
+        <table>
+          <tr><th>行動</th><th class="v">2026-10</th><th class="v">2026-09</th><th class="v">2026-08</th><th>補足</th></tr>
+          <tr><td>リンクをコピーして共有</td><td class="v pos">20.0</td><td class="v">20.0</td><td class="v">20.0</td><td>稀な行動</td></tr>
+          <tr><td>返信</td><td class="v pos">5.0</td><td class="v">5.0</td><td class="v">5.0</td><td>相互フォロー時は +15 のブースト</td></tr>
+          <tr><td>引用</td><td class="v pos">5.0</td><td class="v">5.0</td><td class="v">5.0</td><td></td></tr>
+          <tr><td>DMで共有</td><td class="v pos">5.0</td><td class="v">5.0</td><td class="v">5.0</td><td></td></tr>
+          <tr><td>フォロー</td><td class="v pos">4.0</td><td class="v">4.0</td><td class="v">4.0</td><td></td></tr>
+          <tr><td>共有</td><td class="v pos">2.0</td><td class="v">2.0</td><td class="v">2.0</td><td></td></tr>
+          <tr><td>リポスト</td><td class="v pos">1.0</td><td class="v">1.0</td><td class="v">1.0</td><td></td></tr>
+          <tr><td>いいね</td><td class="v pos">0.5</td><td class="v">0.5</td><td class="v">0.5</td><td></td></tr>
+          <tr><td>クリック後滞在</td><td class="v pos">0.4</td><td class="v">0.0</td><td class="v">0.0</td><td><b>10月に有効化</b></td></tr>
+          <tr><td>クリック</td><td class="v pos">0.3</td><td class="v">0.4</td><td class="v">0.4</td><td><b>10月に減</b></td></tr>
+          <tr><td>リンクを開く</td><td class="v pos">0.2</td><td class="v">0.2</td><td class="v">0.2</td><td></td></tr>
+          <tr><td>動画を開く</td><td class="v pos">0.07</td><td class="v">0.07</td><td class="v">0.05</td><td>9月に増</td></tr>
+          <tr><td>画像展開</td><td class="v pos">0.05</td><td class="v">0.05</td><td class="v">0.05</td><td></td></tr>
+          <tr><td>滞在</td><td class="v pos">0.05</td><td class="v">0.05</td><td class="v">0.0</td><td>9月に有効化</td></tr>
+          <tr><td>引用クリック</td><td class="v pos">0.05</td><td class="v">0.05</td><td class="v">0.05</td><td></td></tr>
+          <tr><td>滞在時間（連続値）</td><td class="v pos">0.004</td><td class="v">0.004</td><td class="v">0.004</td><td>秒数に掛かる</td></tr>
+          <tr><td>新規性（post_unexplored）</td><td class="v pos">0.02</td><td class="v">0.02</td><td class="v">0.02</td><td>in-network のみ</td></tr>
+          <tr><td>プロフィール表示</td><td class="v">0.0</td><td class="v">0.0</td><td class="v">0.0</td><td>既定では無効</td></tr>
+          <tr><td>動画視聴（VQV）</td><td class="v">0.0</td><td class="v">0.0</td><td class="v">0.05</td><td>9月に0へ</td></tr>
+          <tr><td>引用動画視聴</td><td class="v">0.0</td><td class="v">0.0</td><td class="v">0.0</td><td></td></tr>
+          <tr><td>5分内アクティブ時間</td><td class="v">0.0</td><td class="v">0.0</td><td class="v">0.0</td><td>10月に param から撤去</td></tr>
+        </table>
+
+        <h2>負の重み</h2>
+        <div class="chart" data-chart="bars" data-values='[{"label":"報告","value":-234.0},{"label":"ミュート","value":-58.8},{"label":"興味なし","value":-47.52},{"label":"ブロック","value":-31.2},{"label":"即離脱","value":-0.02}]' data-opts='{"max":234}'></div>
+        <p class="chart-note">負の重みは絶対値が大きく、起こりにくい行動（報告など）を強く抑制します。</p>
+        <table>
+          <tr><th>行動</th><th class="v">2026-10</th><th class="v">2026-09</th><th class="v">2026-08</th></tr>
+          <tr><td>報告</td><td class="v neg">−234.0</td><td class="v">−234.0</td><td class="v">−234.0</td></tr>
+          <tr><td>ミュート</td><td class="v neg">−58.8</td><td class="v">−58.8</td><td class="v">−58.8</td></tr>
+          <tr><td>興味なし</td><td class="v neg">−47.52</td><td class="v">−43.2</td><td class="v">−43.2</td></tr>
+          <tr><td>ブロック</td><td class="v neg">−31.2</td><td class="v">−31.2</td><td class="v">−31.2</td></tr>
+          <tr><td>即離脱</td><td class="v neg">−0.02</td><td class="v">−0.02</td><td class="v">−0.02</td></tr>
+        </table>
+
+        <h2>10月に変わった3項目</h2>
+        <div class="num-box">
+          <b>click 0.4 → 0.3</b>（クリックの価値を下げた）<br />
+          <b>cont_click_dwell_time 0.0 → 0.4</b>（クリック後の滞在を評価するようになった）<br />
+          <b>not_interested −43.2 → −47.52</b>（興味なしの抑制を強めた）
+        </div>
+        <p class="memo">「クリックは減ったが、クリック後の滞在が新たに効く」と読めます。変更の履歴は <a href="./history.html">重みの変遷</a>。</p>
+
+        <h2>重みの正規化</h2>
+        <p>offset の計算には、重みの合計が使われます。</p>
+        <table>
+          <tr><th>値</th><th>対象</th><th>10月の合計</th></tr>
+          <tr><td><code>positive_sum</code></td><td>正の重み18個</td><td>43.24</td></tr>
+          <tr><td><code>negative_sum</code></td><td>負の重み5個（絶対値）</td><td>371.54</td></tr>
+          <tr><td><code>total_sum</code></td><td>両方の合計</td><td>414.78</td></tr>
+        </table>
+        <p class="memo">この合計は、負のスコアを 0〜0.001 に圧縮するときの分母・分子に使われます（<a href="./scoring.html">スコア計算</a>）。</p>
+
+        <footer>出典: xai-org/x-algorithm の公開既定値（upstream_2026_10 / 76843a5eea）</footer>
+      </main>
+    </div>
+    <script src="./site.js" defer></script>
+    <script src="./charts.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="このサイトが分析したソース（xai-org/x-algorithm）と、その構成・歴史・範囲" />
+    <title>背景（分析対象） — Xアルゴリズム観測</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside id="sidebar"></aside>
+      <main class="content">
+        <h1>背景（分析対象）</h1>
+        <p class="lead">このサイトの数字はすべて、公開リポジトリ <a href="https://github.com/xai-org/x-algorithm" target="_blank" rel="noreferrer">xai-org/x-algorithm</a> の特定 commit を読み取った結果です。どのソースの、どの範囲を、いつ時点で分析したのかを先に示します。</p>
+
+        <h2>分析対象</h2>
+        <table>
+          <tr><th>項目</th><th>内容</th></tr>
+          <tr><td>リポジトリ</td><td><code>xai-org/x-algorithm</code>（X の For You フィードを駆動する推薦アルゴリズム）</td></tr>
+          <tr><td>ライセンス</td><td>Apache License 2.0（<a href="https://github.com/xai-org/x-algorithm/blob/main/LICENSE" target="_blank" rel="noreferrer">LICENSE</a>）</td></tr>
+          <tr><td>基準 commit</td><td><code>76843a5eea</code>（2026-10-02）</td></tr>
+          <tr><td>比較した過去の基準</td><td><code>1b3fec20bc</code>（2026-09-23）、<code>8b25829717</code>（2026-09-18）、<code>d011592a1c</code>（2026-08-24）、<code>0bfc2795d3</code>（2026-05-15 demo）</td></tr>
+          <tr><td>分析した範囲</td><td>値モデル（重み・設定・数式）、Phoenix の model profile、action space</td></tr>
+          <tr><td>分析していない範囲</td><td>可視性フィルタの個別ルール、Grox ポリシー、執行サービス、広告</td></tr>
+        </table>
+
+        <h2>公開の歴史</h2>
+        <table>
+          <tr><th>時期</th><th>出来事</th></tr>
+          <tr><td>2023-03</td><td><code>twitter/the-algorithm</code>（旧 Heavy Ranker）を公開。返信 75、報告 −369 などの重みはこの世代。</td></tr>
+          <tr><td>2026-01-20</td><td><code>xai-org/x-algorithm</code> を公開。Grok と同じ Transformer 系へ全面書き換え。</td></tr>
+          <tr><td>2026-08-13</td><td>本番で使う重み値まで公開。以降、ほぼ毎日 main が更新される。</td></tr>
+          <tr><td>2026-09-24</td><td>値モデルが <code>home-mixer/scorers/ranking_scorer.rs</code> から <code>xai-value-model</code> crate と <code>vm-ranker/params.rs</code> へ抽出。</td></tr>
+          <tr><td>2026-09-29</td><td>公開既定値が更新（click 0.3 / cont_click_dwell_time 0.4 / not_interested −47.52）。</td></tr>
+        </table>
+
+        <h2>リポジトリの構成（このサイトに関係する部分）</h2>
+        <table>
+          <tr><th>ディレクトリ</th><th>言語</th><th>役割</th></tr>
+          <tr><td><code>home-mixer/</code></td><td>Rust</td><td>候補の取得・除外・スコア付けを行う本体パイプライン</td></tr>
+          <tr><td><code>xai-value-model/</code></td><td>Rust</td><td><b>スコアの数式</b>（重み付き和・offset・多様性）</td></tr>
+          <tr><td><code>vm-ranker/</code></td><td>Rust</td><td>ランキングサービス。<b>公開既定値の重み</b>はここ</td></tr>
+          <tr><td><code>phoenix/</code></td><td>Python</td><td>行動確率を予測するモデルの学習・推論・設定</td></tr>
+          <tr><td><code>candidate-pipeline/</code></td><td>Rust</td><td>パイプラインの基盤（source / hydrator / filter / scorer）</td></tr>
+          <tr><td><code>visibility-filtering/</code></td><td>Rust</td><td>表示可否のルール（安全・年齢・地域など）</td></tr>
+          <tr><td><code>grox/</code></td><td>Python</td><td>スパム・安全などのポリシー判定</td></tr>
+          <tr><td><code>simclusters/</code>・<code>thunder/</code></td><td>Rust</td><td>候補取得（類似クラスタ・フォロー中）</td></tr>
+        </table>
+        <p class="memo">このサイトが扱う「スコア」は、<code>xai-value-model</code> と <code>vm-ranker/params.rs</code> の値モデル部分です。可視性やポリシーはスコアとは別の層で、ここでは扱いません。</p>
+
+        <h2>なぜ値モデルを見るのか</h2>
+        <p>1つの投稿がフィードのどこに並ぶかは、最終的に <b>値モデルが計算するスコア</b>で決まります。候補取得や除外は「土俵に上がれるか」を決め、値モデルは「土俵の上で何点か」を決めます。投稿の作り方を考えるとき、直接コントロールできるのは後者です。</p>
+
+        <h2>数字を読むときの前提</h2>
+        <ul>
+          <li>公開されているのは<b>既定値</b>です。本番では実験設定（feature switch）で上書きされます。</li>
+          <li>重みは<b>確率に掛かる</b>もので、生のカウントに掛かるものではありません。詳しくは <a href="./weights.html">重み一覧</a>。</li>
+          <li>2023年版と2026年版は<b>別物</b>です。古い重み（返信 75、報告 −369 など）を混ぜないでください。詳しくは <a href="./competitors.html">競合・関連</a>。</li>
+        </ul>
+
+        <footer>出典: xai-org/x-algorithm の公開既定値（upstream_2026_10 / 76843a5eea）</footer>
+      </main>
+    </div>
+    <script src="./site.js" defer></script>
+    <script src="./charts.js" defer></script>
+  </body>
+</html>

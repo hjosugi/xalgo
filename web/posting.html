@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="重みと例から導く、投稿の具体的な作り方" />
+    <title>投稿の作り方 — Xアルゴリズム観測</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside id="sidebar"></aside>
+      <main class="content">
+        <h1>投稿の作り方</h1>
+        <p class="lead">重み（<a href="./weights.html">一覧</a>）と例（<a href="./examples.html">比較</a>）から、実際に何をすればいいかをまとめます。</p>
+
+        <h2>返信を呼ぶ（重み 5.0）</h2>
+        <p>最も効く行動のひとつ。返信率が上がるとスコアが直接伸びます。</p>
+        <ul>
+          <li><b>問いを1つだけ置く。</b>「どっち？」「あなたは？」のように答えやすい形にする。</li>
+          <li><b>意見が割れる題材。</b>正解が1つでない話題は返信が集まる（攻撃的・差別的な方向はNG）。</li>
+          <li><b>未完成な主張。</b>結論を少し開けておくと補足したくなる。</li>
+        </ul>
+        <div class="num-box">
+          効果の目安: P(返信) を 0.002 → 0.016 に上げると、寄与は <b>0.010 → 0.080</b>（+0.07）。<br />
+          <span class="example-inline">これは P(いいね) を 0.14 増やすのと同じ効果です。</span>
+        </div>
+
+        <h2>引用を呼ぶ（重み 5.0）</h2>
+        <ul>
+          <li><b>断言する。</b>「〜はこうだ」と言い切ると引用して議論したくなる。</li>
+          <li><b>数字を入れる。</b>数字は引用・要約の材料になる。</li>
+          <li><b>要点を短く。</b>引用する側が一言添えやすい長さにする。</li>
+        </ul>
+
+        <h2>保存・共有される（DM共有 5.0 / リンクコピー 20.0）</h2>
+        <ul>
+          <li><b>後で使える情報。</b>手順・チェックリスト・比較表は保存される。</li>
+          <li><b>人に送りたくなる。</b>「これ見て」と言える発見やまとめ。</li>
+        </ul>
+
+        <h2>フォローされる（4.0）</h2>
+        <ul>
+          <li><b>継続的な価値を見せる。</b>1投稿で完結させず、テーマの一貫性を作る。</li>
+        </ul>
+
+        <h2>滞在・クリック後滞在（0.05 / 0.4）</h2>
+        <ul>
+          <li><b>読み応えを足す。</b>長文・具体例・画像は滞在を伸ばす。</li>
+          <li><b>クリック先で満足させる。</b>10月から「クリック後の滞在」に 0.4 の重みが入った。釣りクリックは逆効果になり得る。</li>
+        </ul>
+
+        <h2>避けること（負の重み）</h2>
+        <table>
+          <tr><th>行動</th><th class="v">重み</th><th>避けるには</th></tr>
+          <tr><td>報告</td><td class="v neg">−234</td><td>誤情報・攻撃・規約違反を出さない</td></tr>
+          <tr><td>ミュート</td><td class="v neg">−58.8</td><td>連投しすぎない。同じ話題ばかりにしない</td></tr>
+          <tr><td>興味なし</td><td class="v neg">−47.52</td><td>読者の期待とズレる内容を混ぜない</td></tr>
+          <tr><td>ブロック</td><td class="v neg">−31.2</td><td>攻撃的・執拗なリプをしない</td></tr>
+        </table>
+        <p class="memo">負の重みは絶対値が大きいので、1回のミュートが数十のいいねを打ち消します（確率ベースの話である点に注意）。</p>
+
+        <h2>テンプレ</h2>
+        <table>
+          <tr><th>型</th><th>例</th></tr>
+          <tr><td>問いかけ</td><td>「AとB、実際に使ってるのはどっち？理由も知りたい」</td></tr>
+          <tr><td>断言＋数字</td><td>「〜を100回試した。結果は3つに分かれた」</td></tr>
+          <tr><td>保存用まとめ</td><td>「〜の手順を5ステップにまとめた（保存推奨）」</td></tr>
+          <tr><td>比較</td><td>「〜の前後を並べた。差が出たのはこの1点」</td></tr>
+        </table>
+
+        <h2>投稿前のチェック</h2>
+        <ol>
+          <li>返信したくなる問いがあるか（重み5）。</li>
+          <li>引用したくなる断言・数字があるか（重み5）。</li>
+          <li>保存・共有したくなる実用性があるか（重み5〜20）。</li>
+          <li>ミュート・興味なしを招く要素がないか（重み −47〜−58）。</li>
+        </ol>
+        <p class="memo">実際の数字は <a href="./calculator.html">計算機</a> で試せます。</p>
+
+        <footer>出典: xai-org/x-algorithm の公開既定値（upstream_2026_10 / 76843a5eea）</footer>
+      </main>
+    </div>
+    <script src="./site.js" defer></script>
+    <script src="./charts.js" defer></script>
+  </body>
+</html>

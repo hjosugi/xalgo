@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="投稿が表示されるまでの7段の流れ" />
+    <title>パイプライン — Xアルゴリズム観測</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside id="sidebar"></aside>
+      <main class="content">
+        <h1>パイプライン</h1>
+        <p class="lead">投稿があなたのフィードに届くまでには7つの段があります。スコア計算は5番目です。</p>
+
+        <div class="flow">
+          <span class="n">1 候補取得</span><span class="a">→</span>
+          <span class="n">2 ハイドレーション</span><span class="a">→</span>
+          <span class="n">3 除外</span><span class="a">→</span>
+          <span class="n">4 Phoenix 予測</span><span class="a">→</span>
+          <span class="n">5 スコア計算</span><span class="a">→</span>
+          <span class="n">6 多様性・OON</span><span class="a">→</span>
+          <span class="n">7 選択・安全</span>
+        </div>
+
+        <h2>1. 候補取得</h2>
+        <p>数百万件から、その人に見せる価値がありそうな数百〜数千件を集めます。</p>
+        <ul>
+          <li><b>Thunder</b> — フォロー中のアカウントの新しい投稿（in-network）。</li>
+          <li><b>Phoenix retrieval</b> — 興味が近い投稿を埋め込みで検索（out-of-network）。</li>
+          <li><b>SimClusters</b> — 類似ユーザーのクラスタから取得。</li>
+          <li><b>MoE / SidSource / PopularPosts</b> — 新規著者、SID 検索、人気投稿の枠。</li>
+        </ul>
+
+        <h2>2. ハイドレーション</h2>
+        <p>候補に、スコア計算とルール判定に必要な属性を付けます。著者属性（フォロー関係、認証、停止）、投稿属性（本文、メディア、会話）、安全ラベル、会話コントロールなどです。</p>
+
+        <h2>3. 除外</h2>
+        <p>土俵に上がる前に落とす層です。重複、既読、ブロック・ミュート、古い投稿（既定48時間超）、nullcast、NSFW、テイクダウン、地域ルール（例: Brazil 2026 election filter）など。</p>
+
+        <h2>4. Phoenix 予測</h2>
+        <p>残った候補それぞれについて、<b>その閲覧者</b>が各行動を起こす確率 P(action) を予測します。これがスコアの入力です。</p>
+        <ul>
+          <li>予測する行動は 19 種類以上（いいね、返信、リポスト、引用、クリック、滞在、共有、フォロー、負の行動など）。</li>
+          <li>モデルは閲覧者の行動履歴と候補投稿を Transformer に入れて予測します。</li>
+          <li>このサイトでは予測モデルを再現できないため、<b>公開カウント ÷ 表示回数</b>で代用します（<a href="./limits.html">限界と注意</a>）。</li>
+        </ul>
+
+        <h2>5. スコア計算（値モデル）</h2>
+        <p>予測確率に重みを掛けて足し、offset で負を圧縮します。これがこのサイトの中心です。</p>
+        <p><span class="box">score = offset(Σ 重み × P(行動))</span></p>
+        <p class="memo">計算の詳細は <a href="./scoring.html">スコア計算</a>、重みの値は <a href="./weights.html">重み一覧</a>。</p>
+
+        <h2>6. 多様性・OON</h2>
+        <p>同じ著者の連投を減衰させ（author diversity）、ネットワーク外の投稿を割引します（OON）。</p>
+        <p class="memo">例: 同じ著者の2件目は <b>0.625倍</b>、ネットワーク外は <b>0.75倍</b>。詳細は <a href="./scoring.html">スコア計算</a>。</p>
+
+        <h2>7. 選択・安全</h2>
+        <p>上位候補を選び、最終的な安全確認をして表示します。スコアが高いだけでは表示されず、この段で落ちることがあります。</p>
+
+        <h2>投稿者がコントロールできる範囲</h2>
+        <table>
+          <tr><th>段</th><th>投稿者との関係</th></tr>
+          <tr><td>1–3</td><td>ほぼ不可（フォロー関係や既読に依存）</td></tr>
+          <tr><td>4</td><td>間接的（読者の過去行動に依存）</td></tr>
+          <tr><td>5–6</td><td><b>投稿の内容で変えられる中心</b>。返信・引用などの確率を上げる</td></tr>
+          <tr><td>7</td><td>安全ルールを踏むと落ちる（避けるべき）</td></tr>
+        </table>
+
+        <footer>出典: xai-org/x-algorithm の公開既定値（upstream_2026_10 / 76843a5eea）</footer>
+      </main>
+    </div>
+    <script src="./site.js" defer></script>
+    <script src="./charts.js" defer></script>
+  </body>
+</html>

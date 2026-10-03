@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="自分の数字でスコアを計算する" />
+    <title>計算機 — Xアルゴリズム観測</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside id="sidebar"></aside>
+      <main class="content">
+        <h1>計算機</h1>
+        <p class="lead">投稿の公開カウントを入れると、行動率 P・重み・寄与・スコアを計算します。URL は公式 oEmbed で表示し、数字は手入力します。</p>
+
+        <h2>入力の意味</h2>
+        <table>
+          <tr><th>項目</th><th>使われ方</th></tr>
+          <tr><td>表示回数</td><td>分母。P(行動) = 行動数 ÷ 表示回数</td></tr>
+          <tr><td>いいね・返信・リポスト・引用</td><td>それぞれ P に変換され、重み（0.5 / 5.0 / 1.0 / 5.0）が掛かる</td></tr>
+          <tr><td>重み</td><td>プリセットまたは手動で変更</td></tr>
+          <tr><td>滞在する確率</td><td>公開データに無いので、仮の値として注入（重み 0.05）</td></tr>
+        </table>
+
+        <h2>計算する</h2>
+        <form id="score-form" class="calc">
+          <div class="calc-row">
+            <div class="source-tabs" role="tablist" aria-label="入力方法">
+              <button type="button" class="active" data-source="manual" role="tab" aria-selected="true">手入力</button>
+              <button type="button" data-source="url" role="tab" aria-selected="false">URLから表示</button>
+            </div>
+            <button class="link-btn" type="button" id="reset-button">リセット</button>
+          </div>
+
+          <div id="manual-inputs">
+            <div class="calc-fields">
+              <label>表示回数<input name="views" type="number" min="1" value="100000" /></label>
+              <label>いいね<input name="likes" type="number" min="0" value="1500" /></label>
+              <label>返信<input name="replies" type="number" min="0" value="1600" /></label>
+              <label>リポスト<input name="retweets" type="number" min="0" value="300" /></label>
+              <label>引用<input name="quotes" type="number" min="0" value="400" /></label>
+            </div>
+            <label class="calc-preset">サンプル
+              <select id="sample-select">
+                <option value="conversation">問いかけ（会話型）</option>
+                <option value="assertion">断言（引用型）</option>
+                <option value="viral">ネタ（拡散型）</option>
+                <option value="empathy">共感（いいね型）</option>
+              </select>
+            </label>
+          </div>
+
+          <div id="url-inputs" hidden>
+            <label class="calc-preset">投稿URL
+              <input id="post-url" type="url" placeholder="https://x.com/user/status/…" />
+            </label>
+            <button class="link-btn" type="button" id="fetch-embed">投稿を表示（公式oEmbed）</button>
+            <div id="embed-preview" hidden></div>
+            <p class="preset-note">表示は公式oEmbed。いいね・返信・表示回数は手入力してください。</p>
+          </div>
+
+          <div class="calc-preset" style="margin-top:8px">重み
+            <select id="preset-select"><option value="upstream_2026_10">upstream_2026_10</option></select>
+          </div>
+          <p class="preset-note" id="preset-note"></p>
+
+          <button type="button" id="advanced-button" class="adv" aria-expanded="false"><span>＋</span> 確率・重みを調整</button>
+          <div id="advanced-panel" hidden>
+            <div class="range-field">
+              <label for="dwell-p">滞在する確率 <output id="dwell-output">0%</output></label>
+              <input id="dwell-p" type="range" min="0" max="1" value="0" step="0.01" />
+            </div>
+            <div id="weight-fields" class="weight-fields"></div>
+          </div>
+
+          <button class="calculate-button" type="submit"><span id="calculate-label">計算する</span></button>
+          <p class="form-error" id="form-error" role="alert" hidden></p>
+        </form>
+
+        <section class="result-panel" aria-live="polite" aria-busy="false">
+          <div class="score-line">
+            <span id="mode-pill">RATE MODE</span>
+            <strong id="score-value">0.00000</strong>
+          </div>
+          <div id="breakdown-list" class="breakdown-list"></div>
+          <div class="trace">
+            <code id="formula-output"></code>
+            <button type="button" id="copy-formula">式をコピー</button>
+          </div>
+          <p class="result-note" id="result-note" hidden></p>
+        </section>
+
+        <h2>同じ著者の連投は減衰する</h2>
+        <p>同じ著者の2件目以降は、位置に応じた倍率がスコアに掛かります。</p>
+        <p><code>multiplier = (1 − floor) × decay^position + floor</code></p>
+        <div class="num-box">
+          <b>0.625 の意味:</b> 2件目はスコアが <b>62.5% に減る</b>。<br />
+          <span class="example-inline">元スコア 0.100 の投稿は <b>0.100 × 0.625 = 0.0625</b> として並ぶ。</span>
+        </div>
+        <div class="chart" data-chart="line" data-values='[{"x":0,"y":1.0},{"x":1,"y":0.625},{"x":2,"y":0.4375},{"x":3,"y":0.34375},{"x":4,"y":0.296875},{"x":5,"y":0.2734375}]' data-opts='{"xMax":5,"yMax":1,"yMin":0}'></div>
+        <p class="chart-note">横軸: 同じ著者の何件目（0=1件目）、縦軸: 倍率。スライダーと連動します。</p>
+        <div class="range-field">
+          <label for="position-slider">同じ人の <output id="position-output">2件目</output></label>
+          <input id="position-slider" type="range" min="1" max="6" value="2" step="1" />
+        </div>
+        <p class="memo">倍率の詳細は <a href="./scoring.html">スコア計算</a>、OON（ネットワーク外 0.75 倍）も同じページにあります。</p>
+
+        <footer>出典: xai-org/x-algorithm の公開既定値（upstream_2026_10 / 76843a5eea）</footer>
+      </main>
+    </div>
+    <script src="./scoring.js" defer></script>
+    <script src="./app.js" defer></script>
+    <script src="./site.js" defer></script>
+    <script src="./charts.js" defer></script>
+  </body>
+</html>

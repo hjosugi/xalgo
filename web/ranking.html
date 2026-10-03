@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="重みとスコアが順位にどうつながるか、そして現実とどこで切れるか" />
+    <title>順位との関係 — Xアルゴリズム観測</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside id="sidebar"></aside>
+      <main class="content">
+        <h1>順位との関係</h1>
+        <p class="lead">重みとスコアは「順位を決めるための材料」です。数字が順位にどうつながるか、そしてどこで現実と切れるのかを順に説明します。</p>
+
+        <h2>スコアは「並べ替えのキー」</h2>
+        <p>同じリクエストの中で候補を<b>スコアの高い順に並べる</b>。それが順位です。つまり意味があるのは絶対値ではなく<b>順序</b>です。</p>
+        <div class="num-box">
+          スコア 0.1115 は「111.5点」ではありません。<br />
+          <span class="example-inline">「隣の候補より高いか低いか」だけが意味を持ちます。</span>
+        </div>
+
+        <h2>例: 4つの候補を並べる</h2>
+        <p>同じ閲覧者・同じリクエストの候補4件を、<a href="./examples.html">例</a>のスコアで並べます。</p>
+        <table>
+          <tr><th>候補</th><th>型</th><th class="v">スコア</th><th class="v">順位</th></tr>
+          <tr><td>A</td><td>問いかけ（会話型）</td><td class="v">0.1115</td><td class="v"><b>1</b></td></tr>
+          <tr><td>B</td><td>断言（引用型）</td><td class="v">0.1010</td><td class="v">2</td></tr>
+          <tr><td>C</td><td>ネタ（拡散型）</td><td class="v">0.0690</td><td class="v">3</td></tr>
+          <tr><td>D</td><td>共感（いいね型）</td><td class="v">0.0438</td><td class="v">4</td></tr>
+        </table>
+        <p class="memo">この順位が、実際の表示位置の基礎になります。ただし後述のとおり、ここから先は公開されていません。</p>
+
+        <h2>重みが変わると順位が変わる</h2>
+        <p>ためしに返信の重みを 5.0 → 1.0 に下げます。A の返信の寄与は <code>5.0×0.016=0.080</code> から <code>1.0×0.016=0.016</code> に落ち、スコアは <b>0.1115 → 0.0475</b>。</p>
+        <table>
+          <tr><th>候補</th><th class="v">元スコア</th><th class="v">返信重み1.0後</th><th class="v">順位の変化</th></tr>
+          <tr><td>A（返信が多い）</td><td class="v">0.1115</td><td class="v">0.0475</td><td class="v"><b>1位 → 3位</b></td></tr>
+          <tr><td>B</td><td class="v">0.1010</td><td class="v">0.1010</td><td class="v">2位 → 1位</td></tr>
+          <tr><td>C</td><td class="v">0.0690</td><td class="v">0.0690</td><td class="v">3位 → 2位</td></tr>
+          <tr><td>D</td><td class="v">0.0438</td><td class="v">0.0438</td><td class="v">4位</td></tr>
+        </table>
+        <p class="memo">重みを1つ変えるだけで、返信に依存した投稿は順位を落とします。2026-09-29 の重み変更は、まさにこの意味を持ちます。</p>
+
+        <h2>多様性・OON でも順位が変わる</h2>
+        <p>B が A と同じ著者の2件目なら、B には <b>0.625</b> が掛かります。スコアは <code>0.1010 × 0.625 = 0.0631</code> となり、B は C の下へ落ちます。</p>
+        <table>
+          <tr><th>候補</th><th class="v">スコア</th><th class="v">順位</th></tr>
+          <tr><td>A（1件目）</td><td class="v">0.1115</td><td class="v">1</td></tr>
+          <tr><td>C</td><td class="v">0.0690</td><td class="v"><b>2</b></td></tr>
+          <tr><td>B（2件目・0.625倍）</td><td class="v">0.0631</td><td class="v">3</td></tr>
+          <tr><td>D</td><td class="v">0.0438</td><td class="v">4</td></tr>
+        </table>
+        <p class="memo">同じ著者で連投すると、2件目は1件目より下に置かれます。OON ならさらに 0.75 倍（<a href="./scoring.html">スコア計算</a>）。</p>
+
+        <h2>重みの効き方は P に依存する</h2>
+        <p>重みを1上げたときのスコアの増加は <code>1 × P(行動)</code> です。つまり<b>確率が高い行動ほど、同じ重みでも効きます</b>。</p>
+        <div class="num-box">
+          いいね重み +1（0.5→1.5）: P(いいね)=0.08 なら <b>+0.080</b><br />
+          返信重み +1（5.0→6.0）: P(返信)=0.016 なら <b>+0.016</b><br />
+          <span class="example-inline">この候補では、いいねの重みを1上げる方が5倍効きます。「重みが大きい＝常に効く」ではありません。</span>
+        </div>
+        <p class="memo">だから <a href="./weights.html">重み一覧</a> と <a href="./examples.html">例</a> はセットで見る必要があります。</p>
+
+        <h2>スコア差と順位差</h2>
+        <ul>
+          <li>0.001 の差でも順序はつきますが、P の推定誤差より小さければ実質は同点です。</li>
+          <li>どれだけ差があれば順位が入れ替わるかは、<b>そのリクエストの候補のスコア分布</b>によります。</li>
+          <li>スコアを「表示回数」や「インプレッション」に変換する式は公開されていません。</li>
+        </ul>
+
+        <h2>なぜ理論と実際がひもづかないのか</h2>
+        <ol>
+          <li><b>P は viewer ごと・非公開。</b>公開カウントは全閲覧者の平均で、あなたの閲覧者ではありません。</li>
+          <li><b>スコア→表示数の式がない。</b>公開されているのは順位付けまで。何回表示されるかは非公開です。</li>
+          <li><b>候補集合が違えば順位も違う。</b>同じ投稿でも、誰の・どのリクエストかで隣人が変わります。</li>
+          <li><b>後段が並べ替える。</b>多様性・OON・安全・広告・ブレンドがスコアの後に効きます。</li>
+          <li><b>本番の重みは上書きされる。</b>公開値は既定値で、実験設定が優先されます。</li>
+          <li><b>フィードバックループが非公開。</b>表示→反応→次回の予測、の更新は外から見えません。</li>
+        </ol>
+
+        <h2>それでも言えること</h2>
+        <table>
+          <tr><th>言える</th><th>言えない</th></tr>
+          <tr><td>同じ条件なら、返信率が高い投稿は順位が上がる（重み5.0）</td><td>何位になるか</td></tr>
+          <tr><td>重みを変えると、どの候補が入れ替わるか</td><td>何回表示されるか</td></tr>
+          <tr><td>同じ表示回数の投稿同士の相対比較</td><td>あなた個人のスコア</td></tr>
+          <tr><td>どの重みが順位に効きやすいか（感度）</td><td>将来の重み</td></tr>
+        </table>
+
+        <h2>実際の検証について</h2>
+        <p>実データでの検証（同じ閲覧者・同じリクエストの候補集合と順位）は、匿名化された cohort が必要で、まだ実施できていません。現実との接続を強めるには、自分の投稿を同じ型で出して反応の推移を見るのが現実的です。</p>
+
+        <footer>出典: xai-org/x-algorithm の公開既定値（upstream_2026_10 / 76843a5eea）。順位の例は公開式による並べ替えの説明で、実際の表示位置ではありません。</footer>
+      </main>
+    </div>
+    <script src="./site.js" defer></script>
+    <script src="./charts.js" defer></script>
+  </body>
+</html>

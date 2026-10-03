@@ -3,154 +3,76 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="どう投稿すればスコアが伸びるかを、公開アルゴリズムの重みから考えるノート" />
-    <title>xalgo — どう投稿すれば伸びるか</title>
+    <meta name="description" content="Xのおすすめスコアを公開アルゴリズムの重みから読み解き、どう投稿すれば伸びるかを考える学習ノート" />
+    <title>はじめに — Xアルゴリズム観測</title>
     <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <main class="note">
-      <header>
-        <h1>どう投稿すれば伸びるか <small>xalgo</small></h1>
-        <p class="sub">公開アルゴリズムの重みで考える</p>
-      </header>
+    <div class="layout">
+      <aside id="sidebar"></aside>
+      <main class="content">
+        <h1>Xアルゴリズム観測 <small>xalgo</small></h1>
+        <p class="lead">Xのおすすめ順位を決めるスコアを、公開アルゴリズムの重みから読み解くノートです。「どう投稿すれば伸びるか」を数字で考えるための材料をまとめています。</p>
 
-      <h2><span class="no">1</span>スコアの決まり方</h2>
-      <p><span class="box">score = Σ 重み × P(行動)</span></p>
-      <div class="flow">
-        <span class="n">投稿</span><span class="a">→</span>
-        <span class="n">行動される確率 P</span><span class="a">→</span>
-        <span class="n">× 重み</span><span class="a">→</span>
-        <span class="n">Σ</span><span class="a">→</span>
-        <span class="n">スコア</span>
-      </div>
-      <p class="memo">P(行動) は本来その人ごとの予測。ここでは公開カウント ÷ 表示回数で代用する。<br />
-        根拠: <a href="https://github.com/xai-org/x-algorithm/blob/76843a5eea278ced444b21372d4e6d6909f5c35e/xai-value-model/scoring.rs">xai-value-model/scoring.rs</a>（offset_score / compute_weighted_score）</p>
-
-      <h2><span class="no">2</span>効く行動（重み）</h2>
-      <table>
-        <tr><td>返信</td><td class="v pos">+5.0</td></tr>
-        <tr><td>引用</td><td class="v pos">+5.0</td></tr>
-        <tr><td>DMで共有</td><td class="v pos">+5.0</td></tr>
-        <tr><td>フォロー</td><td class="v pos">+4.0</td></tr>
-        <tr><td>リポスト</td><td class="v pos">+1.0</td></tr>
-        <tr><td>いいね</td><td class="v pos">+0.5</td></tr>
-        <tr><td>クリック</td><td class="v pos">+0.3</td></tr>
-        <tr><td>滞在</td><td class="v pos">+0.05</td></tr>
-        <tr><td>報告</td><td class="v neg">−234</td></tr>
-        <tr><td>ミュート</td><td class="v neg">−58.8</td></tr>
-        <tr><td>興味なし</td><td class="v neg">−47.5</td></tr>
-        <tr><td>ブロック</td><td class="v neg">−31.2</td></tr>
-      </table>
-      <p class="take">いいねより、返信・引用・共有・フォローが強い。負の行動は桁違いに強い。<br />
-        根拠: <a href="https://github.com/xai-org/x-algorithm/blob/76843a5eea278ced444b21372d4e6d6909f5c35e/vm-ranker/params.rs">vm-ranker/params.rs</a>（公開既定値）</p>
-
-      <h2><span class="no">3</span>スコアが高い投稿の例</h2>
-      <p class="memo">表示回数を10万に揃えて計算。返信・引用が多い投稿ほど高くなる。</p>
-      <table>
-        <tr><th>投稿の型</th><th class="v">いいね</th><th class="v">返信</th><th class="v">引用</th><th class="v">スコア</th></tr>
-        <tr><td>問いかけ（会話型）</td><td class="v">1,500</td><td class="v">1,600</td><td class="v">400</td><td class="v"><b>0.112</b></td></tr>
-        <tr><td>断言（引用型）</td><td class="v">3,000</td><td class="v">200</td><td class="v">1,200</td><td class="v"><b>0.101</b></td></tr>
-        <tr><td>ネタ（拡散型）</td><td class="v">3,000</td><td class="v">60</td><td class="v">200</td><td class="v"><b>0.069</b></td></tr>
-        <tr><td>共感（いいね型）</td><td class="v">8,000</td><td class="v">40</td><td class="v">5</td><td class="v"><b>0.044</b></td></tr>
-      </table>
-      <p class="take">いいねを集めるより、返信と引用を集めるほうが効く。リポストだけでは伸びにくい。</p>
-
-      <h2><span class="no">4</span>投稿に落とす</h2>
-      <ul>
-        <li><b>返信</b>を呼ぶ → 問いを1つ置く。意見が割れる題材にする。</li>
-        <li><b>引用</b>を呼ぶ → 断言する。要点を短くまとめる。</li>
-        <li><b>滞在</b>を伸ばす → 読み応えのある本文や画像を添える。</li>
-        <li><b>負</b>を避ける → 煽りや、ミュート・報告されやすい内容を避ける。</li>
-      </ul>
-
-      <h2><span class="no">5</span>自分の数字で計算する</h2>
-      <form id="score-form" class="calc">
-        <div class="calc-row">
-          <div class="source-tabs" role="tablist" aria-label="入力方法">
-            <button type="button" class="active" data-source="manual" role="tab" aria-selected="true">手入力</button>
-            <button type="button" data-source="url" role="tab" aria-selected="false">URLから表示</button>
+        <h2>このサイトについて</h2>
+        <p>公開されている X の推薦アルゴリズム（<a href="https://github.com/xai-org/x-algorithm" target="_blank" rel="noreferrer">xai-org/x-algorithm</a>）には、投稿のスコアを計算する式と、その重みの既定値が含まれています。このサイトはそれを読み解き、<b>どの行動がスコアに効くのか</b>、<b>どんな投稿が高く評価されるのか</b>を、根拠コード付きで説明します。</p>
+        <div class="grid2">
+          <div>
+            <h3>できること</h3>
+            <ul>
+              <li>スコア式の構造を理解する</li>
+              <li>行動ごとの重みを確認する</li>
+              <li>投稿の型ごとにスコアを比べる</li>
+              <li>自分の数字で計算する</li>
+            </ul>
           </div>
-          <button class="link-btn" type="button" id="reset-button">リセット</button>
-        </div>
-
-        <div id="manual-inputs">
-          <div class="calc-fields">
-            <label>表示回数<input name="views" type="number" min="1" value="100000" /></label>
-            <label>いいね<input name="likes" type="number" min="0" value="1500" /></label>
-            <label>返信<input name="replies" type="number" min="0" value="1600" /></label>
-            <label>リポスト<input name="retweets" type="number" min="0" value="300" /></label>
-            <label>引用<input name="quotes" type="number" min="0" value="400" /></label>
+          <div>
+            <h3>できないこと</h3>
+            <ul>
+              <li>実際の「おすすめ順位」の再現</li>
+              <li>あなた個人の Phoenix 予測</li>
+              <li>非公開の実験設定の反映</li>
+            </ul>
           </div>
-          <label class="calc-preset">サンプル
-            <select id="sample-select">
-              <option value="conversation">問いかけ（会話型）</option>
-              <option value="assertion">断言（引用型）</option>
-              <option value="viral">ネタ（拡散型）</option>
-              <option value="empathy">共感（いいね型）</option>
-            </select>
-          </label>
         </div>
 
-        <div id="url-inputs" hidden>
-          <label class="calc-preset">投稿URL
-            <input id="post-url" type="url" placeholder="https://x.com/user/status/…" />
-          </label>
-          <button class="link-btn" type="button" id="fetch-embed">投稿を表示（公式oEmbed）</button>
-          <div id="embed-preview" hidden></div>
-          <p class="preset-note">表示は公式oEmbed。いいね・返信・表示回数は手入力してください。</p>
+        <h2>使い方</h2>
+        <ol>
+          <li><a href="./pipeline.html">パイプライン</a> — 投稿が表示されるまでの流れをつかむ。</li>
+          <li><a href="./weights.html">重みと設定</a> — 何がどれだけ効くかを確認する。</li>
+          <li><a href="./examples.html">スコアが高い例</a> と <a href="./posting.html">投稿の作り方</a> — 型を学ぶ。</li>
+          <li><a href="./calculator.html">計算機</a> — 自分の投稿の数字を入れて試す。</li>
+          <li><a href="./observation.html">観測・調査</a> — 上流の変化と調査方法を知る。</li>
+        </ol>
+
+        <h2>スコアの決まり方（一行）</h2>
+        <p><span class="box">score = Σ 重み × P(行動)</span>　負は offset で圧縮し、多様性・OON を掛ける。</p>
+        <div class="flow">
+          <span class="n">投稿</span><span class="a">→</span>
+          <span class="n">行動される確率 P</span><span class="a">→</span>
+          <span class="n">× 重み</span><span class="a">→</span>
+          <span class="n">Σ</span><span class="a">→</span>
+          <span class="n">offset</span><span class="a">→</span>
+          <span class="n">多様性/OON</span><span class="a">→</span>
+          <span class="n">スコア</span>
         </div>
+        <p class="memo">P(行動) は本来その人ごとの予測。このサイトでは公開カウント ÷ 表示回数で代用する。</p>
 
-        <div class="calc-preset" style="margin-top:8px">重み
-          <select id="preset-select"><option value="upstream_2026_10">upstream_2026_10</option></select>
-        </div>
-        <p class="preset-note" id="preset-note"></p>
+        <h2>3つの要点</h2>
+        <ol>
+          <li><b>返信・引用・共有・フォローが強い。</b>いいねは弱い（+0.5）。</li>
+          <li><b>負の行動は桁違いに強い。</b>報告 −234、ミュート −58.8、興味なし −47.5、ブロック −31.2。</li>
+          <li><b>同じ人の連投は減衰し、ネットワーク外の投稿は割引される。</b></li>
+        </ol>
 
-        <button type="button" id="advanced-button" class="adv" aria-expanded="false"><span>＋</span> 確率・重みを調整</button>
-        <div id="advanced-panel" hidden>
-          <div class="range-field">
-            <label for="dwell-p">滞在する確率 <output id="dwell-output">0%</output></label>
-            <input id="dwell-p" type="range" min="0" max="1" value="0" step="0.01" />
-          </div>
-          <div id="weight-fields" class="weight-fields"></div>
-        </div>
+        <h2>観測の現在地</h2>
+        <p>公開既定値は 2026-09-29（<code>a707cc27ba</code>）で更新されました。click <code>0.4→0.3</code>、cont_click_dwell_time <code>0.0→0.4</code>、not_interested <code>−43.2→−47.52</code>。変遷と調査方法は <a href="./observation.html">観測・調査</a> にまとめています。</p>
 
-        <button class="calculate-button" type="submit"><span id="calculate-label">計算する</span></button>
-        <p class="form-error" id="form-error" role="alert" hidden></p>
-      </form>
-
-      <section class="result-panel" aria-live="polite" aria-busy="false">
-        <div class="score-line">
-          <span id="mode-pill">RATE MODE</span>
-          <strong id="score-value">0.00000</strong>
-        </div>
-        <div id="breakdown-list" class="breakdown-list"></div>
-        <div class="trace">
-          <code id="formula-output"></code>
-          <button type="button" id="copy-formula">式をコピー</button>
-        </div>
-        <p class="result-note" id="result-note" hidden></p>
-      </section>
-
-      <h2><span class="no">6</span>同じ人の連投は減衰する</h2>
-      <p class="diversity-formula"><code id="diversity-formula"></code></p>
-      <div class="range-field">
-        <label for="position-slider">同じ人の <output id="position-output">2件目</output></label>
-        <input id="position-slider" type="range" min="1" max="6" value="2" step="1" />
-      </div>
-
-      <h2><span class="no">7</span>計算の根拠（コード）</h2>
-      <ul class="refs">
-        <li><a href="https://github.com/xai-org/x-algorithm/blob/76843a5eea278ced444b21372d4e6d6909f5c35e/xai-value-model/scoring.rs">xai-value-model/scoring.rs</a> — offset_score / unoffset_score / compute_weighted_score</li>
-        <li><a href="https://github.com/xai-org/x-algorithm/blob/76843a5eea278ced444b21372d4e6d6909f5c35e/xai-value-model/weights.rs">xai-value-model/weights.rs</a> — 重みの定義と normalization sum</li>
-        <li><a href="https://github.com/xai-org/x-algorithm/blob/76843a5eea278ced444b21372d4e6d6909f5c35e/vm-ranker/params.rs">vm-ranker/params.rs</a> — 公開既定値（upstream_2026_10）</li>
-        <li><a href="https://github.com/xai-org/x-algorithm/blob/76843a5eea278ced444b21372d4e6d6909f5c35e/vm-ranker/scoring/value_model.rs">vm-ranker/scoring/value_model.rs</a> — 多様性・OON・perturbation の適用</li>
-        <li><a href="https://github.com/hjosugi/xalgo/blob/main/docs/scoring-logic.md">docs/scoring-logic.md</a> — このノートの Markdown 版</li>
-      </ul>
-
-      <footer>出典: xai-org/x-algorithm の公開既定値（upstream_2026_10 / 76843a5eea）</footer>
-    </main>
-    <script src="./scoring.js" defer></script>
-    <script src="./app.js" defer></script>
+        <footer>出典: xai-org/x-algorithm の公開既定値（upstream_2026_10 / 76843a5eea）</footer>
+      </main>
+    </div>
+    <script src="./site.js" defer></script>
   </body>
 </html>

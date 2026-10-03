@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="スコア式の各ステップと、数字が何を意味するかの解説" />
+    <title>スコア計算 — Xアルゴリズム観測</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside id="sidebar"></aside>
+      <main class="content">
+        <h1>スコア計算</h1>
+        <p class="lead">スコアは「行動確率 × 重み」の和を offset で整え、多様性と OON を掛けた値です。ここでは各数字が<b>何を意味し、どう結果を変えるか</b>を順に説明します。</p>
+
+        <h2>全体の式</h2>
+        <p><span class="box">score = offset(Σ 重み × P(行動)) × 多様性 × OON</span></p>
+        <table>
+          <tr><th>記号</th><th>意味</th><th>範囲・例</th></tr>
+          <tr><td><code>P(行動)</code></td><td>その閲覧者がその行動をする確率</td><td>0〜1。例: 0.02</td></tr>
+          <tr><td><code>重み</code></td><td>行動の重要度（倍率）</td><td>例: 返信 5.0、いいね 0.5、報告 −234</td></tr>
+          <tr><td><code>Σ</code></td><td>すべての行動の寄与を足す</td><td>例: 0.111</td></tr>
+          <tr><td><code>offset</code></td><td>負のスコアを小さい正の値へ圧縮</td><td>0.001 が基準</td></tr>
+          <tr><td><code>多様性</code></td><td>同じ著者の連投を減衰</td><td>2件目は 0.625 倍</td></tr>
+          <tr><td><code>OON</code></td><td>ネットワーク外の投稿を割引</td><td>0.75 倍</td></tr>
+        </table>
+
+        <h2>ステップ1: 重み付き和</h2>
+        <p>行動ごとに <code>重み × P(行動)</code> を計算して足します。たとえば P(返信)=0.02 なら、返信の寄与は <code>5.0 × 0.02 = 0.1</code> です。</p>
+        <div class="num-box">
+          例: 表示 100 回で いいね 5・返信 2・リポスト 1 のとき<br />
+          <span class="example-inline">いいね <b>0.5 × 0.05 = 0.025</b>　返信 <b>5.0 × 0.02 = 0.100</b>　リポスト <b>1.0 × 0.01 = 0.010</b></span><br />
+          <b>Σ = 0.135</b>（負の行動がなければこのまま次へ）
+        </div>
+        <p class="memo">重みは<b>確率</b>に掛かります。生のカウントに掛けると「報告1件 = いいね468件分」のような誤解になります（上流 README も明示的に否定）。</p>
+
+        <h2>ステップ2: offset</h2>
+        <p>負の寄与があると Σ は負になり得ます。負のままでは順位計算が壊れるため、次の3分岐で整えます。</p>
+        <table>
+          <tr><th>条件</th><th>結果</th><th>意味</th></tr>
+          <tr><td><code>Σ ≥ 0</code></td><td><code>Σ + 0.001</code></td><td>正のスコアに小さな下駄を履かせる</td></tr>
+          <tr><td><code>Σ &lt; 0</code></td><td><code>(Σ + negative_sum) / total_sum × 0.001</code></td><td>負を <b>0〜0.001</b> の範囲へ圧縮</td></tr>
+          <tr><td><code>total_sum = 0</code></td><td><code>max(Σ, 0)</code></td><td>重みが全部0のとき</td></tr>
+        </table>
+        <div class="num-box">
+          負の例: Σ = −0.5、negative_sum = 371.54、total_sum = 414.78 のとき<br />
+          <span class="example-inline">(−0.5 + 371.54) ÷ 414.78 × 0.001 = <b>0.000895</b></span><br />
+          つまり「負の投稿」は 0 と 0.001 の間に置かれ、正の投稿より必ず下になります。
+        </div>
+        <p class="memo"><code>negative_sum</code> は負の重みの合計（絶対値）、<code>total_sum</code> は正負の合計。0.001 は <code>NEGATIVE_SCORES_OFFSET</code> という定数です。</p>
+
+        <h2>ステップ3: 多様性（同じ著者の連投）</h2>
+        <p>同じ著者の2件目以降には、位置に応じた倍率が掛かります。</p>
+        <p><code>multiplier = (1 − floor) × decay^position + floor</code>（既定 <code>decay=0.5, floor=0.25</code>）</p>
+        <table>
+          <tr><th>同じ著者の何件目</th><th>倍率</th><th>例: 元スコア 0.100 のとき</th></tr>
+          <tr><td>1件目（position 0）</td><td>1.000</td><td>0.100</td></tr>
+          <tr><td>2件目（position 1）</td><td><b>0.625</b></td><td>0.0625</td></tr>
+          <tr><td>3件目（position 2）</td><td>0.438</td><td>0.0438</td></tr>
+          <tr><td>4件目（position 3）</td><td>0.344</td><td>0.0344</td></tr>
+        </table>
+        <div class="num-box">
+          <b>0.625 の意味:</b> 同じ著者の2件目は、スコアが <b>62.5% に減る</b>ということ。<br />
+          元スコア 0.100 の投稿は <span class="example-inline"><b>0.100 × 0.625 = 0.0625</b></span> として並びます。
+        </div>
+        <div class="chart" data-chart="line" data-values='[{"x":0,"y":1.0},{"x":1,"y":0.625},{"x":2,"y":0.4375},{"x":3,"y":0.34375},{"x":4,"y":0.296875},{"x":5,"y":0.2734375}]' data-opts='{"xMax":5,"yMax":1,"yMin":0}'></div>
+        <p class="chart-note">横軸: 同じ著者の何件目（0=1件目）、縦軸: スコア倍率。1件目は1.0、2件目で0.625まで落ち、以降はゆるやかに下がります。</p>
+
+        <h2>ステップ4: OON（ネットワーク外）</h2>
+        <p>フォロー外の投稿には <code>0.75</code> が掛かります。</p>
+        <div class="num-box">
+          <b>0.75 の意味:</b> ネットワーク外の投稿はスコアが <b>75% に割引される</b>。<br />
+          元スコア 0.100 の投稿は <span class="example-inline"><b>0.100 × 0.75 = 0.075</b></span>。
+        </div>
+        <table>
+          <tr><th>種類</th><th>倍率</th></tr>
+          <tr><td>通常（OON）</td><td>0.75</td></tr>
+          <tr><td>トピック指定</td><td>0.5</td></tr>
+          <tr><td>新規ユーザー</td><td>0.00001（既定の閾値0秒では発火しない）</td></tr>
+        </table>
+        <p class="memo">多様性と OON は掛け合わされます。2件目かつネットワーク外なら <code>0.625 × 0.75 = 0.469</code> 倍です。</p>
+
+        <h2>ステップ5: スコアの読み方</h2>
+        <div class="num-box">
+          最終スコアは確率ではなく<b>相対値</b>です。<br />
+          <span class="example-inline">0.111 は 0.044 の約 <b>2.5倍</b>。つまり「そのぶん上の順位に置かれやすい」という意味。</span>
+        </div>
+        <p>0.001 の差はほぼ誤差ですが、0.05 と 0.1 の差は順位に効きます。同じ表示回数で比べることが大切です（<a href="./examples.html">スコアが高い例</a>）。</p>
+
+        <h2>派生の設定</h2>
+        <table>
+          <tr><th>設定</th><th>既定</th><th>何をするか</th></tr>
+          <tr><td><code>MultiplierPreOffset</code></td><td>false</td><td>true なら多様性/OON を offset の<b>前</b>に掛ける</td></tr>
+          <tr><td><code>WeightPerturbationSigma</code></td><td>0.0</td><td>0 より大きいと viewer ごとに重みを揺らす</td></tr>
+          <tr><td><code>EnableOonRescore…</code></td><td>true</td><td>ネットワーク内の返信/リポストも OON 再評価の対象にする</td></tr>
+          <tr><td><code>CachedPostsReuseWeightedScore</code></td><td>（10月に撤去）</td><td>キャッシュ済み weighted score を再利用する</td></tr>
+        </table>
+
+        <footer>出典: xai-org/x-algorithm の公開既定値（upstream_2026_10 / 76843a5eea）</footer>
+      </main>
+    </div>
+    <script src="./site.js" defer></script>
+    <script src="./charts.js" defer></script>
+  </body>
+</html>
