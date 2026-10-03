@@ -92,11 +92,6 @@
         score += offset;
       }
     }
-    if (preset.startsWith("upstream_")) {
-      warnings.push(
-        "公開されたHome Mixer既定値です。実リクエストでは実験設定により上書きされ得ます。",
-      );
-    }
 
     return {
       preset,
