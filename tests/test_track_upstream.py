@@ -170,6 +170,39 @@ fn filter(
         self.assertEqual([item["number"] for item in kept], [2])
         self.assertEqual([item["number"] for item in duplicates], [1])
 
+    def test_short_report_is_written_unchanged(self):
+        text = "# Upstream algorithm check\n\nNo ranking-relevant changes.\n"
+        self.assertEqual(track_upstream._fit_issue_body(text), text)
+
+    def test_oversized_report_is_cut_at_a_line_boundary_with_a_note(self):
+        lines = [
+            f"- **file_{index}.rs** (modified; ranking/scorer)" for index in range(5000)
+        ]
+        text = "\n".join(lines) + "\n"
+        self.assertGreater(len(text), 65536)
+        env = {
+            "GITHUB_SERVER_URL": "https://github.com",
+            "GITHUB_REPOSITORY": "owner/repo",
+            "GITHUB_RUN_ID": "42",
+        }
+        with patch.dict("os.environ", env):
+            fitted = track_upstream._fit_issue_body(text)
+        # Leaves room for the model-contract section the workflow appends.
+        self.assertLessEqual(len(fitted), track_upstream.ISSUE_REPORT_LIMIT)
+        body, _, note = fitted.rstrip("\n").rpartition("\n\n")
+        self.assertTrue(set(body.splitlines()) <= set(lines))
+        self.assertIn(lines[0], body)
+        self.assertIn("of 5000 lines", note)
+        self.assertIn("https://github.com/owner/repo/actions/runs/42", note)
+
+    def test_oversized_report_note_works_outside_github_actions(self):
+        text = "x" * 100 + "\n"
+        text *= 1000
+        with patch.dict("os.environ", {}, clear=True):
+            fitted = track_upstream._fit_issue_body(text, limit=5000)
+        self.assertLessEqual(len(fitted), 5000)
+        self.assertIn("The complete report is in", fitted)
+
 
 if __name__ == "__main__":
     unittest.main()
