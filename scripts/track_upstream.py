@@ -33,6 +33,11 @@ LAST_CHECK_FILE = ROOT / "state" / "last_checked_at.txt"
 REPORT_FILE = ROOT / "report.md"
 CORPUS_FILE = ROOT / "state" / "upstream_tracking_corpus.json"
 
+# GitHub rejects an issue body longer than 65536 characters.  The workflow
+# appends the model-contract audit (about 5000 characters) to report.md, so the
+# report itself stays well under the limit.
+ISSUE_REPORT_LIMIT = 50_000
+
 # A path match is enough to flag a change.  The regular expression below is
 # only used to extract a compact set of especially interesting patch lines.
 RANKING_PATHS = (
@@ -608,8 +613,7 @@ def run(since: str | None = None, as_json: bool = False) -> int:
     if as_json:
         print(json.dumps(report, ensure_ascii=False, indent=2))
     else:
-        _write_markdown(report)
-        print(REPORT_FILE.read_text(encoding="utf-8"))
+        print(_write_markdown(report))
     if since is None:
         _persist_state(report)
     changed = report["algorithm_commits"] or report["algorithm_pull_requests"]
@@ -635,7 +639,40 @@ def _append_change(lines: list[str], change: dict, heading: str) -> None:
     lines.append("")
 
 
-def _write_markdown(report: dict) -> None:
+def _fit_issue_body(text: str, limit: int = ISSUE_REPORT_LIMIT) -> str:
+    """Cut ``text`` at a line boundary so that it fits in an issue body.
+
+    A large upstream change (hundreds of files) makes the report far longer
+    than GitHub accepts.  The complete report is still printed to the job log;
+    the issue gets the leading part and a note saying where the rest is.
+    """
+    if len(text) <= limit:
+        return text
+    server = os.environ.get("GITHUB_SERVER_URL")
+    repository = os.environ.get("GITHUB_REPOSITORY")
+    run_id = os.environ.get("GITHUB_RUN_ID")
+    if server and repository and run_id:
+        where = f"the `Detect scoring changes` log of {server}/{repository}/actions/runs/{run_id}"
+    else:
+        where = "the `Detect scoring changes` step log of the tracker run"
+    lines = text.splitlines()
+    budget = limit - 400  # room for the closing note
+    kept: list[str] = []
+    size = 0
+    for line in lines:
+        if size + len(line) + 1 > budget:
+            break
+        kept.append(line)
+        size += len(line) + 1
+    note = (
+        f"_Report truncated at {len(kept)} of {len(lines)} lines to fit the "
+        f"issue body limit. The complete report is in {where}._"
+    )
+    return "\n".join(kept).rstrip() + "\n\n" + note + "\n"
+
+
+def _write_markdown(report: dict) -> str:
+    """Write the issue report to ``REPORT_FILE`` and return the full text."""
     lines = [
         f"# Upstream algorithm check — {report['checked_at']}",
         "",
@@ -663,7 +700,9 @@ def _write_markdown(report: dict) -> None:
             heading = f"PR #{pr['number']} {pr['title']} ({pr['merged_at']})"
             _append_change(lines, pr, heading)
 
-    REPORT_FILE.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
+    full = "\n".join(lines).rstrip() + "\n"
+    REPORT_FILE.write_text(_fit_issue_body(full), encoding="utf-8")
+    return full
 
 
 def main(argv: list[str] | None = None) -> int:
